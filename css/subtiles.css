@@ -25,7 +25,7 @@ svg {
 	height: 50rem;
 	max-width: 90vmin;
 	max-height: 90vmin;
-	background: red;
+	overflow: visible;
 }
 
 svg path {

@@ -5,15 +5,13 @@ import { connectArray, vertsToD } from "./utility.js";
 
 export class Tile {
 
-	constructor() {
-		this.verts = [ [0.25,0.25], [0.25,-0.25], [-0.25,-0.25], [-0.25,0.25] ];
+	constructor( verts ) {
 		this.next = this.prev = null;
+		this.verts = verts;
 	}
 
 	subdivide() {
-		const tiles = [ new Tile(), new Tile() ];
-		connectArray( tiles );
-		return tiles;
+		return [ this ];
 	}
 
 	toSVG() {
@@ -23,3 +21,23 @@ export class Tile {
 	}
 }
 
+
+function mapFromTileSpace( innerTileSpaceVerts, outerTileSpaceVerts, outerVerts ) {
+	return innerTileSpaceVerts;
+}
+
+export class TwistTile extends Tile {
+
+	subdivide() {
+		
+		const innerTileVerts = mapFromTileSpace(
+			[ [-0.95,-1], [1,-0.95], [0.95,1], [-1,0.95] ], 
+			[ [-1,-1], [1,-1], [1,1], [-1,1] ],
+			this.verts
+		);
+
+		const tiles = [ new Tile( this.verts ), new TwistTile( innerTileVerts ) ];
+
+		return connectArray( tiles );
+	}
+}
