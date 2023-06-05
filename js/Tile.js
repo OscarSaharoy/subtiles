@@ -1,6 +1,6 @@
 // Oscar Saharoy 2023
 
-import { dot, connectArray, vertsToD, meanVec, normalise, matMatMul, matVecMul, inverse, transpose } from "./utility.js";
+import * as utility from "./utility.js";
 
 
 export class Tile {
@@ -19,70 +19,13 @@ export class Tile {
 
 	toSVG() {
 		return `<path 
-			d="${ vertsToD(this.verts) }"
-			fill="${ depthToColour(this.depth) }"
-			stroke="${ depthToColour(this.depth+5) }"
+			d="${ utility.vertsToD(this.verts) }"
+			fill="${ utility.depthToColour(this.depth) }"
+			stroke="${ utility.depthToColour(this.depth+5) }"
 		/>`;
 	}
 }
 
-
-function depthToColour( depth ) {
-
-	const hue = "190deg";
-	const sat = "100%";
-	const val = `${depth*4}%`;
-
-	return `hsl( ${hue} ${sat} ${val} )`;
-}
-
-
-function betweenDirections( point, [ direction1, direction2 ] ) {
-
-	const pointDirection = normalise(point);
-
-	return dot( pointDirection, direction1 ) >= dot( direction1, direction2)
-		&& dot( pointDirection, direction2 ) >= dot( direction1, direction2);
-}
-
-
-function calcAffineTransform( sourceTriplet, targetTriplet ) {
-
-	// targetMat = A @ sourceMat
-
-	const sourceMat = transpose( sourceTriplet.map( p => [...p, 1] ) );
-	const targetMat = transpose( targetTriplet.map( p => [...p, 1] ) );
-
-	return matMatMul( targetMat, inverse(sourceMat) );
-}
-
-
-function mapFromTileSpace( innerTileSpaceVert, tile ) {
-
-	const outerVerts = tile.verts;
-	const outerTileSpaceVerts = tile.__proto__.constructor.tileSpaceVerts;
-
-	for( let i = 0; i < tile.verts.length; ++i ) {
-
-		const a = i;
-		const b = ( i + 1 ) % tile.verts.length;
-
-		const tileSpaceDirections = [
-			normalise( outerTileSpaceVerts[a] ),
-			normalise( outerTileSpaceVerts[b] ),
-		];
-
-		if( !betweenDirections( innerTileSpaceVert, tileSpaceDirections ) )
-			continue;
-
-		const transform = calcAffineTransform(
-			[[0,0], outerTileSpaceVerts[a], outerTileSpaceVerts[b]],
-			[meanVec(outerVerts), outerVerts[a], outerVerts[b] ],
-		);
-
-		return matVecMul( transform, [...innerTileSpaceVert, 1] );
-	}
-}
 
 export class TwistTile extends Tile {
 
@@ -93,26 +36,15 @@ export class TwistTile extends Tile {
 		const innerTileSpaceVerts = 
 			[ [-0.95,-1], [1,-0.95], [0.95,1], [-1,0.95] ];
 
-		const innerTileVerts = innerTileSpaceVerts.map( vert => mapFromTileSpace( vert, this ) );
+		const innerTileVerts = innerTileSpaceVerts.map( vert => utility.mapFromTileSpace( vert, this ) );
 
 
 		const tiles = [ new Tile( this.verts, this.depth ), new TwistTile( innerTileVerts, this.depth+1 ) ];
 
-		return connectArray( tiles );
+		return utility.connectArray( tiles );
 	}
 }
 
-
-function mapTilesFromTileSpace( subtiles, tile ) {
-
-	subtiles.forEach(
-		subtile => subtile.verts = subtile.verts.map( 
-			vert => mapFromTileSpace( vert, tile ) 
-		)
-	);
-
-	return subtiles;
-}
 
 export class HalvingTile extends Tile {
 
@@ -120,14 +52,14 @@ export class HalvingTile extends Tile {
 
 	subdivide() {
 		
-		const subtiles = mapTilesFromTileSpace([
+		const subtiles = utility.mapTilesFromTileSpace([
 
 			new Tile(         [ [-1,-1], [0,-1], [0,1], [-1,1] ], this.depth   ),
 			new HalvingTile(  [ [ 1,-1], [1, 1], [0,1], [0,-1] ], this.depth+1 ) 
 
 		], this);
 
-		return connectArray( subtiles );
+		return utility.connectArray( subtiles );
 	}
 }
 
