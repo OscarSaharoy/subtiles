@@ -114,7 +114,7 @@ export class RoseTile extends Tile {
 }
 
 
-export class TestTile extends Tile {
+export class DiamondTile extends Tile {
 
 	static tileSpaceVerts =
 		[ [-1,-1], [1,-1], [1,1], [-1,1] ];
@@ -130,29 +130,29 @@ export class TestTile extends Tile {
 
 		const subtiles = utility.mapTilesFromTileSpace([
 
-			new TestTile(
+			new DiamondTile(
 				[ i1, i2, i3, i4 ],
-				this.depth + 5
+				this.depth + 2
 			),
 	
-			new TestTile(
+			new DiamondTile(
 				[ i1, i2, o2, o1 ],
-				this.depth + 3
+				this.depth + 1
 			),
 
-			new TestTile(
+			new DiamondTile(
 				[ i2, i3, o3, o2 ],
-				this.depth + 1
+				this.depth + 0
 			),
 
-			new TestTile(
+			new DiamondTile(
 				[ i3, i4, o4, o3 ],
-				this.depth + 3
+				this.depth + 1
 			),
 
-			new TestTile(
+			new DiamondTile(
 				[ i4, i1, o1, o4 ],
-				this.depth + 1
+				this.depth + 0
 			),
 
 		], this);
