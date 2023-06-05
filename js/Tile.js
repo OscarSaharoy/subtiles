@@ -103,7 +103,7 @@ export class RoseTile extends Tile {
 			new RoseTile( 
 				squareVerts(
 					[0,0],
-					argMag( 0.23, 1.3 )
+					argMag( 0.41, 1.3 )
 				),
 				this.depth + 1 )
 

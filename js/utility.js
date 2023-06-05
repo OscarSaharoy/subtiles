@@ -24,9 +24,9 @@ export function connectArray( tiles ) {
 
 export function depthToColour( depth ) {
 
-	const hue = "190deg";
+	const hue = "10deg";
 	const sat = "100%";
-	const val = `${depth*4}%`;
+	const val = `${10+depth*2.5}%`;
 
 	return `hsl( ${hue} ${sat} ${val} )`;
 }
