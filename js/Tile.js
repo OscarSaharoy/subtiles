@@ -114,7 +114,7 @@ export class RoseTile extends Tile {
 }
 
 
-export class TestTile {
+export class TestTile extends Tile {
 
 	static tileSpaceVerts =
 		[ [-1,-1], [1,-1], [1,1], [-1,1] ];
@@ -126,18 +126,18 @@ export class TestTile {
 
 		const [ i1, i2, i3, i4 ] =
 			this.__proto__.constructor.tileSpaceVerts
-				.map( vert => utility.scaleVec(vert, .5));
-		
+				.map( vert => utility.scaleVec(vert, .25));
+
 		const subtiles = utility.mapTilesFromTileSpace([
 
 			new TestTile(
 				[ i1, i2, i3, i4 ],
-				this.depth + 1
+				this.depth + 5
 			),
 	
 			new TestTile(
 				[ i1, i2, o2, o1 ],
-				this.depth + 1
+				this.depth + 3
 			),
 
 			new TestTile(
@@ -147,11 +147,11 @@ export class TestTile {
 
 			new TestTile(
 				[ i3, i4, o4, o3 ],
-				this.depth + 1
+				this.depth + 3
 			),
 
 			new TestTile(
-				[ i1, i4, o4, o1 ],
+				[ i4, i1, o1, o4 ],
 				this.depth + 1
 			),
 

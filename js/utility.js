@@ -24,7 +24,7 @@ export function connectArray( tiles ) {
 
 export function depthToColour( depth ) {
 
-	const hue = "10deg";
+	const hue = "190deg";
 	const sat = "100%";
 	const val = `${10+depth*2.5}%`;
 
