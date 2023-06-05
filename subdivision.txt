@@ -12,3 +12,10 @@ tiles stored in linked list, on subdivision big one is
 cut out and replaced by a few smaller ones
 each tile has a toSVG() methos which retuns an svg elm
 that can be rendered
+
+tile space outer verts as static attribute of tile class
+map from tile space to world space - affine tranaform from
+tile slice
+tile slice defined by centroid and 2 adjacent verts
+check point inside slice: dot of direction to point with
+directions to verts >= that with other vert
