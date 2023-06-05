@@ -5,9 +5,11 @@ import { dot, connectArray, vertsToD, meanVec, normalise, matMatMul, matVecMul, 
 
 export class Tile {
 
+	static tileSpaceVerts = [];
+
 	constructor( verts, depth = 0 ) {
 		this.next = this.prev = null;
-		this.verts = verts;
+		this.verts = verts ?? this.__proto__.constructor.tileSpaceVerts;
 		this.depth = depth;
 	}
 
@@ -120,3 +122,5 @@ export class HalvingTile extends Tile {
 		return connectArray( tiles );
 	}
 }
+
+

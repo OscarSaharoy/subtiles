@@ -4,7 +4,7 @@ import { TileList } from "./TileList.js";
 import { HalvingTile } from "./Tile.js";
 
 
-const rootTile = new HalvingTile( HalvingTile.tileSpaceVerts );
+const rootTile = new HalvingTile();
 const tileList = new TileList( rootTile );
 
 const svg = document.querySelector( "svg" );
