@@ -29,7 +29,7 @@ function depthToColour( depth ) {
 
 	const hue = "190deg";
 	const sat = "100%";
-	const val = `${depth*0.76}%`;
+	const val = `${depth*4}%`;
 
 	return `hsl( ${hue} ${sat} ${val} )`;
 }
@@ -100,3 +100,23 @@ export class TwistTile extends Tile {
 	}
 }
 
+export class HalvingTile extends Tile {
+
+	static tileSpaceVerts = [ [-1,-1], [1,-1], [1,1], [-1,1] ];
+
+	subdivide() {
+		
+		const leftTileSpaceVerts = 
+			[ [-1,-1], [0,-1], [0,1], [-1,1] ];
+		const rightTileSpaceVerts = 
+			[ [1,-1], [1,1], [0,1], [0, -1] ];
+
+		const rightTileVerts = rightTileSpaceVerts.map( vert => mapFromTileSpace( vert, this ) );
+		const leftTileVerts  = leftTileSpaceVerts.map(  vert => mapFromTileSpace( vert, this ) );
+
+
+		const tiles = [ new Tile( leftTileVerts, this.depth ), new HalvingTile( rightTileVerts, this.depth+1 ) ];
+
+		return connectArray( tiles );
+	}
+}
