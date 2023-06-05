@@ -102,25 +102,32 @@ export class TwistTile extends Tile {
 	}
 }
 
+
+function mapTilesFromTileSpace( subtiles, tile ) {
+
+	subtiles.forEach(
+		subtile => subtile.verts = subtile.verts.map( 
+			vert => mapFromTileSpace( vert, tile ) 
+		)
+	);
+
+	return subtiles;
+}
+
 export class HalvingTile extends Tile {
 
 	static tileSpaceVerts = [ [-1,-1], [1,-1], [1,1], [-1,1] ];
 
 	subdivide() {
 		
-		const leftTileSpaceVerts = 
-			[ [-1,-1], [0,-1], [0,1], [-1,1] ];
-		const rightTileSpaceVerts = 
-			[ [1,-1], [1,1], [0,1], [0, -1] ];
+		const subtiles = mapTilesFromTileSpace([
 
-		const rightTileVerts = rightTileSpaceVerts.map( vert => mapFromTileSpace( vert, this ) );
-		const leftTileVerts  = leftTileSpaceVerts.map(  vert => mapFromTileSpace( vert, this ) );
+			new Tile(         [ [-1,-1], [0,-1], [0,1], [-1,1] ], this.depth   ),
+			new HalvingTile(  [ [ 1,-1], [1, 1], [0,1], [0,-1] ], this.depth+1 ) 
 
+		], this);
 
-		const tiles = [ new Tile( leftTileVerts, this.depth ), new HalvingTile( rightTileVerts, this.depth+1 ) ];
-
-		return connectArray( tiles );
+		return connectArray( subtiles );
 	}
 }
-
 
