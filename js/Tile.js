@@ -112,3 +112,52 @@ export class RoseTile extends Tile {
 		return utility.connectArray( subtiles );
 	}
 }
+
+
+export class TestTile {
+
+	static tileSpaceVerts =
+		[ [-1,-1], [1,-1], [1,1], [-1,1] ];
+
+	subdivide() {
+
+		const [ o1, o2, o3, o4 ] =
+			this.__proto__.constructor.tileSpaceVerts;
+
+		const [ i1, i2, i3, i4 ] =
+			this.__proto__.constructor.tileSpaceVerts
+				.map( vert => utility.scaleVec(vert, .5));
+		
+		const subtiles = utility.mapTilesFromTileSpace([
+
+			new TestTile(
+				[ i1, i2, i3, i4 ],
+				this.depth + 1
+			),
+	
+			new TestTile(
+				[ i1, i2, o2, o1 ],
+				this.depth + 1
+			),
+
+			new TestTile(
+				[ i2, i3, o3, o2 ],
+				this.depth + 1
+			),
+
+			new TestTile(
+				[ i3, i4, o4, o3 ],
+				this.depth + 1
+			),
+
+			new TestTile(
+				[ i1, i4, o4, o1 ],
+				this.depth + 1
+			),
+
+		], this);
+
+		return utility.connectArray( subtiles );
+	}
+
+}
