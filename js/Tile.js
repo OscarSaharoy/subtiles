@@ -63,3 +63,52 @@ export class HalvingTile extends Tile {
 	}
 }
 
+function squareVerts( centre, toCorner ) {
+	const toOtherCorner = [ toCorner[1], -toCorner[0] ];
+	
+	return [
+		utility.addVec( centre, toCorner ),
+		utility.addVec( centre, toOtherCorner ),
+		utility.subVec( centre, toCorner ),
+		utility.subVec( centre, toOtherCorner ),
+	];
+}
+
+function unitVector( theta ) {
+	return [ Math.sin( theta ), Math.cos( theta ) ];
+}
+
+function argMag( theta, length ) {
+	return utility.scaleVec( unitVector( theta ), length );
+}
+
+export class RoseTile extends Tile {
+
+	static tileSpaceVerts = [ [-1,-1], [1,-1], [1,1], [-1,1] ];
+
+	subdivide() {
+		
+		const subtiles = utility.mapTilesFromTileSpace([
+
+			...utility.range(10)
+					.map( i => i/10*6.28 )
+					.map( t => new Tile(
+						squareVerts(
+							unitVector(t),
+							argMag( t+0.09, 0.4 )
+						),
+						this.depth )
+					),
+
+			new RoseTile( 
+				squareVerts(
+					[0,0],
+					argMag( 0.25, 1.3 )
+				),
+				this.depth + 1 )
+
+		], this);
+
+		return utility.connectArray( subtiles );
+	}
+}
