@@ -1,0 +1,14 @@
+
+tile class
+subclassed to specific tiles each with overridden
+subdivide() method
+which returns new tile instances
+vertex positions defined in arbitrary space
+generalised affine mapping from actual space to arbitrary
+space found from actual and arbitrary vertices
+then inverse applied to arbitrary subtile vertices to get
+actual subtile vertices
+tiles stored in linked list, on subdivision big one is
+cut out and replaced by a few smaller ones
+each tile has a toSVG() methos which retuns an svg elm
+that can be rendered
