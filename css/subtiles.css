@@ -1,0 +1,30 @@
+
+* {
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	width: 100%;
+	min-height: 100vh;
+	min-height: 100dvh;
+	display: grid;
+	place-items: center;
+}
+
+#container {
+	width: 100%;
+	min-height: 100vh;
+	min-height: 100dvh;
+	display: grid;
+	place-items: center;
+}
+
+svg {
+	width: 50rem;
+	height: 50rem;
+	max-width: 90vmin;
+	max-height: 90vmin;
+	background: red;
+}
+
