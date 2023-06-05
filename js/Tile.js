@@ -90,12 +90,12 @@ export class RoseTile extends Tile {
 		
 		const subtiles = utility.mapTilesFromTileSpace([
 
-			...utility.range(10)
-					.map( i => i/10*6.28 )
+			...utility.range(50)
+					.map( i => i/50*6.28 )
 					.map( t => new Tile(
 						squareVerts(
 							unitVector(t),
-							argMag( t+0.09, 0.4 )
+							argMag( t, 0.1 )
 						),
 						this.depth )
 					),
@@ -103,7 +103,7 @@ export class RoseTile extends Tile {
 			new RoseTile( 
 				squareVerts(
 					[0,0],
-					argMag( 0.25, 1.3 )
+					argMag( 0.23, 1.3 )
 				),
 				this.depth + 1 )
 
