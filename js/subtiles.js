@@ -9,6 +9,21 @@ function vertsToD( verts ) {
 	) + "Z";
 }
 
+function connect( firstTile, secondTile ) {
+	firstTile.next = secondTile;
+	secondTile.prev = firstTile;
+}
+
+function connectArray( tiles ) {
+	tiles.slice( 0, -1 ).forEach( (_,i) =>
+		connect( tiles[i], tiles[i+1] )
+	);
+}
+
+function getFirstLast( array ) {
+	return [ array[0], array[array.length - 1] ];
+}
+
 
 class Tile {
 
@@ -18,13 +33,9 @@ class Tile {
 	}
 
 	subdivide() {
-		const firstSubTile = new Tile();
-		const lastSubTile = new Tile();
-
-		firstSubTile.next = lastSubTile;
-		lastSubTile.prev = firstSubTile;
-
-		return [ firstSubTile, lastSubTile ];
+		const tiles = [ new Tile(), new Tile() ];
+		connectArray( tiles );
+		return tiles;
 	}
 
 	toSVG() {
@@ -49,13 +60,11 @@ class TileList {
 
 		while( tile != this ) {
 			
-			const [ firstSubTile, lastSubTile ] = tile.subdivide();
+			const subtiles = tile.subdivide();
+			const [ firstSubtile, lastSubtile ] = getFirstLast( subtiles );
 
-			firstSubTile.prev = tile.prev;
-			tile.prev.next = firstSubTile;
-
-			lastSubTile.next = tile.next;
-			tile.next.prev = lastSubTile;
+			connect( tile.prev, firstSubtile );
+			connect( lastSubtile, tile.next );
 
 			tile = tile.next;
 		}
@@ -79,6 +88,8 @@ class TileList {
 const rootTile = new Tile();
 const tileList = new TileList( rootTile );
 
+tileList.subdivide();
+tileList.subdivide();
 tileList.subdivide();
 
 svg.innerHTML = tileList.toSVG();
