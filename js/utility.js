@@ -25,48 +25,183 @@ export function getFirstLast( array ) {
 	return [ array[0], array[array.length - 1] ];
 }
 
-// returns true if points A B C are ordered counter clockwise
-export const ccw = (A, B, C) =>
-	(C[1]-A[1]) * (B[0]-A[0]) > (B[1]-A[1]) * (C[0]-A[0]);
+export const range = n =>
+	Object.keys( Array(n).fill(0) ).map( parseFloat );
 
-// euclidian distance between A and B
-export const dist = (A, B) =>
-	length( sub( A, B ) );
+export function sum( arr ) {
+	return arr.reduce( (acc,val) => acc + val, 0 );
+}
 
-// returns true if segA intersects segB
-export const intersectSegments = (segA, segB) =>
-	ccw(segA.start, segB.start, segB.end  ) != ccw(segA.end,   segB.start, segB.end) &&
-	ccw(segA.start, segA.end,   segB.start) != ccw(segA.start, segA.end,   segB.end);
-
-export const segment = (A, B) =>
-	({ start: A, end: B });
-
-export const add = (A, B) =>
-	[ A[0] + B[0], A[1] + B[1] ];
-
-export const sub = (A, B) =>
-	[ A[0] - B[0], A[1] - B[1] ];
-
-export const mul = (A, k) =>
-	[ A[0] * k, A[1] * k ];
-
-export const div = (A, k) =>
-	[ A[0] / k, A[1] / k ];
-
-export const length = (A) =>
-	Math.sqrt( A[0]**2 + A[1]**2 );
-
-export const normalise = (A) =>
-	mul( A, 1/length(A) );
-
-export const direction = (A, B) =>
-	normalise( sub( B, A ) );	
-
-export const dot = (A, B) =>
-	A[0] * B[0] + A[1] * B[1];
 
 export const back = (arr, offset = -1) =>
 	arr[ arr.length + offset ]
 
-export const commaSep = A =>
-	`${A[0]},${A[1]}`;
+export const identity = rows =>
+	range(rows).map( x => range(rows).map( y => x==y ? 1 : 0 ) );
+
+export const vec0 = rows =>
+	Array(rows).fill(0);
+
+export const scaleVec = (vec,f) =>
+	vec.map( x => x*f );
+
+export const addVec = (vecA,vecB) =>
+	vecA.map( (_,i) => vecA[i] + vecB[i] );
+
+export const subVec = (vecA,vecB) =>
+	vecA.map( (_,i) => vecA[i] - vecB[i] );
+
+export const scaleMat = (mat,f) =>
+	mat.map( row => scaleVec(row, f) );
+
+export const dot = (vecA,vecB) =>
+	vecA.reduce( (sum,_,i) => sum + vecA[i]*vecB[i], 0 );
+
+export const cross = (vecA,vecB) =>
+	[
+		vecA[1]*vecB[2] - vecA[2]*vecB[1],
+		vecA[2]*vecB[0] - vecA[0]*vecB[2],
+		vecA[0]*vecB[1] - vecA[1]*vecB[0],
+	];
+
+export const meanVec = vecs =>
+	scaleVec( 
+		vecs.reduce( (acc,vec) => 
+			addVec(acc, vec), vec0(vecs[0].length) ),
+		1 / vecs.length 
+	);
+
+export const length2 = vec =>
+	vec.reduce( (acc,val) => acc + val*val, 0 );
+
+export const length = vec =>
+	Math.sqrt( length2(vec) );
+
+export const arg = vec =>
+	Math.atan2( vec[1], vec[0] );
+
+export const normalise = vec =>
+	scaleVec( vec, 1/length(vec) );
+
+export const matVecMul = (mat,vec) =>
+	mat.map( row => dot(row, vec) );
+
+export const transpose = mat =>
+	mat[0].map( (_,j) => mat.map( (_,i) => mat[i][j] ) );
+
+export const matMatMul = (matA,matB) =>
+	transpose(transpose(matB).map( colB => matA.map( rowA => dot(colB,rowA) ) ));
+
+export const matMultiMul = (...mats) =>
+	mats.length == 2 ? matMatMul(...mats) : matMatMul( mats[0], matMultiMul(...mats.slice(1)) );
+
+
+export function inverse( mat ) {
+
+	const rows = mat.length;
+	const cols = mat[0].length;
+
+	if( rows != cols ) throw Error("No inverse, nonsquare matrix");
+
+	let r, s, f, value, temp
+
+	if (rows === 1) {
+		// this is a 1 x 1 matrix
+		value = mat[0][0]
+		if (value === 0) {
+			throw Error('Cannot calculate inverse, determinant is zero')
+		}
+		return [[
+			divideScalar(1, value)
+		]]
+	} else if (rows === 2) {
+		// this is a 2 x 2 matrix
+		const d = det(mat)
+		if (d === 0) {
+			throw Error('Cannot calculate inverse, determinant is zero')
+		}
+		return [
+			[
+				divideScalar(mat[1][1], d),
+				divideScalar(unaryMinus(mat[0][1]), d)
+			],
+			[
+				divideScalar(unaryMinus(mat[1][0]), d),
+				divideScalar(mat[0][0], d)
+			]
+		]
+	} else {
+		// this is a matrix of 3 x 3 or larger
+		// calculate inverse using gauss-jordan elimination
+		//            https://en.wikipedia.org/wiki/Gaussian_elimination
+		//            http://mathworld.wolfram.com/MatrixInverse.html
+		//            http://math.uww.edu/~mcfarlat/inverse.htm
+
+		// make a copy of the matrix (only the arrays, not of the elements)
+		const A = mat.concat()
+		for (r = 0; r < rows; r++) {
+			A[r] = A[r].concat()
+		}
+
+		// create an identity matrix which in the end will contain the
+		// matrix inverse
+		const B = identity(rows)
+
+		// loop over all columns, and perform row reductions
+		for (let c = 0; c < cols; c++) {
+			// Pivoting: Swap row c with row r, where row r contains the largest element A[r][c]
+			let ABig = Math.abs(A[c][c])
+			let rBig = c
+			r = c + 1
+			while (r < rows) {
+				if (Math.abs(A[r][c]) > ABig) {
+					ABig = Math.abs(A[r][c])
+					rBig = r
+				}
+				r++
+			}
+			if (ABig === 0) {
+				throw Error('Cannot calculate inverse, determinant is zero')
+			}
+			r = rBig
+			if (r !== c) {
+				temp = A[c]; A[c] = A[r]; A[r] = temp
+				temp = B[c]; B[c] = B[r]; B[r] = temp
+			}
+
+			// eliminate non-zero values on the other rows at column c
+			const Ac = A[c]
+			const Bc = B[c]
+			for (r = 0; r < rows; r++) {
+				const Ar = A[r]
+				const Br = B[r]
+				if (r !== c) {
+					// eliminate value at column c and row r
+					if (Ar[c] !== 0) {
+						f = -Ar[c] / Ac[c]
+
+						// add (f * row c) to row r to eliminate the value
+						// at column c
+						for (s = c; s < cols; s++) {
+							Ar[s] = Ar[s] + f * Ac[s]
+						}
+						for (s = 0; s < cols; s++) {
+							Br[s] = Br[s] + f * Bc[s]
+						}
+					}
+				} else {
+					// normalize value at Acc to 1,
+					// divide each value on row r with the value at Acc
+					f = Ac[c]
+					for (s = c; s < cols; s++) {
+						Ar[s] = Ar[s] / f
+					}
+					for (s = 0; s < cols; s++) {
+						Br[s] = Br[s] / f
+					}
+				}
+			}
+		}
+		return B
+	}
+}

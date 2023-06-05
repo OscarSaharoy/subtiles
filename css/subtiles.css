@@ -29,9 +29,7 @@ svg {
 }
 
 svg path {
-	fill: transparent;
-	stroke: black;
-	stroke-width: 0.01;
+	stroke-width: 0.003;
 	stroke-linejoin: bevel;
 }
 

@@ -4,14 +4,18 @@ import { TileList } from "./TileList.js";
 import { TwistTile } from "./Tile.js";
 
 
-const fullSquare = [ [-1,-1], [1,-1], [1,1], [-1,1] ];
-const rootTile = new TwistTile( fullSquare );
-
+const rootTile = new TwistTile( TwistTile.tileSpaceVerts );
 const tileList = new TileList( rootTile );
-tileList.subdivide();
-tileList.subdivide();
-tileList.subdivide();
 
 const svg = document.querySelector( "svg" );
-svg.innerHTML = tileList.toSVG();
+let i = 0;
+
+( function loop() {
+
+	if( ++i < 200 ) requestAnimationFrame( loop );
+	
+	tileList.subdivide();
+	svg.innerHTML = tileList.toSVG();
+
+} )();
 
