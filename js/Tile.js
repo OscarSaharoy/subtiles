@@ -159,5 +159,4 @@ export class DiamondTile extends Tile {
 
 		return utility.connectArray( subtiles );
 	}
-
 }
