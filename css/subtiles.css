@@ -2,6 +2,7 @@
 * {
 	margin: 0;
 	padding: 0;
+	box-sizing: border-box;
 }
 
 body {
@@ -17,14 +18,23 @@ body {
 	min-height: 100vh;
 	min-height: 100dvh;
 	display: grid;
-	place-items: center;
+	grid-template-columns: min-content auto;
+	grid-template-rows: 1fr;
+	justify-items: center;
+	align-items: center;
+}
+
+@media (max-aspect-ratio: 1/1) {
+	#container {
+		grid-template-columns: 1fr;
+		grid-template-rows: min-content auto;
+	}
 }
 
 svg {
-	width: 50rem;
-	height: 50rem;
-	max-width: 90vmin;
-	max-height: 90vmin;
+	width: 100vmin;
+	height: 100vmin;
+	padding: 2rem;
 	overflow: visible;
 }
 
