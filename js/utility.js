@@ -55,7 +55,7 @@ export function calcAffineTransform( sourceTriplet, targetTriplet ) {
 export function mapFromTileSpace( innerTileSpaceVert, tile ) {
 
 	const outerVerts = tile.verts;
-	const outerTileSpaceVerts = tile.__proto__.constructor.tileSpaceVerts;
+	const outerTileSpaceVerts = tile.tileSpaceVerts;
 
 	for( let i = 0; i < tile.verts.length; ++i ) {
 

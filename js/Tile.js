@@ -4,12 +4,14 @@ import * as utility from "./utility.js";
 
 
 export class Tile {
-
-	static tileSpaceVerts = [];
+	
+	get tileSpaceVerts() {
+		return [];
+	}
 
 	constructor( verts, depth = 0 ) {
 		this.next = this.prev = null;
-		this.verts = verts ?? this.__proto__.constructor.tileSpaceVerts;
+		this.verts = verts ?? this.tileSpaceVerts;
 		this.depth = depth;
 	}
 
@@ -29,7 +31,9 @@ export class Tile {
 
 export class TwistTile extends Tile {
 
-	static tileSpaceVerts = [ [-1,-1], [1,-1], [1,1], [-1,1] ];
+	get tileSpaceVerts() {
+		return [ [-1,-1], [1,-1], [1,1], [-1,1] ];
+	}
 
 	subdivide() {
 		
@@ -48,7 +52,9 @@ export class TwistTile extends Tile {
 
 export class HalvingTile extends Tile {
 
-	static tileSpaceVerts = [ [-1,-1], [1,-1], [1,1], [-1,1] ];
+	get tileSpaceVerts() {
+		return [ [-1,-1], [1,-1], [1,1], [-1,1] ];
+	}
 
 	subdivide() {
 		
@@ -84,7 +90,10 @@ function argMag( theta, length ) {
 
 export class RoseTile extends Tile {
 
-	static tileSpaceVerts = [ [-1,-1], [1,-1], [1,1], [-1,1] ];
+	get tileSpaceVerts() {
+		return [ [-1,-1], [1,-1], [1,1], [-1,1] ];
+	}
+
 
 	subdivide() {
 		
@@ -116,16 +125,17 @@ export class RoseTile extends Tile {
 
 export class DiamondTile extends Tile {
 
-	static tileSpaceVerts =
-		[ [-1,-1], [1,-1], [1,1], [-1,1] ];
+	get tileSpaceVerts() {
+		return [ [-1,-1], [1,-1], [1,1], [-1,1] ];
+	}
 
 	subdivide() {
 
 		const [ o1, o2, o3, o4 ] =
-			this.__proto__.constructor.tileSpaceVerts;
+			this.tileSpaceVerts;
 
 		const [ i1, i2, i3, i4 ] =
-			this.__proto__.constructor.tileSpaceVerts
+			this.tileSpaceVerts
 				.map( vert => utility.scaleVec(vert, .25));
 
 		const subtiles = utility.mapTilesFromTileSpace([
@@ -160,3 +170,4 @@ export class DiamondTile extends Tile {
 		return utility.connectArray( subtiles );
 	}
 }
+
