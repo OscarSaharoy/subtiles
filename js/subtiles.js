@@ -2,6 +2,7 @@
 
 import { TileList } from "./TileList.js";
 import { DiamondTile } from "./Tile.js";
+import { SVGTile } from "./SVGTile.js";
 
 
 let svg = document.querySelector( "svg" );
@@ -27,6 +28,8 @@ function constructRules( svgText ) {
 
 	const outerTile = outerGroup.querySelector( "path" );
 	const innerTiles = [ ...innerGroup.querySelectorAll( "path" ) ];
+
+	new SVGTile( outerTile, innerTiles );
 
 	console.log( outerTile, innerTiles );
 }
