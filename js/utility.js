@@ -36,9 +36,10 @@ export function betweenDirections( point, [ direction1, direction2 ] ) {
 
 	const pointDirection = normalise(point);
 
-	return dot( pointDirection, direction1 ) >= dot( direction1, direction2)
-		&& dot( pointDirection, direction2 ) >= dot( direction1, direction2);
+	return dot( pointDirection, direction1 ) >= dot( direction1, direction2) - 1e-4
+		&& dot( pointDirection, direction2 ) >= dot( direction1, direction2) - 1e-4;
 }
+
 
 
 export function calcAffineTransform( sourceTriplet, targetTriplet ) {
@@ -56,6 +57,10 @@ export function mapFromTileSpace( innerTileSpaceVert, tile ) {
 
 	const outerVerts = tile.verts;
 	const outerTileSpaceVerts = tile.tileSpaceVerts;
+
+	//console.log( "outerVerts", outerVerts )
+	//console.log( "outerTileSpaceVerts", outerTileSpaceVerts )
+	//console.log( "innerTileSpaceVert", innerTileSpaceVert )
 
 	for( let i = 0; i < tile.verts.length; ++i ) {
 
@@ -75,8 +80,13 @@ export function mapFromTileSpace( innerTileSpaceVert, tile ) {
 			[meanVec(outerVerts), outerVerts[a], outerVerts[b] ],
 		);
 
-		return matVecMul( transform, [...innerTileSpaceVert, 1] );
+		return matVecMul( transform, [...innerTileSpaceVert, 1] ).slice(0,2);
 	}
+	console.log( "outerVerts", outerVerts )
+	console.log( "outerTileSpaceVerts", outerTileSpaceVerts )
+	console.log( "innerTileSpaceVert", innerTileSpaceVert )
+
+	throw "";
 }
 
 
@@ -275,3 +285,4 @@ export function inverse( mat ) {
 		return B
 	}
 }
+

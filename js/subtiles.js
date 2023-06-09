@@ -26,8 +26,10 @@ function constructRules( svgText ) {
 	const outerGroup = svg.querySelector( "g" );
 	const innerGroup = outerGroup.querySelector( "g" );
 
-	const outerTile = outerGroup.querySelector( "path" );
+	const outerTile = outerGroup.querySelector( ":scope > path" );
 	const innerTiles = [ ...innerGroup.querySelectorAll( "path" ) ];
+
+	console.log( outerTile, innerTiles );
 
 	const rootTile = new SVGTile( outerTile, innerTiles );
 	const tileList = new TileList( rootTile );
