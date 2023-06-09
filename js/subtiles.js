@@ -29,9 +29,14 @@ function constructRules( svgText ) {
 	const outerTile = outerGroup.querySelector( "path" );
 	const innerTiles = [ ...innerGroup.querySelectorAll( "path" ) ];
 
-	new SVGTile( outerTile, innerTiles );
+	const rootTile = new SVGTile( outerTile, innerTiles );
+	const tileList = new TileList( rootTile );
 
-	console.log( outerTile, innerTiles );
+	let i = 0;
+	while( i++ < 4 )
+		tileList.subdivide();
+
+	svg.innerHTML = tileList.toSVG();
 }
 
 
