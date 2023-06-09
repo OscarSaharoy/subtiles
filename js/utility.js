@@ -35,9 +35,10 @@ export function depthToColour( depth ) {
 export function betweenDirections( point, [ direction1, direction2 ] ) {
 
 	const pointDirection = normalise(point);
+	const eps = 1e-3;
 
-	return dot( pointDirection, direction1 ) >= dot( direction1, direction2) - 1e-4
-		&& dot( pointDirection, direction2 ) >= dot( direction1, direction2) - 1e-4;
+	return dot( pointDirection, direction1 ) >= dot( direction1, direction2) - eps
+		&& dot( pointDirection, direction2 ) >= dot( direction1, direction2) - eps;
 }
 
 
@@ -57,10 +58,6 @@ export function mapFromTileSpace( innerTileSpaceVert, tile ) {
 
 	const outerVerts = tile.verts;
 	const outerTileSpaceVerts = tile.tileSpaceVerts;
-
-	//console.log( "outerVerts", outerVerts )
-	//console.log( "outerTileSpaceVerts", outerTileSpaceVerts )
-	//console.log( "innerTileSpaceVert", innerTileSpaceVert )
 
 	for( let i = 0; i < tile.verts.length; ++i ) {
 
@@ -82,11 +79,8 @@ export function mapFromTileSpace( innerTileSpaceVert, tile ) {
 
 		return matVecMul( transform, [...innerTileSpaceVert, 1] ).slice(0,2);
 	}
-	console.log( "outerVerts", outerVerts )
-	console.log( "outerTileSpaceVerts", outerTileSpaceVerts )
-	console.log( "innerTileSpaceVert", innerTileSpaceVert )
 
-	throw "";
+	throw "fell through";
 }
 
 

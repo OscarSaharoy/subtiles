@@ -29,25 +29,13 @@ function constructRules( svgText ) {
 	const outerTile = outerGroup.querySelector( ":scope > path" );
 	const innerTiles = [ ...innerGroup.querySelectorAll( "path" ) ];
 
-	console.log( outerTile, innerTiles );
-
 	const rootTile = new SVGTile( outerTile, innerTiles );
 	const tileList = new TileList( rootTile );
 
 	let i = 0;
-	while( i++ < 4 )
+	while( i++ < 2 )
 		tileList.subdivide();
 
 	svg.innerHTML = tileList.toSVG();
 }
-
-
-const rootTile = new DiamondTile();
-const tileList = new TileList( rootTile );
-
-let i = 0;
-while( i++ < 4 )
-	tileList.subdivide();
-
-svg.innerHTML = tileList.toSVG();
 
