@@ -13,9 +13,18 @@
 
     <div id="container">
 		<svg viewBox="-1 -1 2 2"> </svg>
-		<div id="ui">
-			<input type="file" id="upload-input">
-		</div>
+		<form id="ui" onsubmit="return false;">
+			<label>
+				<input type="file" id="upload-input">
+				<image src="assets/open.svg" />
+			</label>
+			<button id="plus">
+				<image src="assets/plus.svg" />
+			</button>
+			<button id="minus">
+				<image src="assets/minus.svg" />
+			</button>
+		</form>
     </div>
 
 	<script type="module" src="js/subtiles.js"></script>

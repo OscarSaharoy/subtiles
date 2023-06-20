@@ -7,6 +7,8 @@ import { SVGTile } from "./SVGTile.js";
 
 let svg = document.querySelector( "svg" );
 const uploadInput = document.getElementById( "upload-input" );
+const plusButton = document.getElementById( "plus" );
+const minusButton = document.getElementById( "minus" );
 
 const reader = new FileReader();
 
@@ -16,7 +18,13 @@ uploadInput.addEventListener( "change",
 	e => reader.readAsText( uploadInput.files[0] ) );
 reader.addEventListener( "load", 
 	e => constructRules( reader.result ) );
+plusButton.addEventListener( "click", plus );
+minusButton.addEventListener( "click", minus );
 
+
+let tileList = null;
+const svgCache = {};
+let divisionDepth = 1;
 
 function constructRules( svgText ) {
 
@@ -30,12 +38,30 @@ function constructRules( svgText ) {
 	const innerTiles = [ ...innerGroup.querySelectorAll( "path" ) ];
 
 	const rootTile = new SVGTile( outerTile, innerTiles );
-	const tileList = new TileList( rootTile );
+	tileList = new TileList( rootTile );
 
-	let i = 0;
-	while( i++ < 2 )
-		tileList.subdivide();
+	svgCache[0] = tileList.toSVG();
 
-	svg.innerHTML = tileList.toSVG();
+	tileList.subdivide();
+	svgCache[ divisionDepth ] = svg.innerHTML = tileList.toSVG();
+
+	svg.removeAttribute( "width"  );
+	svg.removeAttribute( "height" );
 }
 
+function plus() {
+
+	++divisionDepth;
+
+	if( divisionDepth in svgCache )
+		svg.innerHTML = svgCache[ divisionDepth ];
+	
+	else
+		svgCache[ divisionDepth ] = svg.innerHTML = tileList.subdivide().toSVG();
+}
+
+function minus() {
+
+	divisionDepth = Math.max( 0, divisionDepth - 1 );
+	svg.innerHTML = svgCache[ divisionDepth ];
+}

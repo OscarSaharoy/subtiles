@@ -24,6 +24,8 @@ export class TileList {
 
 			tile = tile.next;
 		}
+
+		return this;
 	}
 
 	toSVG() {

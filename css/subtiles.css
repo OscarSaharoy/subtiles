@@ -15,27 +15,19 @@ body {
 
 #container {
 	width: 100%;
-	min-height: 100vh;
-	min-height: 100dvh;
+	height: 100vh;
+	padding: 2rem;
 	display: grid;
-	grid-template-columns: min-content auto;
-	grid-template-rows: 1fr;
+	grid-template-columns: 1fr;
+	grid-template-rows: calc(100vh - 7rem) min-content;
+	grid-gap: 1rem;
 	justify-items: center;
 	align-items: center;
 }
 
-@media (max-aspect-ratio: 1/1) {
-	#container {
-		grid-template-columns: 1fr;
-		grid-template-rows: min-content auto;
-	}
-}
-
 svg {
-	width: 100vmin;
-	height: 100vmin;
-	padding: 2rem;
 	overflow: visible;
+	max-height: 100%;
 }
 
 svg path {
@@ -43,5 +35,19 @@ svg path {
 	stroke-linejoin: bevel;
 	fill: transparent;
 	stroke: black;
+}
+
+form button {
+	appearance: none;
+	background: transparent;
+	border: none;
+}
+form input {
+	display: none;
+}
+
+form img {
+	height: 2rem;
+	cursor: pointer;
 }
 
