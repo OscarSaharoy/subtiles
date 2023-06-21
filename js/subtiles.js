@@ -23,10 +23,14 @@ minusButton.addEventListener( "click", minus );
 
 
 let tileList = null;
-const svgCache = {};
+let svgCache = {};
 let divisionDepth = 1;
 
 function constructRules( svgText ) {
+
+	tileList = null;
+	svgCache = {};
+	divisionDepth = 1;
 
 	svg.outerHTML = svgText.match( /<\s*svg.*?>(.*)<\/\s*svg.*?>/is )[0];
 	
