@@ -280,3 +280,96 @@ export function inverse( mat ) {
 	}
 }
 
+
+export function solve( mat, x ) {
+
+	const rows = mat.length;
+	const cols = mat[0].length;
+
+	if( rows != cols ) throw Error("No inverse, nonsquare matrix");
+
+	let r, s, f, value, temp
+
+	// make a copy of the matrix (only the arrays, not of the elements)
+	const A = mat.map( row => row.map( v => v ) );
+
+	// make a copy of the column vector x which will store the answer at the end
+	const b = x.map( v => v );
+
+	// loop over all columns, and perform row reductions
+	for (let c = 0; c < cols; c++) {
+		// Pivoting: Swap row c with row r, where row r contains the largest element A[r][c]
+		let ABig = Math.abs(A[c][c])
+		let rBig = c
+		r = c + 1
+		while (r < rows) {
+			if (Math.abs(A[r][c]) > ABig) {
+				ABig = Math.abs(A[r][c])
+				rBig = r
+			}
+			r++
+		}
+		if (ABig === 0) {
+			throw Error('Cannot calculate inverse, determinant is zero')
+		}
+		r = rBig
+		if (r !== c) {
+			temp = A[c]; A[c] = A[r]; A[r] = temp
+			temp = b[c]; b[c] = b[r]; b[r] = temp
+		}
+
+		// eliminate non-zero values on the other rows at column c
+		const Ac = A[c]
+		for (r = 0; r < rows; r++) {
+			const Ar = A[r]
+			if (r !== c) {
+				// eliminate value at column c and row r
+				if (Ar[c] !== 0) {
+					f = -Ar[c] / Ac[c]
+
+					// add (f * row c) to row r to eliminate the value
+					// at column c
+					for (s = c; s < cols; s++) {
+						Ar[s] = Ar[s] + f * Ac[s]
+					}
+					b[r] = b[r] + f * b[c]
+				}
+			} else {
+				// normalize value at Acc to 1,
+				// divide each value on row r with the value at Acc
+				f = Ac[c]
+				for (s = c; s < cols; s++) {
+					Ar[s] = Ar[s] / f
+				}
+				b[r] = b[r] / f
+			}
+		}
+	}
+	return b
+}
+
+
+export const addComp = ( [a,b], [c,d] ) =>
+	[ a+c, b+d ];
+
+export const subComp = ( [a,b], [c,d] ) =>
+	[ a-c, b-d ];
+
+export const scaleComp = ( [a,b], s ) =>
+	[ a*s, b*s ];
+
+export const real = ([a,b]) =>
+	a;
+
+export const imag = ([a,b]) =>
+	b;
+
+export const mulComp = ( [a,b], [c,d] ) =>
+	[ a*c - b*d, a*d + b*c ];
+
+export const compConj = ([a,b]) =>
+	[ a, -b ];
+
+export const divComp = ( [a,b], [c,d] ) =>
+	scaleComp( mulComp( [a,b], compConj([c,d]) ), 1 / real( mulComp([c,d], compConj([c,d])) ) );
+
