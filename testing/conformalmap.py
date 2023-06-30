@@ -11,22 +11,16 @@ src_corners = [
 	( 1,-1),
 	(-1,-1),
 	(-1, 1),
+	( 0, 0),
 ]
 
 dst_corners = [
-	( -0.8, 0.05),
-	( -0.8,-0.05),
+	( -0.2, 0.2),
+	( -0.2,-0.2),
 	(-1,-1),
 	(-1, 1),
+	(-0.3,0),
 ]
-"""
-dst_corners = [
-	( 0.2, 0.2),
-	( 0.2,-0.2),
-	(-.2,-.2),
-	(-.2, .2),
-]
-"""
 
 # also some lines which can be used to visualise the transform
 
@@ -60,27 +54,17 @@ v_line_complexes = [
 
 # mapping func from src to dst
 
-map_func = lambda z, c0, c1, c2, k1 : \
-	( c0 + c1*z + c2*z**2 ) / ( 1 + k1*z )
-"""
-map_func = lambda z, c0, c1, k1 : \
-	( c0 + c1*z ) / ( 1 + k1*z )
-"""
+map_func = lambda z, c0, c1, c2, k1, k2 : \
+	( c0 + c1*z + c2*z**2 ) / ( 1 + k1*z + k2*z**2 )
 
 # find constants by Ax = b
-A_row = lambda z, zp : [ 1, z, z**2, -z*zp ]
-"""
-A_row = lambda z, zp : [ 1, z, -z*zp ]
-"""
+A_row = lambda z, zp : [ 1, z, z**2, -z*zp, -z**2*zp ]
 b_row = lambda z, zp : [ zp ]
 
 A = np.array([ A_row(z, zp) for z, zp in zip( src_complexes, dst_complexes ) ])
 b = np.array([ b_row(z, zp) for z, zp in zip( src_complexes, dst_complexes ) ])
 
 x = np.linalg.solve( A, b )[:,0]
-"""
-x = np.linalg.solve( A[:3], b[:3] )[:,0]
-"""
 
 # transform lines by map func
 
