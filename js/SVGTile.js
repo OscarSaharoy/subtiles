@@ -1,6 +1,7 @@
 // Oscar Saharoy 2023
 
 import * as utility from "./utility.js";
+import { mapTilesFromTileSpace } from "./affine-map.js";
 
 
 const pathCommandMap = {
@@ -88,7 +89,7 @@ export class SVGTile {
 			new SVGTile( this.outerTileSVG, this.innerTileSVGs, vertArray )
 		);
 
-		const subtiles = utility.mapTilesFromTileSpace( newTiles, this );
+		const subtiles = mapTilesFromTileSpace( newTiles, this.verts );
 		return utility.connectArray( subtiles );
 	}
 

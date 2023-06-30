@@ -65,6 +65,9 @@ A = np.array([ A_row(z, zp) for z, zp in zip( src_complexes, dst_complexes ) ])
 b = np.array([ b_row(z, zp) for z, zp in zip( src_complexes, dst_complexes ) ])
 
 x = np.linalg.solve( A, b )[:,0]
+print( A )
+print( b )
+print( x )
 
 # transform lines by map func
 

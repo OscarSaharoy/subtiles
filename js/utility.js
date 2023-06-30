@@ -43,58 +43,6 @@ export function betweenDirections( point, [ direction1, direction2 ] ) {
 
 
 
-export function calcAffineTransform( sourceTriplet, targetTriplet ) {
-
-	// targetMat = A @ sourceMat
-
-	const sourceMat = transpose( sourceTriplet.map( p => [...p, 1] ) );
-	const targetMat = transpose( targetTriplet.map( p => [...p, 1] ) );
-
-	return matMatMul( targetMat, inverse(sourceMat) );
-}
-
-
-export function mapFromTileSpace( innerTileSpaceVert, tile ) {
-
-	const outerVerts = tile.verts;
-	const outerTileSpaceVerts = tile.tileSpaceVerts;
-
-	for( let i = 0; i < tile.verts.length; ++i ) {
-
-		const a = i;
-		const b = ( i + 1 ) % tile.verts.length;
-
-		const tileSpaceDirections = [
-			normalise( outerTileSpaceVerts[a] ),
-			normalise( outerTileSpaceVerts[b] ),
-		];
-
-		if( !betweenDirections( innerTileSpaceVert, tileSpaceDirections ) )
-			continue;
-
-		const transform = calcAffineTransform(
-			[[0,0], outerTileSpaceVerts[a], outerTileSpaceVerts[b]],
-			[meanVec(outerVerts), outerVerts[a], outerVerts[b] ],
-		);
-
-		return matVecMul( transform, [...innerTileSpaceVert, 1] ).slice(0,2);
-	}
-
-	throw "fell through";
-}
-
-
-export function mapTilesFromTileSpace( subtiles, tile ) {
-
-	subtiles.forEach(
-		subtile => subtile.verts = subtile.verts.map( 
-			vert => mapFromTileSpace( vert, tile ) 
-		)
-	);
-
-	return subtiles;
-}
-
 export function getFirstLast( array ) {
 	return [ array[0], array[array.length - 1] ];
 }
@@ -349,8 +297,14 @@ export function solve( mat, x ) {
 }
 
 
-export const addComp = ( [a,b], [c,d] ) =>
-	[ a+c, b+d ];
+export const real = ([a,b]) =>
+	a;
+
+export const imag = ([a,b]) =>
+	b;
+
+export const addComp = ( ...args ) =>
+	[ args.reduce( (a,z) => a + real(z), 0 ), args.reduce( (a,z) => a + imag(z), 0 ) ];
 
 export const subComp = ( [a,b], [c,d] ) =>
 	[ a-c, b-d ];
@@ -358,18 +312,37 @@ export const subComp = ( [a,b], [c,d] ) =>
 export const scaleComp = ( [a,b], s ) =>
 	[ a*s, b*s ];
 
-export const real = ([a,b]) =>
-	a;
-
-export const imag = ([a,b]) =>
-	b;
-
 export const mulComp = ( [a,b], [c,d] ) =>
 	[ a*c - b*d, a*d + b*c ];
+
+export const mulComps = ( ...args ) =>
+	args.reduce( (a,z) => mulComp( a, z ), [1,0] );
 
 export const compConj = ([a,b]) =>
 	[ a, -b ];
 
 export const divComp = ( [a,b], [c,d] ) =>
 	scaleComp( mulComp( [a,b], compConj([c,d]) ), 1 / real( mulComp([c,d], compConj([c,d])) ) );
+
+
+export function solveComp( Ac, bc ) {
+
+	const Areal = Ac.map( row => row.map( real ) );
+	const Aimag = Ac.map( row => row.map( imag ) );
+
+	const A = [
+		...Areal.map( (_,i) => [ ...Areal[i], ...Aimag[i].map( v => -v ) ] ),
+		...Areal.map( (_,i) => [ ...Aimag[i], ...Areal[i]                ] ),
+	];
+
+	const breal = bc.map( real );
+	const bimag = bc.map( imag );
+
+	const b = [ ...breal, ...bimag ];
+
+	const x = solve( A, b );
+
+	const h = x.length / 2;
+	return range(h).map( i => [ x[i], x[h+i] ] );
+}
 
