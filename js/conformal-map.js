@@ -18,6 +18,7 @@ const AcompRow = ( z, zp ) => [
 export function findMapParams( srcCorners, dstCorners, DoF = undefined ) {
 	
 	DoF = DoF || srcCorners.length;
+	if( DoF == 0 ) throw Error( "Unable to solve tile transform" ); 
 
 	try {
 		
@@ -25,7 +26,7 @@ export function findMapParams( srcCorners, dstCorners, DoF = undefined ) {
 			.slice( 0, DoF )
 			.map( (z,i) => AcompRow( z, dstCorners[i] ).slice( 0, DoF ) );
 
-		return u.solveComp( Acomp, dstCorners );
+		return u.complexGaussianElimination( Acomp, dstCorners.slice( 0, DoF) );
 
 	} catch {
 
@@ -33,23 +34,19 @@ export function findMapParams( srcCorners, dstCorners, DoF = undefined ) {
 	}
 }
 
-export function mapTilesFromTileSpace( ){}
+export function mapTilesFromTileSpace( subtiles, tile ) {
 
-const srcCorners = [
-    [ 1, 1],
-    [ 1,-1],
-    [-1,-1],
-    [-1, 1],
-    [ 0, 0],
-];
+	console.log( u.vertsToPythonComplex( tile.tileSpaceVerts ) );
+	console.log( u.vertsToPythonComplex( tile.verts ) );
+	const params = findMapParams( tile.tileSpaceVerts, tile.verts );
+	console.log( u.vertsToPythonComplex(params) );
 
-const dstCorners = [
-    [ -0.2, 0.2],
-    [ -0.2,-0.2],
-    [-1,-1],
-    [-1, 1],
-    [-0.3,0],
-];
+	subtiles.forEach(
+		subtile => subtile.verts = subtile.verts.map( 
+			vert => confMap( vert, ...params )
+		)
+	);
 
-console.log( findMapParams( srcCorners, srcCorners ) )
+	return subtiles;
+}
 
