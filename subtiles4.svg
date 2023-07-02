@@ -25,7 +25,7 @@
      inkscape:document-units="mm"
      showgrid="false"
      inkscape:zoom="0.73026859"
-     inkscape:cx="269.76376"
+     inkscape:cx="234.16042"
      inkscape:cy="353.97935"
      inkscape:window-width="1920"
      inkscape:window-height="1054"
@@ -45,14 +45,13 @@
     <g
        id="g1041">
       <path
-         id="rect445-3"
-         style="fill:none;stroke:#fa0000;stroke-width:0.0213227;stroke-linecap:round;stroke-miterlimit:3.1;paint-order:fill markers stroke"
-         transform="rotate(12.8733)"
-         d="M -0.76679361,-0.73257875 H 0.71109164 V 0.74530649 H -0.76679361 Z" />
-      <path
          id="rect445-6"
          style="fill:none;stroke:#fa0000;stroke-width:0.0289999;stroke-linecap:round;stroke-miterlimit:3.1;paint-order:fill markers stroke"
          d="M -1.005,-1.005 H 1.0049976 V 1.0049976 H -1.005 Z" />
+      <path
+         style="fill:none;stroke:#fa0000;stroke-width:0.0289999;stroke-linecap:round;stroke-miterlimit:3.1;paint-order:fill markers stroke"
+         d="M -0.58430536,-0.88500406 0.85643165,-0.55573777 0.52716536,0.88499924 -0.91357165,0.55573294 Z"
+         id="path462" />
     </g>
   </g>
 </svg>
