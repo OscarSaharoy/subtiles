@@ -7,24 +7,42 @@
     <link href="css/subtiles.css" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Noto+Serif&display=swap" rel="stylesheet">
 </head>
 
 <body>
 
     <div id="container">
 		<svg viewBox="-1 -1 2 2"> </svg>
-		<form id="ui" onsubmit="return false;">
-			<label>
-				<input type="file" id="upload-input">
-				<image src="assets/open.svg" />
-			</label>
-			<button id="plus">
-				<image src="assets/plus.svg" />
-			</button>
-			<button id="minus">
-				<image src="assets/minus.svg" />
-			</button>
-		</form>
+		<nav>
+			<span>subtiles</span>
+			<form id="ui" onsubmit="return false;">
+				<label>
+					<input id="preset-input">
+					<image title="presets" src="assets/subsquare.svg" />
+				</label>
+				<label style=>
+					<input type="file" id="upload-input">
+					<image title="open svg template" src="assets/open.svg" />
+				</label>
+				<button id="mapping">
+					<image title="subdivision mapping" src="assets/globe.svg" />
+					<div id="map-options" class="options">
+						<p> Affine Map </p>
+						<p> Conformal Map </p>
+					</div>
+				</button>
+				<button id="plus">
+					<image title="increase subdivision depth" src="assets/plus.svg" />
+				</button>
+				<button id="minus">
+					<image title="decrease subdivision depth" src="assets/minus.svg" />
+				</button>
+			</form>
+			<span><a href="/help">help</a></span>
+		</nav>
     </div>
 
 	<script type="module" src="js/subtiles.js"></script>

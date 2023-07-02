@@ -48,6 +48,22 @@ export function betweenDirections( point, [ direction1, direction2 ] ) {
 }
 
 
+export function segmentsIntersect( segmentA, segmentB ) {
+
+	// rA = oA + t lA
+	// rB = oB + t lB
+	// (oA-oB) . (lB-lA) / (lB-lA).(lB-lA) = t 
+
+	const t = dot(subVec(oA,oB), subVec(lB,lA)) / dot(subVec(lB,lA), subVec(lB,lA));
+	return 0 <= t && t <= 1;
+}
+
+
+export function clampInsideTile( segment, tileVerts ) {
+
+	
+}
+
 
 export function getFirstLast( array ) {
 	return [ array[0], array[array.length - 1] ];

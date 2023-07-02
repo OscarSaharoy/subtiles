@@ -1,7 +1,7 @@
 // Oscar Saharoy 2023
 
 import * as utility from "./utility.js";
-import { mapTilesFromTileSpace } from "./conformal-map.js";
+import { mapTilesFromTileSpace } from "./affine-map.js";
 
 
 const pathCommandMap = {

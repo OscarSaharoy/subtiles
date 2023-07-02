@@ -3,6 +3,7 @@
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
+	font-family: 'Noto Serif', serif;
 }
 
 body {
@@ -20,8 +21,8 @@ body {
 	padding: 2rem;
 	display: grid;
 	grid-template-columns: 1fr;
-	grid-template-rows: calc(100vh - 7rem) min-content;
-	grid-gap: 1rem;
+	grid-template-rows: calc(100vh - 8rem) min-content;
+	grid-gap: 2rem;
 	justify-items: center;
 	align-items: center;
 }
@@ -38,11 +39,63 @@ svg path {
 	stroke: black;
 }
 
+nav {
+	display: grid;
+	grid-gap: 0.5rem;
+	grid-auto-flow: column;
+	justify-items: center;
+}
+
+nav span {
+	padding: 0.05rem 1.5rem 0 1.5rem;
+	font-size: 1.3rem;
+}
+
+nav a {
+	color: black;
+}
+
+form {
+	display: grid;
+	grid-gap: 0.4rem;
+	grid-template-columns: repeat( 5, 1fr );
+	overflow: visible;
+}
+
+form label {
+	position: relative;
+}
+
 form button {
 	appearance: none;
 	background: transparent;
 	border: none;
+	position: relative;
 }
+
+form button .options {
+	display: none;
+}
+
+form button:hover .options,
+form button:active .options {
+	display: grid;
+	position: absolute;
+	text-align: left;
+	font-size: 1.1rem;
+	bottom: 0;
+	left: 0;
+	width: max-content;
+	transform: translateY(-1rem);
+	background: white;
+	padding: .5rem;
+	padding-bottom: 3rem;
+	border: 0.2rem solid black;
+	border-bottom: none;
+	border-right: none;
+	z-index: 2;
+}
+
 form input {
 	display: none;
 }
@@ -50,5 +103,51 @@ form input {
 form img {
 	height: 2rem;
 	cursor: pointer;
+	display: block;
+	position: relative;
+	z-index: 3;
+}
+
+@media( max-width: 40rem ) {
+	nav {
+		grid-auto-flow: row;
+	}
+
+	#container {
+		grid-template-rows: calc(100vh - 12rem) min-content;
+	}
+}
+
+body.help {
+	min-height: 100vh;
+	min-height: 100dvh;
+	display: block;
+	padding: 2rem;
+	text-align: center;
+}
+
+body.help h1 {
+	font-weight: normal;
+}
+
+body.help h2 {
+	font-weight: normal;
+	margin-top: 2rem;
+}
+
+body.help p {
+	margin-top: 1rem;
+	text-align: left;
+}
+
+body.help img {
+	margin-top: 1rem;
+	width: 40rem;
+	max-width: 100%;
+}
+
+body.help p.caption {
+	margin-top: 0.5rem;
+	text-align: center;
 }
 
