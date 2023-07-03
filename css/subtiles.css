@@ -46,6 +46,11 @@ nav {
 	justify-items: center;
 }
 
+nav a, nav p {
+	position: relative;
+	z-index: 3;
+}
+
 nav span {
 	padding: 0.05rem 1.5rem 0 1.5rem;
 	font-size: 1.3rem;
@@ -78,6 +83,7 @@ form button .options {
 }
 
 form button:hover .options,
+form button:focus-within .options,
 form button:active .options {
 	display: grid;
 	position: absolute;
@@ -144,6 +150,13 @@ body.help img {
 	margin-top: 1rem;
 	width: 40rem;
 	max-width: 100%;
+}
+
+body.help p img {
+	margin: 0;
+	height: 0.4rem;
+	width: 1.4rem;
+	transform: scale(3) translateY(-0.06rem);
 }
 
 body.help p.caption {
