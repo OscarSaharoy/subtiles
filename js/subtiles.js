@@ -69,3 +69,13 @@ function minus() {
 	divisionDepth = Math.max( 0, divisionDepth - 1 );
 	svg.innerHTML = svgCache[ divisionDepth ];
 }
+
+
+async function fetchPreset( filename ) {
+
+	const response = await fetch( "/templates/subtiles1.svg" );
+	const svgText = await response.text();
+	constructRules( svgText );
+}
+fetchPreset();
+
