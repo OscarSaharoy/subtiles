@@ -1,6 +1,6 @@
 # subtiles
 
-Framework for creating recursive geometry and subdivision tilings
+Framework for creating recursive geometry and subdivision tilings. Work in progress! More information [here](https://oscarsaharoy.github.io/subtiles/help).
 
 ![diamond tiling](https://github.com/OscarSaharoy/subtiles/blob/main/assets/diamond.jpg?raw=true)
 
