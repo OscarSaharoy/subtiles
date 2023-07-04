@@ -44,7 +44,7 @@ export function mapFromTileSpace( innerTileSpaceVert, tile ) {
 }
 
 
-export function mapTilesFromTileSpace( subtiles, tile ) {
+export function affineTileMap( subtiles, tile ) {
 
 	subtiles.forEach(
 		subtile => subtile.verts = subtile.verts.map( 

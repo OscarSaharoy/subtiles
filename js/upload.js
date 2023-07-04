@@ -20,8 +20,11 @@ reader.addEventListener( "load",
 
 export let tileList = null;
 export let svgCache = {};
+let svgTextCache = null;
 
 export function constructRules( svgText ) {
+
+	svgTextCache = svgText;
 
 	tileList = null;
 	svgCache = {};
@@ -47,3 +50,9 @@ export function constructRules( svgText ) {
 	svg.removeAttribute( "width"  );
 	svg.removeAttribute( "height" );
 }
+
+export function resetSubdivision() {
+	
+	constructRules( svgTextCache );
+}
+

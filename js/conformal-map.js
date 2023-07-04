@@ -34,7 +34,7 @@ export function findMapParams( srcCorners, dstCorners, DoF = undefined ) {
 	}
 }
 
-export function mapTilesFromTileSpace( subtiles, tile ) {
+export function conformalTileMap( subtiles, tile ) {
 
 	const params = findMapParams( tile.tileSpaceVerts, tile.verts );
 
