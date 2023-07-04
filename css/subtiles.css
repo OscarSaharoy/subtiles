@@ -44,6 +44,10 @@ nav {
 	grid-gap: 0.5rem;
 	grid-auto-flow: column;
 	justify-items: center;
+	background: #fffe;
+	padding: 1rem;
+	margin: -1rem;
+	border-radius: 2rem;
 }
 
 nav span {
