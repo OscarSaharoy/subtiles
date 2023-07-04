@@ -7,7 +7,7 @@
    viewBox="-1 -1 2.01 2.01"
    version="1.1"
    id="svg5"
-   sodipodi:docname="subtiles1.svg"
+   sodipodi:docname="square.svg"
    inkscape:version="1.2.2 (b0a8486541, 2022-12-01)"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
@@ -25,7 +25,7 @@
      inkscape:document-units="mm"
      showgrid="false"
      inkscape:zoom="0.76418763"
-     inkscape:cx="362.47642"
+     inkscape:cx="328.45337"
      inkscape:cy="439.02831"
      inkscape:window-width="1920"
      inkscape:window-height="1054"
@@ -43,26 +43,26 @@
       <path
          id="path472"
          style="fill:none;stroke:#fa0000;stroke-width:0.00443467;stroke-linejoin:bevel;stroke-miterlimit:3.1"
-         d="m -0.12976695,-0.12976695 h 0.25953389 l -3.3e-7,0.25953357 -0.25953356,3.2e-7 z"
+         d="m -0.25754162,-0.25754162 h 0.51508323 l -6.6e-7,0.51508259 -0.51508257,6.4e-7 z"
          sodipodi:nodetypes="ccccc" />
       <path
          style="fill:none;stroke:#fa0000;stroke-width:0.0289999;stroke-linecap:round;stroke-miterlimit:3.1;paint-order:fill markers stroke"
-         d="m -1.005,-1.005 0.87523305,0.87523305 0,0.25953389 L -1.005,1.004995 Z"
+         d="m -1.005,-1.005 0.74745838,0.74745838 V 0.25754161 L -1.005,1.004995 Z"
          id="path547"
          sodipodi:nodetypes="ccccc" />
       <path
          style="fill:none;stroke:#fa0000;stroke-width:0.0289999;stroke-linecap:round;stroke-miterlimit:3.1;paint-order:fill markers stroke"
-         d="M 1.004995,-1.005 0.12976694,-0.12976695 H -0.12976695 L -1.005,-1.005 Z"
+         d="M 1.004995,-1.005 0.25754161,-0.25754162 H -0.25754162 L -1.005,-1.005 Z"
          id="path549"
          sodipodi:nodetypes="ccccc" />
       <path
          style="fill:none;stroke:#fa0000;stroke-width:0.0289999;stroke-linecap:round;stroke-miterlimit:3.1;paint-order:fill markers stroke"
-         d="m 1.0049975,-1.005 v 2.0099975 l -0.87523089,-0.87523088 3.3e-7,-0.25953357 z"
+         d="m 1.0049975,-1.005 v 2.0099975 l -0.74745655,-0.74745653 6.6e-7,-0.51508259 z"
          id="path551"
          sodipodi:nodetypes="ccccc" />
       <path
          style="fill:none;stroke:#fa0000;stroke-width:0.0289999;stroke-linecap:round;stroke-miterlimit:3.1;paint-order:fill markers stroke"
-         d="m 1.004995,1.004995 -2.009995,2.5e-6 0.87523305,-0.87523056 0.25953356,-3.2e-7 z"
+         d="m 1.004995,1.004995 -2.009995,2.5e-6 0.74745838,-0.74745589 0.51508257,-6.4e-7 z"
          id="path553"
          sodipodi:nodetypes="ccccc" />
     </g>
