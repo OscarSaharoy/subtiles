@@ -1,5 +1,9 @@
 // Oscar Saharoy 2023
 
+export async function seconds( n ) {
+	await new Promise( resolve => setTimeout( resolve, n*1000 ) );
+}
+
 export function vertsToD( verts ) {
 	return verts.reduce( (acc,v,i) =>
 		acc + `${i ? "L" : "M"} ${v[0]},${v[1]} `, ""
