@@ -5,7 +5,7 @@ import { affineTileMap } from "./affine-map.js";
 import { conformalTileMap } from "./conformal-map.js";
 
 
-export let tileMappingFunction = null;
+export let tileMappingFunction = affineTileMap;
 
 const mappingButton = document.getElementById( "mapping" );
 const mappingOptions = [ ...mappingButton.querySelectorAll( "p" ) ];
@@ -25,5 +25,4 @@ async function setMapping( option ) {
 	tileMappingFunction = mapMap[option];
 	resetSubdivision();
 }
-setMapping( "affine" );
 
