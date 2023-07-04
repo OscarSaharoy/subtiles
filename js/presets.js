@@ -13,7 +13,7 @@ presetOptions.forEach( elm =>
 
 async function fetchPreset( filename ) {
 
-	const response = await fetch( `/presets/${filename}.svg` );
+	const response = await fetch( `presets/${filename}.svg` );
 	const svgText = await response.text();
 	constructRules( svgText );
 }

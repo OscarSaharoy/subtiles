@@ -4,7 +4,7 @@
 
 <head>
     <title> subtiles | help </title>
-    <link href="/css/subtiles.css" rel="stylesheet">
+    <link href="../css/subtiles.css" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 	<link rel="preconnect" href="https://fonts.googleapis.com">
@@ -17,20 +17,21 @@
 	<h1> Thanks for taking a look at subtiles! </h1>
 	<p> subtiles is a web app that allows you to create subdivision tilings.
 		It takes in SVG files, with a certain format which defines the subdivision.
-		You can supply your own files with the open <img src="/assets/open.svg"/> button 
-		or use one of the presets with the preset <img src="/assets/subsquare.svg"/> button.
+		You can supply your own files with the open <img src="../assets/open.svg"/> button 
+		or use one of the presets with the preset <img src="../assets/subsquare.svg"/> button.
 		The web app then parses the file and uses the information to calculate the subdivided geometry -
-		you can use the plus <img src="/assets/plus.svg"/> and minus <img src="/assets/minus.svg"/> buttons to increase or decrease the displayed subdivision level.
-		There are also different mapping functions which can be selected with the mapping <img src="/assets/globe.svg"/> button. </p>
+		you can use the plus <img src="../assets/plus.svg"/> and minus <img src="../assets/minus.svg"/> buttons to increase or decrease the displayed subdivision level.
+		There are also different mapping functions which can be selected with the mapping <img src="../assets/globe.svg"/> button. </p>
 
-	<img src="/assets/diamond.jpg" />
+	<img src="../assets/diamond.jpg" />
 	<p class="caption"> A graphic created by recursively dividing quadrilaterals into 5 more quadrilaterals. </p>
 
 	<h2> SVG input file format </h2>
 	<p> Input files can be created with an svg editor like inkscape. 
 		There should be one group in the file, which contains two items. 
 		The first is the path that should be subdivided, and the other is a group of paths which are the result of the subdivision.
-		For now, all of these paths should have the same number of vertices, have the same vertex order (eg clockwise) and have no svg `transform` property. </p>
+		For now, all of these paths should have the same number of vertices, have the same vertex order (eg clockwise) and have no svg `transform` property. 
+		You can take a look at the <a href="../presets/square.svg">square</a> and <a href="../presets/pentagon.svg">pentagon</a> presets for examples.</p>
 	
 	<h2> More Info </h2>
 	<p> If you would like to know more about subdivision tilings please take a look at the <a href="https://en.wikipedia.org/wiki/Finite_subdivision_rule" target="_black">wikipedia page</a> - the references and external links on this page are also very helpful. </p>
