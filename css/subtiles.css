@@ -91,6 +91,7 @@ form button .options {
 form button:hover .options,
 form button:focus-within .options,
 form button:active .options {
+	min-width: 7rem;
 	display: grid;
 	position: absolute;
 	text-align: left;
@@ -100,11 +101,23 @@ form button:active .options {
 	width: max-content;
 	transform: translateY(0.2rem) translateX(-0.2rem);
 	background: white;
-	padding: .5rem;
-	padding-bottom: 3rem;
+	padding: 0.5rem 0.5rem 0.9rem 0.5rem;
 	border: 0.1rem solid black;
 	border-bottom: 0.1rem solid black;
 	z-index: 2;
+
+	grid-template-rows: 1fr 1rem;
+	grid-row-gap: 0.8rem;
+}
+
+.options p {
+	cursor: pointer;
+}
+
+.options span {
+	padding: 0 0 0 2rem;
+	font-size: 1rem;
+	justify-self: left;
 }
 
 form button:hover img,
