@@ -46,11 +46,6 @@ nav {
 	justify-items: center;
 }
 
-nav a, nav p {
-	position: relative;
-	z-index: 3;
-}
-
 nav span {
 	padding: 0.05rem 1.5rem 0 1.5rem;
 	font-size: 1.3rem;
@@ -78,6 +73,17 @@ form button {
 	position: relative;
 }
 
+form input {
+	display: none;
+}
+
+form img {
+	height: 2rem;
+	cursor: pointer;
+	display: block;
+	position: relative;
+}
+
 form button .options {
 	display: none;
 }
@@ -92,25 +98,18 @@ form button:active .options {
 	bottom: 0;
 	left: 0;
 	width: max-content;
-	transform: translateY(-1rem);
+	transform: translateY(0.2rem) translateX(-0.2rem);
 	background: white;
 	padding: .5rem;
 	padding-bottom: 3rem;
-	border: 0.2rem solid black;
-	border-bottom: none;
-	border-right: none;
+	border: 0.1rem solid black;
+	border-bottom: 0.1rem solid black;
 	z-index: 2;
 }
 
-form input {
-	display: none;
-}
-
-form img {
-	height: 2rem;
-	cursor: pointer;
-	display: block;
-	position: relative;
+form button:hover img,
+form button:focus-within img,
+form button:active img {
 	z-index: 3;
 }
 

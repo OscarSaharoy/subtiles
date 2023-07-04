@@ -1,14 +1,12 @@
 // Oscar Saharoy 2023
 
 import { TileList } from "./TileList.js";
-import { DiamondTile } from "./Tile.js";
 import { SVGTile } from "./SVGTile.js";
+import { divisionDepth, resetDivisionDepth } from "./subdivide.js";
 
 
-let svg = document.querySelector( "svg" );
+export let svg = document.querySelector( "svg" );
 const uploadInput = document.getElementById( "upload-input" );
-const plusButton = document.getElementById( "plus" );
-const minusButton = document.getElementById( "minus" );
 
 const reader = new FileReader();
 
@@ -18,19 +16,16 @@ uploadInput.addEventListener( "change",
 	e => reader.readAsText( uploadInput.files[0] ) );
 reader.addEventListener( "load", 
 	e => constructRules( reader.result ) );
-plusButton.addEventListener( "click", plus );
-minusButton.addEventListener( "click", minus );
 
 
-let tileList = null;
-let svgCache = {};
-let divisionDepth = 1;
+export let tileList = null;
+export let svgCache = {};
 
-function constructRules( svgText ) {
+export function constructRules( svgText ) {
 
 	tileList = null;
 	svgCache = {};
-	divisionDepth = 1;
+	resetDivisionDepth();
 
 	svg.outerHTML = svgText.match( /<\s*svg.*?>(.*)<\/\s*svg.*?>/is )[0];
 	
@@ -52,30 +47,3 @@ function constructRules( svgText ) {
 	svg.removeAttribute( "width"  );
 	svg.removeAttribute( "height" );
 }
-
-function plus() {
-
-	++divisionDepth;
-
-	if( divisionDepth in svgCache )
-		svg.innerHTML = svgCache[ divisionDepth ];
-	
-	else
-		svgCache[ divisionDepth ] = svg.innerHTML = tileList.subdivide().toSVG();
-}
-
-function minus() {
-
-	divisionDepth = Math.max( 0, divisionDepth - 1 );
-	svg.innerHTML = svgCache[ divisionDepth ];
-}
-
-
-async function fetchPreset( filename ) {
-
-	const response = await fetch( "/templates/subtiles1.svg" );
-	const svgText = await response.text();
-	constructRules( svgText );
-}
-fetchPreset();
-

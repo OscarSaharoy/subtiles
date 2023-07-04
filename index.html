@@ -19,10 +19,14 @@
 		<nav>
 			<span>subtiles</span>
 			<form id="ui" onsubmit="return false;">
-				<label tabindex="0" class="click-in">
-					<input id="preset-input">
+				<button id="preset">
 					<image title="presets" src="assets/subsquare.svg" />
-				</label>
+					<div id="map-options" class="options">
+						<p tabindex="0"> Affine Map </p>
+						<p tabindex="0"> Conformal Map </p>
+						<span> preset </span>
+					</div>
+				</button>
 				<label tabindex="0" class="click-in">
 					<input type="file" id="upload-input">
 					<image title="open svg template" src="assets/open.svg" />
@@ -32,6 +36,7 @@
 					<div id="map-options" class="options">
 						<p tabindex="0"> Affine Map </p>
 						<p tabindex="0"> Conformal Map </p>
+						<span> mapping </span>
 					</div>
 				</button>
 				<button id="plus">
@@ -45,7 +50,8 @@
 		</nav>
     </div>
 
-	<script type="module" src="js/subtiles.js"></script>
+	<script type="module" src="js/subdivide.js"></script>
+	<script type="module" src="js/presets.js"></script>
 	<script type="module" src="js/click-in.js"></script>
 </body>
 
