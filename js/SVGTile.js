@@ -1,28 +1,28 @@
 // Oscar Saharoy 2023
 
-import * as utility from "./utility.js";
+import * as u from "./utility.js";
 import { tileMappingFunction } from "./mapping.js";
 
 
 const pathCommandMap = {
 	M: (p, x, y) => [x, y],
-	m: (p, dx, dy) => utility.addVec( p, [dx, dy] ),
+	m: (p, dx, dy) => u.addVec( p, [dx, dy] ),
 	L: (p, x, y) => [x, y],
-	l: (p, dx, dy) => utility.addVec( p, [dx, dy] ),
+	l: (p, dx, dy) => u.addVec( p, [dx, dy] ),
 	H: (p, x) => [ x, p[1] ],
-	h: (p, dx) => utility.addVec( p, [dx, 0] ),
+	h: (p, dx) => u.addVec( p, [dx, 0] ),
 	V: (p, y) => [ p[0], y ],
-	v: (p, dy) => utility.addVec( p, [0, dy] ),
+	v: (p, dy) => u.addVec( p, [0, dy] ),
 	C: (p, x1, y1, x2, y2, x, y) => [ x, y ],
-	c: (p, dx1, dy1, dx2, dy2, dx, dy) => utility.addVec( p, [dx, dy] ),
+	c: (p, dx1, dy1, dx2, dy2, dx, dy) => u.addVec( p, [dx, dy] ),
 	S: (p, x2, y2, x, y) => [ x, y ],
-	s: (p, dx2, dy2, dx, dy) => utility.addVec( p, [ dx, dy ] ),
+	s: (p, dx2, dy2, dx, dy) => u.addVec( p, [ dx, dy ] ),
 	Q: (p, x1, y1, x, y) => [ x, y ],
-	q: (p, dx1, dy1, dx, dy) => utility.addVec( p, [ dx, dy ] ),
+	q: (p, dx1, dy1, dx, dy) => u.addVec( p, [ dx, dy ] ),
 	T: (p, x, y) => [ x, y ],
-	t: (p, dx, dy) => utility.addVec( p, [ dx, dy ] ),
+	t: (p, dx, dy) => u.addVec( p, [ dx, dy ] ),
 	A: (p, rx, ry, angle, largeArgFlag, sweepFlag, x, y) => [ x, y ],
-	a: (p, rx, ry, angle, largeArgFlag, sweepFlag, dx, dy) => utility.addVec( p, [ dx, dy ] ),
+	a: (p, rx, ry, angle, largeArgFlag, sweepFlag, dx, dy) => u.addVec( p, [ dx, dy ] ),
 };
 
 const subsequentCommandMap = {
@@ -69,6 +69,34 @@ function getVerts( tileSVG ) {
 }
 
 
+function calcFingerprint( subtile, subtileIndex, tile ) {
+
+	const tileCentre = u.meanVec( tile.verts );
+	const subtileCentre = u.meanVec( subtile.verts );
+
+	const fingerprint = { 
+		depth: tile.fingerprint.depth + 1,
+		cumulativeIndex: tile.fingerprint.cumulativeIndex + subtileIndex,
+		centre: subtileCentre,
+		movement: u.subVec( subtileCentre, tileCentre ),
+	};
+
+	return fingerprint;
+}
+
+function colour( fingerprint ) {
+
+	if( fingerprint.depth == 0 )
+		return "white";
+
+	const hue = u.dot( fingerprint.centre, [1,1] ) * 100;
+	const saturation = Math.abs( u.dot( u.normalise(fingerprint.movement), [1,0] ) )**3 * 50 + 50;
+	const lightness = 40 + 0.40 * (100 - saturation);
+
+	return `hsl(${hue}deg, ${saturation}%, ${lightness}%)`;
+}
+
+
 export class SVGTile {
 	
 	constructor( outerTileSVG, innerTileSVGs, verts ) {
@@ -81,6 +109,8 @@ export class SVGTile {
 
 		this.next = this.prev = null;
 		this.verts = verts ?? this.tileSpaceVerts;
+
+		this.fingerprint = { depth: 0, cumulativeIndex: 0 };
 	}
 
 	subdivide() {
@@ -90,12 +120,19 @@ export class SVGTile {
 		);
 
 		const subtiles = tileMappingFunction( newTiles, this );
-		return utility.connectArray( subtiles );
+
+		subtiles.forEach( (subtile, subtileIndex) => 
+			subtile.fingerprint = calcFingerprint( subtile, subtileIndex, this ) 
+		);
+
+		return u.connectArray( subtiles );
 	}
 
 	toSVG() {
 		return `<path 
-			d="${ utility.vertsToD(this.verts) }"
+			d="${ u.vertsToD(this.verts) }"
+			fill="${colour( this.fingerprint )}"
+			stroke="black"
 		/>`;
 	}
 }

@@ -35,7 +35,6 @@ svg {
 svg path {
 	stroke-width: 0.003;
 	stroke-linejoin: bevel;
-	fill: transparent;
 	stroke: black;
 }
 
