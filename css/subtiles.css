@@ -61,8 +61,8 @@ nav a {
 form {
 	display: grid;
 	grid-gap: 0.4rem;
-	grid-template-columns: repeat( 5, 1fr );
 	overflow: visible;
+	grid-auto-flow: column;
 }
 
 form label {
@@ -76,7 +76,7 @@ form button {
 	position: relative;
 }
 
-form input {
+form input[type="file"] {
 	display: none;
 }
 
