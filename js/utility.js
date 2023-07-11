@@ -112,6 +112,11 @@ export const cross = (vecA,vecB) =>
 		vecA[0]*vecB[1] - vecA[1]*vecB[0],
 	];
 
+export const mean = A =>
+	A.reduce( 
+		(acc,val) => acc + val, 0
+	) / A.length;
+
 export const meanVec = vecs =>
 	scaleVec( 
 		vecs.reduce( (acc,vec) => 
