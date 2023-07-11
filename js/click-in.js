@@ -26,9 +26,11 @@ const menuOptions = [ ...document.querySelectorAll( ".options-list p" ) ];
 
 const unhoverMenus = () => 
 	[ ...document.querySelectorAll( ".options" ) ].forEach( async elm =>
-		( elm.style.display = "none" ) + await seconds(0.1) + ( elm.style.display = "" )
+		( elm.style.display = "none" ) + document.activeElement.blur() + await seconds(0.1) + ( elm.style.display = "" )
 	);
 
 menuOptions.forEach( elm =>
-	elm.addEventListener( "click", () => document.activeElement.blur() + unhoverMenus() )
+	elm.addEventListener( "click", unhoverMenus )
 );
+
+window.addEventListener( "keydown", e => e.key == "Escape" && unhoverMenus() );
