@@ -12,6 +12,6 @@ const svgRule = Array.prototype.find.call(
 
 function setThickness( rangeValue ) {
 
-	svgRule.style.strokeWidth = ( (rangeValue / 100) ** 3 / 40 ).toString();
+	svgRule.style.strokeWidth = ( (rangeValue / 100) ** 2 / 40 ).toString();
 }
 
