@@ -91,9 +91,9 @@ form button .options {
 	display: none;
 }
 
-form button:hover .options,
-form button:focus-within .options,
-form button:active .options {
+form button.menu:hover .options,
+form button.menu:focus-within .options,
+form button.menu:active .options {
 	min-width: 7rem;
 	display: grid;
 	position: absolute;
@@ -123,9 +123,9 @@ form button:active .options {
 	justify-self: left;
 }
 
-form button:hover img,
-form button:focus-within img,
-form button:active img {
+form button.menu:hover img,
+form button.menu:focus-within img,
+form button.menu:active img {
 	z-index: 3;
 }
 
