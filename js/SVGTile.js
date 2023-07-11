@@ -131,7 +131,7 @@ export class SVGTile {
 	toSVG() {
 		return `<path 
 			d="${ u.vertsToD(this.verts) }"
-			fill="${colour( this.fingerprint )}"
+			fill="${ colour(this.fingerprint) }"
 			stroke="black"
 		/>`;
 	}
