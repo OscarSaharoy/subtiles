@@ -1,12 +1,28 @@
 // Oscar Saharoy 2023
 
 import * as u from "./utility.js"
+import { resetSubdivision } from "./upload.js";
 
 const paletteButton = document.querySelector( "#palette" );
+const paletteOptions = [ ...palette.querySelectorAll( ".options-list p" ) ];
+
+paletteOptions.forEach( option => option.onclick =
+	() => setColourFunction( option.textContent )
+);
+
+function setColourFunction( functionName ) {
+	colourFunction = functionMap[ functionName ];
+	resetSubdivision();
+}
 
 const functionMap = {
+	"wireframe": wireframe,
 	"rainbow": rainbow,
 };
+
+function wireframe( fingerprint ) {
+	return "transparent";
+}
 
 function rainbow( fingerprint ) {
 
