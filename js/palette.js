@@ -7,7 +7,7 @@ const paletteButton = document.querySelector( "#palette" );
 const paletteOptions = [ ...palette.querySelectorAll( ".options-list p" ) ];
 
 paletteOptions.forEach( option => option.onclick =
-	() => setColourFunction( option.textContent )
+	() => setColourFunction( option.textContent.trim() )
 );
 
 function setColourFunction( functionName ) {
