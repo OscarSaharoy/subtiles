@@ -2,6 +2,7 @@
 
 import * as u from "./utility.js";
 import { tileMappingFunction } from "./mapping.js";
+import { colourFunction } from "./palette.js";
 
 
 const pathCommandMap = {
@@ -84,18 +85,6 @@ function calcFingerprint( subtile, subtileIndex, tile ) {
 	return fingerprint;
 }
 
-function colour( fingerprint ) {
-
-	if( fingerprint.depth == 0 )
-		return "white";
-
-	const hue = u.dot( fingerprint.centre, [1,1] ) * 100;
-	const saturation = Math.abs( u.dot( u.normalise(fingerprint.movement), [1,0] ) )**3 * 50 + 50;
-	const lightness = 40 + 0.40 * (100 - saturation);
-
-	return `hsl(${hue}deg, ${saturation}%, ${lightness}%)`;
-}
-
 
 export class SVGTile {
 	
@@ -131,7 +120,7 @@ export class SVGTile {
 	toSVG() {
 		return `<path 
 			d="${ u.vertsToD(this.verts) }"
-			fill="${ colour(this.fingerprint) }"
+			fill="${ colourFunction(this.fingerprint) }"
 			stroke="black"
 		/>`;
 	}
