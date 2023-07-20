@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-python -m http.server &>/dev/null &
+python3 -m http.server &>/dev/null &
