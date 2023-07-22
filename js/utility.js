@@ -148,6 +148,10 @@ export const matMatMul = (matA,matB) =>
 export const matMultiMul = (...mats) =>
 	mats.length == 2 ? matMatMul(...mats) : matMatMul( mats[0], matMultiMul(...mats.slice(1)) );
 
+export const rotation2D = rotation =>
+	[ [  Math.cos(rotation), -Math.sin(rotation) ],
+	  [  Math.sin(rotation),  Math.cos(rotation)] ];
+
 
 export function inverse( mat ) {
 
