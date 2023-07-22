@@ -3,7 +3,7 @@
 import * as u from "./utility.js";
 
 
-export function calcAffineTransform( sourceTriplet, targetTriplet ) {
+function calcAffineTransform( sourceTriplet, targetTriplet ) {
 
 	// targetMat = A @ sourceMat
 
@@ -14,7 +14,7 @@ export function calcAffineTransform( sourceTriplet, targetTriplet ) {
 }
 
 
-export function mapFromTileSpace( innerTileSpaceVert, tile ) {
+function mapFromTileSpace( innerTileSpaceVert, tile ) {
 
 	const outerVerts = tile.verts;
 	const outerTileSpaceVerts = tile.tileSpaceVerts;
