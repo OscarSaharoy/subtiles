@@ -32,6 +32,20 @@ export function connectArray( tiles ) {
 }
 
 
+export function tileCoG( verts ) {
+
+
+}
+
+
+export function vertsToSegments( verts ) {
+	
+	return range( verts.length ).map(
+		i => [ verts[i], verts[ (i+1) % verts.length] ]
+	);
+}
+
+
 export function depthToColour( depth ) {
 
 	const hue = "190deg";
@@ -52,6 +66,21 @@ export function betweenDirections( point, [ direction1, direction2 ] ) {
 }
 
 
+export function pointSegmentDistance( point, [ segStart, segEnd ] ) {
+
+	// r = segStart + t ( segEnd - segStart )
+
+	const segDirection = subVec( segEnd, segStart );
+
+	const closestT = clamp(
+		dot( subVec( point, segStart ), segDirection ),
+		0, 1
+	);
+
+	return distance( point, addVec( segStart, scaleVec( segDirection, closestT ) ) );
+}
+
+
 export function segmentsIntersect( segmentA, segmentB ) {
 
 	// rA = oA + t lA
@@ -63,9 +92,12 @@ export function segmentsIntersect( segmentA, segmentB ) {
 }
 
 
-export function clampInsideTile( segment, tileVerts ) {
+export function pointOnSegment( point, [ segStart, segEnd ] ) {
 
-	
+	const segDirection   = normalise( subVec( segEnd, segStart ) );
+	const pointDirection = normalise( subVec( point,  segStart ) );
+
+	return dot( pointDirection, segDirection ) > 1 - 1e-4;
 }
 
 
@@ -80,6 +112,8 @@ export function sum( arr ) {
 	return arr.reduce( (acc,val) => acc + val, 0 );
 }
 
+export const clamp = ( x, low, high ) =>
+	x < low ? low : x > high ? high : x;
 
 export const back = (arr, offset = -1) =>
 	arr[ arr.length + offset ]
@@ -129,6 +163,9 @@ export const length2 = vec =>
 
 export const length = vec =>
 	Math.sqrt( length2(vec) );
+
+export const distance = ( vecA, vecB ) =>
+	length( subVec( vecA, vecB ) );
 
 export const arg = vec =>
 	Math.atan2( vec[1], vec[0] );
@@ -451,6 +488,7 @@ export function complexGaussianElimination( mat, x ) {
 	return b
 }
 
+/* test complex gaussian elimination
 const Ac = 
 [[ [1. ,+0.],  [ 1. ,+1.],   [0. ,+2.],   [0.4,+0.],   [0.4,+0.4], ],
  [ [1. ,+0.],  [ 1., -1.],   [0., -2.],   [0.4,+0.],   [0.4,-0.4], ],
@@ -466,4 +504,4 @@ const bc =
  [-0.3,0. ]];
 
 console.log( complexGaussianElimination( Ac, bc ) )
-
+*/

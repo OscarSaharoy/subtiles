@@ -15,22 +15,22 @@ const AcompRow = ( z, zp ) => [
 	[1,0], z, u.mulComps([-1,0],z,zp), u.mulComps(z,z), u.mulComps([-1,0],z,z,zp), u.mulComps(z,z,z), u.mulComps([-1,0],z,z,z,zp),
 ];
 
-function findMapParams( srcCorners, dstCorners, DoF = undefined ) {
+function findMapParams( srcVerts, dstVerts, DoF = undefined ) {
 	
-	DoF = DoF || srcCorners.length;
+	DoF = DoF || srcVerts.length;
 	if( DoF == 0 ) throw Error( "Unable to solve tile transform" ); 
 
 	try {
 		
-		const Acomp = srcCorners
+		const Acomp = srcVerts
 			.slice( 0, DoF )
-			.map( (z,i) => AcompRow( z, dstCorners[i] ).slice( 0, DoF ) );
+			.map( (z,i) => AcompRow( z, dstVerts[i] ).slice( 0, DoF ) );
 
-		return u.complexGaussianElimination( Acomp, dstCorners.slice( 0, DoF ) );
+		return u.complexGaussianElimination( Acomp, dstVerts.slice( 0, DoF ) );
 
 	} catch {
 
-		return findMapParams( srcCorners, dstCorners, DoF-1 );
+		return findMapParams( srcVerts, dstVerts, DoF-1 );
 	}
 }
 
