@@ -101,6 +101,9 @@ export function sum( arr ) {
 	return arr.reduce( (acc,val) => acc + val, 0 );
 }
 
+export const remapAngle = angle =>
+	( angle + Math.PI ) % ( 2*Math.PI ) - Math.PI;
+
 export const clamp = ( x, low, high ) =>
 	x < low ? low : x > high ? high : x;
 
