@@ -38,6 +38,21 @@ export function tileCoG( verts ) {
 }
 
 
+export function signedArea( verts ) {
+
+	return range( verts.length )
+		.map( i => [ i, (i+1) % verts.length ] )
+		.map( ([i,j]) => [ verts[i], verts[j] ] )
+		.reduce( (total, [ [startX, startY], [endX, endY] ]) => total + (endX-startX)*(endY+startY), 0 ) ;
+}
+
+
+export function vertsAreClockwise( verts ) {
+	
+	return signedArea( verts ) > 0;
+}
+
+
 export function vertsToSegments( verts ) {
 	
 	return range( verts.length ).map(

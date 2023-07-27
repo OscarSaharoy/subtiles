@@ -37,15 +37,6 @@ const subsequentCommandMap = {
 	v: "v",
 };
 
-function vertsAreClockwise( verts ) {
-
-	return u.range( verts.length )
-		.map( i => [ i, (i+1) % verts.length ] )
-		.map( ([i,j]) => [ verts[i], verts[j] ] )
-		.reduce( (total, [ [startX, startY], [endX, endY] ]) => total + (endX-startX)*(endY+startY), 0 ) 
-		> 0;
-}
-
 function getVerts( tileSVG ) {
 	
 	const d = tileSVG.getAttribute("d");
@@ -74,7 +65,7 @@ function getVerts( tileSVG ) {
 		}
 	}
 
-	if( !vertsAreClockwise( verts ) ) verts.reverse();
+	if( !u.vertsAreClockwise( verts ) ) verts.reverse();
 
 	return verts;
 }
@@ -125,6 +116,10 @@ export class SVGTile {
 		);
 
 		return u.connectArray( subtiles );
+	}
+
+	area() {
+		return Math.abs( u.signedArea( this.verts ) );
 	}
 
 	toSVG() {
