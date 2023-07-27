@@ -31,15 +31,18 @@ export class TileList {
 	toSVG() {
 
 		let tile = this.next;
-		let svgStrings = [];
+		let parsedTiles = [];
 
 		while( tile != this ) {
 			
-			svgStrings.push( tile.toSVG() );
+			parsedTiles.push([ tile.toSVG(), tile.area() ]);
 			tile = tile.next;
 		}
 
-		return svgStrings.join( "\n" );
+		parsedTiles = parsedTiles.sort( ( [svg1, area1], [svg2, area2] ) => area2 - area1 );
+		console.log( parsedTiles )
+
+		return parsedTiles.map( ([svg, area]) => svg ).join( "\n" );
 	}
 }
 
