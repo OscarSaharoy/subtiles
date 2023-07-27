@@ -43,8 +43,8 @@ function tron( fingerprint ) {
 
 	const hue = "190deg";
 	const sat = "100%";
-	const fillVal = `${ fingerprint.cumulativeIndex*8 }%`;
-	const strokeVal = `${ (fingerprint.cumulativeIndex+10)*8 }%`;
+	const fillVal = `${ fingerprint.alternator*8 }%`;
+	const strokeVal = `${ (fingerprint.alternator+5)*8 }%`;
 
 	const fill = `hsl( ${hue} ${sat} ${fillVal} )`;
 	const stroke = `hsl( ${hue} ${sat} ${strokeVal} )`;

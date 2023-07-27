@@ -79,6 +79,7 @@ function calcFingerprint( subtile, subtileIndex, tile ) {
 	const fingerprint = { 
 		depth: tile.fingerprint.depth + 1,
 		cumulativeIndex: tile.fingerprint.cumulativeIndex + subtileIndex,
+		alternator: (tile.fingerprint.alternator || 0) + (subtileIndex+1) % 2,
 		centre: subtileCentre,
 		movement: u.subVec( subtileCentre, tileCentre ),
 	};
