@@ -46,16 +46,6 @@ export function vertsToSegments( verts ) {
 }
 
 
-export function depthToColour( depth ) {
-
-	const hue = "190deg";
-	const sat = "100%";
-	const val = `${depth*8}%`;
-
-	return `hsl( ${hue} ${sat} ${val} )`;
-}
-
-
 export function betweenDirections( point, [ direction1, direction2 ] ) {
 
 	const pointDirection = normalise(point);
@@ -99,7 +89,6 @@ export function pointOnSegment( point, [ segStart, segEnd ] ) {
 
 	return dot( pointDirection, segDirection ) > 1 - 1e-4;
 }
-
 
 export function getFirstLast( array ) {
 	return [ array[0], array[array.length - 1] ];

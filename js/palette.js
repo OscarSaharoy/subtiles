@@ -18,10 +18,11 @@ function setColourFunction( functionName ) {
 const functionMap = {
 	"wireframe": wireframe,
 	"rainbow": rainbow,
+	"tron": tron,
 };
 
 function wireframe( fingerprint ) {
-	return "transparent";
+	return [ "transparent", "black" ];
 }
 
 function rainbow( fingerprint ) {
@@ -33,7 +34,22 @@ function rainbow( fingerprint ) {
 	const saturation = Math.abs( u.dot( u.normalise(fingerprint.movement), [1,0] ) )**3 * 50 + 50;
 	const lightness = 80 - saturation / 2.5;
 
-	return `hsl(${hue}deg, ${saturation}%, ${lightness}%)`;
+	const stroke = "black";
+
+	return [ `hsl(${hue}deg, ${saturation}%, ${lightness}%)`, stroke ];
+}
+
+function tron( fingerprint ) {
+
+	const hue = "190deg";
+	const sat = "100%";
+	const fillVal = `${ fingerprint.cumulativeIndex*8 }%`;
+	const strokeVal = `${ (fingerprint.cumulativeIndex+10)*8 }%`;
+
+	const fill = `hsl( ${hue} ${sat} ${fillVal} )`;
+	const stroke = `hsl( ${hue} ${sat} ${strokeVal} )`;
+
+	return [ fill, stroke ];
 }
 
 export let colourFunction = rainbow;

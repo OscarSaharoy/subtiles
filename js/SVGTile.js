@@ -128,10 +128,13 @@ export class SVGTile {
 	}
 
 	toSVG() {
+		const [ fill, stroke ] = colourFunction(this.fingerprint);
+
 		return `<path 
 			d="${ u.vertsToD(this.verts) }"
-			fill="${ colourFunction(this.fingerprint) }"
-			stroke="black"
+			fill="${ fill }"
+			stroke="${ stroke }"
+			${JSON.stringify(this.fingerprint)}
 		/>`;
 	}
 }
