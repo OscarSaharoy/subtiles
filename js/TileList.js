@@ -40,7 +40,6 @@ export class TileList {
 		}
 
 		parsedTiles = parsedTiles.sort( ( [svg1, area1], [svg2, area2] ) => area2 - area1 );
-		console.log( parsedTiles )
 
 		return parsedTiles.map( ([svg, area]) => svg ).join( "\n" );
 	}
