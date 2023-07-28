@@ -56,17 +56,15 @@ function findMapParams( srcVerts, dstVerts ) {
 	const dstVertAngles = dstVerts.map( vert =>
 		u.arg( u.subVec( vert, dstCentre ) )
 	);
-
-	const calcAngleDelta = ( angle1, angle2 ) => 
-		[ angle1 - 2*Math.PI, angle1, angle1 + 2*Math.PI ]
-			.map( angle1option => angle1option - angle2 )
-			.reduce( (res, val) => Math.abs(val) < Math.abs(res) ? val : res, Infinity );
-
 	const angleDeltas = u.range( srcVerts.length ).map( i =>
-		calcAngleDelta( dstVertAngles[i], srcVertAngles[i] )
+		srcVertAngles[i] - dstVertAngles[i]
+	);
+	const phaseOfSum = Math.atan2(
+		angleDeltas.reduce( (sum, d) => sum + Math.sin(d), 0),
+		angleDeltas.reduce( (sum, d) => sum + Math.cos(d), 0),
 	);
 
-	const rotation = u.mean( angleDeltas );
+	const rotation = - phaseOfSum || 0;
 
 
 	return [ scale, rotation, translation ];
