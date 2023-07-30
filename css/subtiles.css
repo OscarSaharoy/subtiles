@@ -105,7 +105,6 @@ form button.menu:active .options {
 	background: white;
 	padding: 0.5rem 0.5rem 0.9rem 0.5rem;
 	border: 0.1rem solid black;
-	border-bottom: 0.1rem solid black;
 	z-index: 2;
 
 	grid-template-rows: 1fr 1rem;
@@ -130,8 +129,6 @@ form button.menu:active img {
 
 .options input[type="range"] {
 	width: 9rem;
-	margin: .5rem;
-	margin-bottom: 0.2rem;
 }
 
 @media( max-width: 40rem ) {
