@@ -32,9 +32,22 @@ export function connectArray( tiles ) {
 }
 
 
-export function tileCoG( verts ) {
+export function tileCentroid( verts ) {
 
+	const area = signedArea( verts );
 
+	const summation = range( verts.length )
+		.map( i => [ i, (i+1) % verts.length ] )
+		.map( ([i,j]) => [ verts[i], verts[j] ] )
+		.reduce( (total, [ [startX, startY], [endX, endY] ]) =>
+			addVec(
+				total,
+				[ (startX+endX)*(startX*endY - endX*startY),
+				  (startY+endY)*(startX*endY - endX*startY) ]
+			), [0,0]
+		)
+	
+	return scaleVec( summation, 1 / (6*-area) );
 }
 
 
@@ -43,7 +56,9 @@ export function signedArea( verts ) {
 	return range( verts.length )
 		.map( i => [ i, (i+1) % verts.length ] )
 		.map( ([i,j]) => [ verts[i], verts[j] ] )
-		.reduce( (total, [ [startX, startY], [endX, endY] ]) => total + (endX-startX)*(endY+startY), 0 ) ;
+		.reduce( (total, [ [startX, startY], [endX, endY] ]) => 
+			total + (endX-startX)*(endY+startY), 0
+		) / 2;
 }
 
 

@@ -30,8 +30,8 @@ function edgeMap( vert, srcEdges, dstEdges ) {
 
 function findMapParams( srcVerts, dstVerts ) {
 
-	const srcCentre = u.meanVec( srcVerts );
-	const dstCentre = u.meanVec( dstVerts );
+	const srcCentre = u.tileCentroid( srcVerts );
+	const dstCentre = u.tileCentroid( dstVerts );
 
 
 	const srcSegments = u.vertsToSegments( srcVerts );
