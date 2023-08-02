@@ -98,7 +98,6 @@ export class SVGTile {
 		this.tileSpaceVerts = getVerts( this.outerTileSVG );
 		this.innerTileSpaceVerts = innerTileSVGs.map( getVerts );
 
-		this.next = this.prev = null;
 		this.verts = verts ?? this.tileSpaceVerts;
 
 		this.fingerprint = { depth: 0, cumulativeIndex: 0 };
