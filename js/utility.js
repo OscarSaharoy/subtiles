@@ -23,14 +23,6 @@ export function connect( firstTile, secondTile ) {
 	return [ firstTile, secondTile ];
 }
 
-export function connectArray( tiles ) {
-	tiles.slice( 0, -1 ).forEach( (_,i) =>
-		connect( tiles[i], tiles[i+1] )
-	);
-
-	return tiles;
-}
-
 
 export function tileCentroid( verts ) {
 

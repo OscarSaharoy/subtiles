@@ -14,44 +14,58 @@ function calcAffineTransform( sourceTriplet, targetTriplet ) {
 }
 
 
-function mapFromTileSpace( innerTileSpaceVert, tile ) {
+function affineMap( innerTileSpaceVert, params ) {
 
-	const outerVerts = tile.verts;
-	const outerTileSpaceVerts = tile.tileSpaceVerts;
-
-	for( let i = 0; i < tile.verts.length; ++i ) {
-
-		const a = i;
-		const b = ( i + 1 ) % tile.verts.length;
-
-		const tileSpaceDirections = [
-			u.normalise( outerTileSpaceVerts[a] ),
-			u.normalise( outerTileSpaceVerts[b] ),
-		];
+	for( const { tileSpaceDirections, transform } of params ) {
 
 		if( !u.betweenDirections( innerTileSpaceVert, tileSpaceDirections ) )
 			continue;
 
-		const transform = calcAffineTransform(
-			[[0,0], outerTileSpaceVerts[a], outerTileSpaceVerts[b]],
-			[u.meanVec(outerVerts), outerVerts[a], outerVerts[b] ],
-		);
-
 		return u.matVecMul( transform, [...innerTileSpaceVert, 1] ).slice(0,2);
 	}
-
-	throw "fell through";
 }
 
 
-export function affineTileMap( subtiles, tile ) {
+function findMapParams( outerTileSpaceVerts, outerVerts ) {
 
-	subtiles.forEach(
-		subtile => subtile.verts = subtile.verts.map( 
-			vert => mapFromTileSpace( vert, tile ) 
+	const tileSpaceCentroid = u.meanVec( outerTileSpaceVerts );
+	const centroid = u.meanVec( outerVerts );
+
+	const tileSpaceEdgeSegments = u.vertsToSegments( outerTileSpaceVerts );
+	const edgeSegments = u.vertsToSegments( outerVerts );
+
+	const params = [];
+
+	for( let i = 0; i < edgeSegments.length; ++i ) {
+		
+		const tileSpaceEdge = tileSpaceEdgeSegments[i];
+		const edge = edgeSegments[i];
+
+		const tileSpaceDirections = [
+			u.normalise( tileSpaceEdge[0] ),
+			u.normalise( tileSpaceEdge[1] ),
+		];
+
+		const transform = calcAffineTransform(
+			[ tileSpaceCentroid, tileSpaceEdge[0], tileSpaceEdge[1] ],
+			[          centroid,          edge[0],          edge[1] ],
+		);
+
+		params.push({ tileSpaceDirections, transform });
+	}
+
+	return params;
+}
+
+export function affineTileMap( outerTileSpaceVerts, innerTileSpaceVerts, outerVerts ) {
+
+	const params = findMapParams( outerTileSpaceVerts, outerVerts );
+
+	const subtileVerts = innerTileSpaceVerts.map(
+		vertArray => vertArray.map( 
+			vert => affineMap( vert, params )
 		)
 	);
 
-	return subtiles;
+	return subtileVerts;
 }
-

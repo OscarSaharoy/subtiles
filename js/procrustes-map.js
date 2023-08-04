@@ -70,20 +70,21 @@ function findMapParams( srcVerts, dstVerts ) {
 	return [ scale, rotation, translation ];
 }
 
-export function procrustesTileMap( subtiles, tile ) {
 
-	const params = findMapParams( tile.tileSpaceVerts, tile.verts );
+export function procrustesTileMap( outerTileSpaceVerts, innerTileSpaceVerts, outerVerts ) {
 
-	const tileSpaceEdgeSegments = u.vertsToSegments( tile.tileSpaceVerts );
-	const edgeSegments = u.vertsToSegments( tile.verts );
-	
-	subtiles.forEach(
-		subtile => subtile.verts = subtile.verts.map( 
-			vert => edgeMap( vert, tileSpaceEdgeSegments, edgeSegments )
+	const params = findMapParams( outerTileSpaceVerts, outerVerts );
+
+	const tileSpaceEdgeSegments = u.vertsToSegments( outerTileSpaceVerts );
+	const edgeSegments = u.vertsToSegments( outerVerts );
+
+	const subtileVerts = innerTileSpaceVerts.map(
+		vertArray => vertArray.map( 
+			vert => edgeMap( vert, tileSpaceEdgeSegments, edgeSegments ) 
 				 || procrustesMap( vert, ...params )
 		)
 	);
 
-	return subtiles;
+	return subtileVerts;
 }
 

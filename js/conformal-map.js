@@ -16,9 +16,9 @@ const AcompRow = ( z, zp ) => [
 ];
 
 function findMapParams( srcVerts, dstVerts, DoF = undefined ) {
-	
-	DoF = DoF || srcVerts.length;
+
 	if( DoF == 0 ) throw Error( "Unable to solve tile transform" ); 
+	DoF = DoF || srcVerts.length;
 
 	try {
 		
@@ -34,16 +34,16 @@ function findMapParams( srcVerts, dstVerts, DoF = undefined ) {
 	}
 }
 
-export function conformalTileMap( subtiles, tile ) {
+export function conformalTileMap( outerTileSpaceVerts, innerTileSpaceVerts, outerVerts ) {
 
-	const params = findMapParams( tile.tileSpaceVerts, tile.verts );
+	const params = findMapParams( outerTileSpaceVerts, outerVerts );
 
-	subtiles.forEach(
-		subtile => subtile.verts = subtile.verts.map( 
+	const subtileVerts = innerTileSpaceVerts.map(
+		vertArray => vertArray.map( 
 			vert => conformalMap( vert, ...params )
 		)
 	);
 
-	return subtiles;
+	return subtileVerts;
 }
 
