@@ -27,13 +27,14 @@ function wireframe( fingerprint ) {
 
 function rainbow( fingerprint ) {
 
-	const hue = u.dot( fingerprint.centre, [1,1] ) * 100;
+	const hue = u.dot( fingerprint.centre, [1.2, 0.8] ) * 110;
 	const saturation = Math.abs( u.dot( u.normalise(fingerprint.movement), [1,0] ) )**3 * 50 + 50;
 	const lightness = 80 - saturation / 2.5;
 
+	const fill = `hsl(${hue}deg, ${saturation}%, ${lightness}%)`;
 	const stroke = "black";
 
-	return [ `hsl(${hue}deg, ${saturation}%, ${lightness}%)`, stroke ];
+	return [ fill, stroke ];
 }
 
 function tron( fingerprint ) {
