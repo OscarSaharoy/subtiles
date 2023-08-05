@@ -12,15 +12,6 @@ clickIns.forEach( elm =>
 	) 
 );
 
-
-// take focus away from other buttons when mouse enters either of the menus
-const menus = [ "preset", "mapping" ].map( s => document.getElementById( s ) );
-
-menus.forEach( elm =>
-	elm.addEventListener( "pointermove", e => document.activeElement.blur() )
-);
-
-
 // when a menu option is clicked, the menu should close
 const menuOptions = [ ...document.querySelectorAll( ".options-list p" ) ];
 

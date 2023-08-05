@@ -90,7 +90,7 @@ form button .options {
 	display: none;
 }
 
-form button.menu:hover .options,
+form button.menu:focus .options,
 form button.menu:focus-within .options,
 form button.menu:active .options {
 	min-width: 7rem;
