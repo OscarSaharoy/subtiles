@@ -8,10 +8,10 @@ const minusButton = document.getElementById( "minus" );
 plusButton.addEventListener( "click", plus );
 minusButton.addEventListener( "click", minus );
 
-export let divisionDepth = 1;
-export const resetDivisionDepth = () => divisionDepth = 1;
+export let divisionDepth = 0;
+export const resetDivisionDepth = () => divisionDepth = 0;
 
-function plus() {
+export function plus() {
 
 	++divisionDepth;
 

@@ -30,7 +30,7 @@ export class SVGTile {
 	constructor( verts ) {
 
 		this.verts = verts;
-		this.fingerprint = { depth: 0 };
+		this.fingerprint = { depth: 0, fill: "white", stroke: "black" };
 	}
 
 	subdivide( subdivisionRules ) {

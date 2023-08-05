@@ -2,11 +2,11 @@
 
 import { TileList } from "./TileList.js";
 import { SVGTile } from "./SVGTile.js";
-import { divisionDepth, resetDivisionDepth } from "./subdivide.js";
+import { plus, divisionDepth, resetDivisionDepth } from "./subdivide.js";
 import { getVerts } from "./parse-svg.js"
 
 
-export let svg = document.querySelector( "svg" );
+export const svg = document.querySelector( "svg" );
 const uploadInput = document.getElementById( "upload-input" );
 
 const reader = new FileReader();
@@ -16,25 +16,20 @@ window.addEventListener( "keydown",
 uploadInput.addEventListener( "change",
 	e => reader.readAsText( uploadInput.files[0] ) );
 reader.addEventListener( "load", 
-	e => constructRules( reader.result ) );
+	e => ingestSVGFile( reader.result ) );
 
 
 export let tileList = null;
 export let svgCache = {};
 let svgTextCache = null;
 
+
 export function constructRules( svgText ) {
 
-	svgTextCache = svgText;
-
-	tileList = null;
-	svgCache = {};
-	resetDivisionDepth();
-
-	svg.outerHTML = svgText.match( /<\s*svg.*?>(.*)<\/\s*svg.*?>/is )[0];
+	const shadowSVGContainer = document.createElement( "div" );
+	shadowSVGContainer.innerHTML = svgText.match( /<\s*svg.*?>(.*)<\/\s*svg.*?>/is )[0];
 	
-	svg = document.querySelector( "svg" );
-	const outerGroup = svg.querySelector( "g" );
+	const outerGroup = shadowSVGContainer.querySelector( "g" );
 	const innerGroup = outerGroup.querySelector( "g" );
 
 	const outerTileSVG  = outerGroup.querySelector( ":scope > path" );
@@ -44,21 +39,28 @@ export function constructRules( svgText ) {
 	const innerTileSpaceVerts = innerTileSVGs.map( getVerts );
 
 	const subdivisionRules = { "*": { srcVerts: tileSpaceVerts, dstVertArray: innerTileSpaceVerts } };
+	return [ tileSpaceVerts, subdivisionRules ];
+}
+
+
+export function ingestSVGFile( svgText ) {
+
+	svgTextCache = svgText;
+
+	tileList = null;
+	svgCache = {};
+	resetDivisionDepth();
+
+	const [ tileSpaceVerts, subdivisionRules ] = constructRules( svgText );
 
 	const rootTile = new SVGTile( tileSpaceVerts );
 	tileList = new TileList( rootTile, subdivisionRules );
-
 	svgCache[0] = tileList.toSVG();
-
-	tileList.subdivide();
-	svgCache[ divisionDepth ] = svg.innerHTML = tileList.toSVG();
-
-	svg.removeAttribute( "width"  );
-	svg.removeAttribute( "height" );
+	plus();
 }
 
 export function resetSubdivision() {
 	
-	constructRules( svgTextCache );
+	ingestSVGFile( svgTextCache );
 }
 
