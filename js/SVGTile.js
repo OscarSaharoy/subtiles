@@ -19,6 +19,8 @@ function calcFingerprint( subtile, subtileIndex, tile ) {
 		movement: u.subVec( subtileCentre, tileCentre ),
 	};
 
+	[ fingerprint.fill, fingerprint.stroke ] = colourFunction( fingerprint );
+
 	return fingerprint;
 }
 
@@ -52,13 +54,11 @@ export class SVGTile {
 	}
 
 	toSVG() {
-		const [ fill, stroke ] = colourFunction(this.fingerprint);
-
 		return `<path 
 			d="${ u.vertsToD(this.verts) }"
-			fill="${ fill }"
-			stroke="${ stroke }"
-			${JSON.stringify(this.fingerprint)}
+			fill="${ this.fingerprint.fill }"
+			stroke="${ this.fingerprint.stroke }"
+			data="${ JSON.stringify(this.fingerprint).replaceAll(" ","").replaceAll("\"","") }"
 		/>`;
 	}
 }
