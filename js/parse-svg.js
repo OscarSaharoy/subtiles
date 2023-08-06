@@ -37,8 +37,8 @@ const subsequentCommandMap = {
 
 export function getVerts( tileSVG, transforms=[] ) {
 
-	const pathTransform = getTransform( tileSVG );
-	transforms.push( pathTransform );
+	const pathTransforms = getTransforms( tileSVG );
+	transforms = [ ...transforms, ...pathTransforms ];
 	
 	const d = tileSVG.getAttribute("d");
 	const letterSeperated = d.match( /([MmLlHhVvCcSsQqTtAa])([-\de\., ]*)/g );
@@ -60,8 +60,8 @@ export function getVerts( tileSVG, transforms=[] ) {
 			const currentArgs = args.splice( 0, argsRequired );
 
 			p = pathCommandMap[commandType]( p, ...currentArgs );
-			const transformedPoint = transforms
-				.reduce( (reducerPoint, transformParams) => applyTransform( reducerPoint, transformParams ), p );
+			const transformedPoint = transforms.toReversed().reduce(
+				(reducerPoint, transform) => applyTransform( reducerPoint, transform ), p );
 			verts.push( transformedPoint );
 
 			commandType = subsequentCommandMap[ commandType ];
@@ -74,36 +74,36 @@ export function getVerts( tileSVG, transforms=[] ) {
 }
 
 
-const getParamArgs = (string, param) =>
-	string?.match( new RegExp(`${param}\\((.*?)\\)`) )?.[1]
-		.split(",").map( x => +x )
+const makeTransformObj = ([ _, transformType, params ]) =>
+	({ type: transformType, params: params.split(",").map( x => +x ) });
 
-export function getTransform( svg ) {
+const parseTransformString = string =>
+	string
+		? [ ...string.matchAll( /(\w+)\((.*?)\)/g ) ].map( makeTransformObj )
+		: [];
 
-	const transformString = svg.getAttribute( "transform" );
+export const getTransforms = svg =>
+	parseTransformString( svg.getAttribute( "transform" ) );
 
-	const transformParams = {};
-	[ "matrix", "translate", "scale", "rotate", "skewX", "skewY" ]
-		.forEach( param => transformParams[param] = getParamArgs(transformString, param) );
+const transformMatrixMap = {
 
-	return transformParams;
-}
+	"matrix": params =>
+		u.transpose([
+			params.slice(0, 2),
+			params.slice(2, 4),
+			params.slice(4, 6),
+		]),
+	
+	"translate": params => [
+			[1, 0, params[0]],
+			[0, 1, params[1]],
+		],
+};
 
-function applyTransform( point, transformParams ) {
+const applyTransform = ( point, transform ) =>	
+	u.matVecMul(
+		transformMatrixMap[transform.type](transform.params),
+		[ ...point, 1 ],
+	);
 
-	let transformedPoint = point;
-
-	if( transformParams.matrix ) {
-
-		const transformMatrix = u.transpose([
-			transformParams.matrix.slice(0, 2),
-			transformParams.matrix.slice(2, 4),
-			transformParams.matrix.slice(4, 6),
-		]);
-
-		transformedPoint = u.matVecMul( transformMatrix, [...transformedPoint, 1] );
-	}
-
-	return transformedPoint;
-}
 

@@ -3,7 +3,7 @@
 import { TileList } from "./TileList.js";
 import { SVGTile } from "./SVGTile.js";
 import { plus, divisionDepth, resetDivisionDepth } from "./subdivide.js";
-import { getVerts, getTransform } from "./parse-svg.js"
+import { getVerts, getTransforms } from "./parse-svg.js"
 
 
 export const svg = document.querySelector( "svg" );
