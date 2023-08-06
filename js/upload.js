@@ -3,7 +3,7 @@
 import { TileList } from "./TileList.js";
 import { SVGTile } from "./SVGTile.js";
 import { plus, divisionDepth, resetDivisionDepth } from "./subdivide.js";
-import { getVerts } from "./parse-svg.js"
+import { getVerts, getTransform } from "./parse-svg.js"
 
 
 export const svg = document.querySelector( "svg" );
@@ -32,11 +32,13 @@ export function constructRules( svgText ) {
 	const outerGroup = shadowSVGContainer.querySelector( "g" );
 	const innerGroup = outerGroup.querySelector( "g" );
 
+	getTransform( outerGroup );
+
 	const outerTileSVG  = outerGroup.querySelector( ":scope > path" );
 	const innerTileSVGs = [ ...innerGroup.querySelectorAll( "path" ) ];
 
 	const tileSpaceVerts = getVerts( outerTileSVG );
-	const innerTileSpaceVerts = innerTileSVGs.map( getVerts );
+	const innerTileSpaceVerts = innerTileSVGs.map( tileSVG => getVerts(tileSVG) );
 
 	const subdivisionRules = { "*": { srcVerts: tileSpaceVerts, dstVertArray: innerTileSpaceVerts } };
 	return [ tileSpaceVerts, subdivisionRules ];

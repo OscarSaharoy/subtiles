@@ -35,7 +35,10 @@ const subsequentCommandMap = {
 	v: "v",
 };
 
-export function getVerts( tileSVG ) {
+export function getVerts( tileSVG, transforms=[] ) {
+
+	const pathTransform = getTransform( tileSVG );
+	transforms.push( pathTransform );
 	
 	const d = tileSVG.getAttribute("d");
 	const letterSeperated = d.match( /([MmLlHhVvCcSsQqTtAa])([-\de\., ]*)/g );
@@ -57,7 +60,9 @@ export function getVerts( tileSVG ) {
 			const currentArgs = args.splice( 0, argsRequired );
 
 			p = pathCommandMap[commandType]( p, ...currentArgs );
-			verts.push( p );
+			const transformedPoint = transforms
+				.reduce( (reducerPoint, transformParams) => applyTransform( reducerPoint, transformParams ), p );
+			verts.push( transformedPoint );
 
 			commandType = subsequentCommandMap[ commandType ];
 		}
@@ -67,3 +72,38 @@ export function getVerts( tileSVG ) {
 
 	return verts;
 }
+
+
+const getParamArgs = (string, param) =>
+	string?.match( new RegExp(`${param}\\((.*?)\\)`) )?.[1]
+		.split(",").map( x => +x )
+
+export function getTransform( svg ) {
+
+	const transformString = svg.getAttribute( "transform" );
+
+	const transformParams = {};
+	[ "matrix", "translate", "scale", "rotate", "skewX", "skewY" ]
+		.forEach( param => transformParams[param] = getParamArgs(transformString, param) );
+
+	return transformParams;
+}
+
+function applyTransform( point, transformParams ) {
+
+	let transformedPoint = point;
+
+	if( transformParams.matrix ) {
+
+		const transformMatrix = u.transpose([
+			transformParams.matrix.slice(0, 2),
+			transformParams.matrix.slice(2, 4),
+			transformParams.matrix.slice(4, 6),
+		]);
+
+		transformedPoint = u.matVecMul( transformMatrix, [...transformedPoint, 1] );
+	}
+
+	return transformedPoint;
+}
+
