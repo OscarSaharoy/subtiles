@@ -115,13 +115,13 @@ const transformMatrixMap = {
 		],
 
 	"skewX": params => [
-			[1, 0, 0],
+			[1, u.sinD(params[0]), 0],
 			[0, 1, 0],
 		],
 
 	"skewY": params => [
 			[1, 0, 0],
-			[0, 1, 0],
+			[u.sinD(params[0]), 1, 0],
 		],
 };
 
