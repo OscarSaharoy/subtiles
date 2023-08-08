@@ -73,17 +73,22 @@ export function getVerts( tileSVG, transforms=[] ) {
 	return verts;
 }
 
+const parseParams = string => string?.split( /[, ]+/g ).map( x => +x );
 
-const makeTransformObj = ([ _, transformType, params ]) =>
-	({ type: transformType, params: params.split(",").map( x => +x ) });
+const makeTransformObj = ([ _, transformType, params ], transformOrigin) =>
+	({ type: transformType,
+	   params: parseParams(params),
+	   origin: ( transformType === "rotate" && parseParams(params).length === 3 ) ? [0, 0] : transformOrigin });
 
-const parseTransformString = string =>
-	string
-		? [ ...string.matchAll( /(\w+)\((.*?)\)/g ) ].map( makeTransformObj )
-		: [];
+const parseTransformString = (transformString, transformOrigin) =>
+	[ ...transformString.matchAll( /(\w+)\((.*?)\)/g ) ]
+		.map( match => makeTransformObj(match, transformOrigin) )
 
 export const getTransforms = svg =>
-	parseTransformString( svg.getAttribute( "transform" ) );
+	parseTransformString(
+		svg.getAttribute( "transform" ) ?? "",
+		parseParams( svg.getAttribute( "transform-origin" ) ) || [0,0],
+	);
 
 const transformMatrixMap = {
 
@@ -96,14 +101,36 @@ const transformMatrixMap = {
 	
 	"translate": params => [
 			[1, 0, params[0]],
-			[0, 1, params[1]],
+			[0, 1, params[1] || 0],
+		],
+
+	"scale": params => [
+			[ params[0], 0, 0 ],
+			[ 0, params[1] || params[0], 0 ],
+		],
+
+	"rotate": params => [
+			[ u.cosD(params[0]), -u.sinD(params[0]), -u.cosD(params[0]) * (params[1] ?? 0) + u.sinD(params[0]) * (params[2] ?? 0) + (params[1] ?? 0) ],
+			[ u.sinD(params[0]),  u.cosD(params[0]), -u.sinD(params[0]) * (params[1] ?? 0) - u.cosD(params[0]) * (params[2] ?? 0) + (params[2] ?? 0) ],
+		],
+
+	"skewX": params => [
+			[1, 0, 0],
+			[0, 1, 0],
+		],
+
+	"skewY": params => [
+			[1, 0, 0],
+			[0, 1, 0],
 		],
 };
 
 const applyTransform = ( point, transform ) =>	
-	u.matVecMul(
-		transformMatrixMap[transform.type](transform.params),
-		[ ...point, 1 ],
+	u.addVec( 
+		transform.origin,
+		u.matVecMul(
+			transformMatrixMap[transform.type](transform.params),
+			[ ...u.subVec( point, transform.origin ), 1 ],
+		)
 	);
-
 
