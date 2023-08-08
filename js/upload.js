@@ -32,13 +32,14 @@ export function constructRules( svgText ) {
 	const outerGroup = shadowSVGContainer.querySelector( "g" );
 	const innerGroup = outerGroup.querySelector( "g" );
 
-	getTransform( outerGroup );
+	const outerGroupTransforms = getTransforms( outerGroup );
+	const innerGroupTransforms = [ ...outerGroupTransforms, ...getTransforms( innerGroup ) ];
 
 	const outerTileSVG  = outerGroup.querySelector( ":scope > path" );
 	const innerTileSVGs = [ ...innerGroup.querySelectorAll( "path" ) ];
 
-	const tileSpaceVerts = getVerts( outerTileSVG );
-	const innerTileSpaceVerts = innerTileSVGs.map( tileSVG => getVerts(tileSVG) );
+	const tileSpaceVerts = getVerts( outerTileSVG, outerGroupTransforms );
+	const innerTileSpaceVerts = innerTileSVGs.map( tileSVG => getVerts(tileSVG, innerGroupTransforms) );
 
 	const subdivisionRules = { "*": { srcVerts: tileSpaceVerts, dstVertArray: innerTileSpaceVerts } };
 	return [ tileSpaceVerts, subdivisionRules ];
