@@ -57,6 +57,14 @@ nav a {
 	color: black;
 }
 
+div.right-fix {
+	width: 8rem;
+	overflow: visible;
+	display: grid;
+	justify-content: right;
+	white-space: nowrap;
+}
+
 form {
 	display: grid;
 	grid-gap: 0.4rem;
@@ -138,6 +146,10 @@ form button.menu:active img {
 
 	#container {
 		grid-template-rows: calc(100vh - 12rem) min-content;
+	}
+
+	div.right-fix {
+		width: auto;
 	}
 }
 
