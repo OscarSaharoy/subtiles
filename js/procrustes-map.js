@@ -3,11 +3,12 @@
 import * as u from "./utility.js";
 
 
-function procrustesMap( vert, scale, rotation, translation ) {
+function procrustesMap( vert, centre, scale, rotation, translation ) {
 
-	const scaled     = u.scaleVec( vert, scale );
-	const rotated    = u.matVecMul( u.rotation2D(rotation), scaled );
-	const translated = u.addVec( rotated, translation );
+	const relativeToCentre = u.subVec( vert, centre );
+	const scaled           = u.scaleVec( relativeToCentre, scale );
+	const rotated          = u.matVecMul( u.rotation2D(rotation), scaled );
+	const translated       = u.addVec( rotated, u.addVec( translation, centre ) );
 
 	return translated;
 }
@@ -67,7 +68,7 @@ function findMapParams( srcVerts, dstVerts ) {
 	const rotation = - phaseOfSum || 0;
 
 
-	return [ scale, rotation, translation ];
+	return [ srcCentre, scale, rotation, translation ];
 }
 
 
