@@ -203,6 +203,9 @@ export const rotation2D = rotation =>
 	[ [  Math.cos(rotation), -Math.sin(rotation) ],
 	  [  Math.sin(rotation),  Math.cos(rotation)] ];
 
+export const sinD = x => Math.sin( x * Math.PI/180 );
+export const cosD = x => Math.cos( x * Math.PI/180 );
+
 
 export function inverse( mat ) {
 
