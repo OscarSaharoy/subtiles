@@ -32,6 +32,7 @@ export function constructRules( svgText ) {
 	const outerGroup = shadowSVGContainer.querySelector( "g" );
 	const innerGroup = outerGroup.querySelector( "g" );
 
+	// now handle multiple outer and inner groups!!!!
 	const outerGroupTransforms = getTransforms( outerGroup );
 	const innerGroupTransforms = [ ...outerGroupTransforms, ...getTransforms( innerGroup ) ];
 
