@@ -14,14 +14,16 @@ function calcAffineTransform( sourceTriplet, targetTriplet ) {
 }
 
 
-function affineMap( innerTileSpaceVert, params ) {
+function affineMap( innerTileSpaceVert, tileSpaceCentroid, mapMatrices ) {
+	
+	const innerTileSpaceVertDirection = u.subVec( innerTileSpaceVert, tileSpaceCentroid );
 
-	for( const { tileSpaceDirections, transform } of params ) {
+	for( const { tileSpaceDirections, matrix } of mapMatrices ) {
 
-		if( !u.betweenDirections( innerTileSpaceVert, tileSpaceDirections ) )
+		if( !u.betweenDirections( innerTileSpaceVertDirection, tileSpaceDirections ) )
 			continue;
 
-		return u.matVecMul( transform, [...innerTileSpaceVert, 1] ).slice(0,2);
+		return u.matVecMul( matrix, [...innerTileSpaceVert, 1] ).slice(0,2);
 	}
 }
 
@@ -34,7 +36,7 @@ function findMapParams( outerTileSpaceVerts, outerVerts ) {
 	const tileSpaceEdgeSegments = u.vertsToSegments( outerTileSpaceVerts );
 	const edgeSegments = u.vertsToSegments( outerVerts );
 
-	const params = [];
+	const mapMatrices = [];
 
 	for( let i = 0; i < edgeSegments.length; ++i ) {
 		
@@ -46,24 +48,25 @@ function findMapParams( outerTileSpaceVerts, outerVerts ) {
 			u.normalise( tileSpaceEdge[1] ),
 		];
 
-		const transform = calcAffineTransform(
+		const matrix = calcAffineTransform(
 			[ tileSpaceCentroid, tileSpaceEdge[0], tileSpaceEdge[1] ],
 			[          centroid,          edge[0],          edge[1] ],
 		);
 
-		params.push({ tileSpaceDirections, transform });
+		mapMatrices.push({ tileSpaceDirections, matrix });
 	}
 
-	return params;
+	return mapMatrices;
 }
 
 export function affineTileMap( outerTileSpaceVerts, innerTileSpaceVerts, outerVerts ) {
 
-	const params = findMapParams( outerTileSpaceVerts, outerVerts );
+	const tileSpaceCentroid = u.meanVec( outerTileSpaceVerts );
+	const mapMatrices = findMapParams( outerTileSpaceVerts, outerVerts );
 
 	const subtileVerts = innerTileSpaceVerts.map(
 		vertArray => vertArray.map( 
-			vert => affineMap( vert, params )
+			vert => affineMap( vert, tileSpaceCentroid, mapMatrices )
 		)
 	);
 
