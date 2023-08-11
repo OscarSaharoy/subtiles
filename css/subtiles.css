@@ -30,7 +30,6 @@ body {
 #container > svg {
 	overflow: visible;
 	max-height: 100%;
-	stroke-width: 0.003;
 }
 
 svg path {

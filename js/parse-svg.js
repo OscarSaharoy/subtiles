@@ -73,7 +73,7 @@ export function getVerts( tileSVG, transforms=[] ) {
 	return verts;
 }
 
-const parseParams = string => string?.split( /[, ]+/g ).map( x => +x );
+export const parseParams = string => string?.split( /[, ]+/g ).map( x => +x );
 
 const makeTransformObj = ([ _, transformType, params ], transformOrigin) =>
 	({ type: transformType,

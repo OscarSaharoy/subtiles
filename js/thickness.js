@@ -1,5 +1,7 @@
 // Oscar Saharoy 2023
 
+import { parseParams } from "./parse-svg.js";
+
 const thicknessSlider = document.querySelector( "#thickness input" );
 
 thicknessSlider.addEventListener( "input", e => setThickness( e.target.value ) );
@@ -10,8 +12,16 @@ const svgRule = Array.prototype.find.call(
 );
 
 
-function setThickness( rangeValue ) {
+const getScale = ([ , , width, height ]) =>
+	Math.max( width, height ) * 0.01;
 
-	svgRule.style.strokeWidth = ( (rangeValue / 100) ** 2 / 40 ).toString();
+export function setThickness() {
+
+	const rangeValue = thicknessSlider.value;
+	const scale = getScale( 
+		parseParams( document.querySelector( "#container > svg" )
+			.getAttribute( "viewBox" ) ) 
+	);
+	svgRule.style.strokeWidth = ( (rangeValue / 100) ** 2 * scale ).toString();
 }
 
