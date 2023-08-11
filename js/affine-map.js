@@ -44,8 +44,8 @@ function findMapParams( outerTileSpaceVerts, outerVerts ) {
 		const edge = edgeSegments[i];
 
 		const tileSpaceDirections = [
-			u.normalise( tileSpaceEdge[0] ),
-			u.normalise( tileSpaceEdge[1] ),
+			u.normalise( u.subVec( tileSpaceEdge[0], tileSpaceCentroid ) ),
+			u.normalise( u.subVec( tileSpaceEdge[1], tileSpaceCentroid ) ),
 		];
 
 		const matrix = calcAffineTransform(
