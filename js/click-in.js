@@ -15,13 +15,8 @@ clickIns.forEach( elm =>
 // when a menu option is clicked, the menu should close
 const menuOptions = [ ...document.querySelectorAll( ".options-list p" ) ];
 
-const unhoverMenus = () => 
-	[ ...document.querySelectorAll( ".options" ) ].forEach( async elm =>
-		( elm.style.display = "none" ) + document.activeElement.blur() + await seconds(0.1) + ( elm.style.display = "" )
-	);
-
 menuOptions.forEach( elm =>
-	elm.addEventListener( "click", unhoverMenus )
+	elm.addEventListener( "click", () => document.activeElement.blur() )
 );
 
-window.addEventListener( "keydown", e => e.key == "Escape" && unhoverMenus() );
+window.addEventListener( "keydown", e => e.key == "Escape" && document.activeElement.blur() );
