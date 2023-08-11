@@ -6,7 +6,7 @@ import { plus, divisionDepth, resetDivisionDepth } from "./subdivide.js";
 import { getVerts, getTransforms } from "./parse-svg.js"
 
 
-export const svg = document.querySelector( "svg" );
+export let svg = document.querySelector( "#container > svg" );
 const uploadInput = document.getElementById( "upload-input" );
 
 const reader = new FileReader();
@@ -26,10 +26,12 @@ let svgTextCache = null;
 
 export function constructRules( svgText ) {
 
-	const shadowSVGContainer = document.createElement( "div" );
-	shadowSVGContainer.innerHTML = svgText.match( /<\s*svg.*?>(.*)<\/\s*svg.*?>/is )[0];
+	svg.outerHTML = svgText.match( /<\s*svg.*?>(.*)<\/\s*svg.*?>/is )[0];
+	svg = document.querySelector( "#container > svg" );
+	svg.removeAttribute( "width"  );
+	svg.removeAttribute( "height" );
 	
-	const outerGroup = shadowSVGContainer.querySelector( "g" );
+	const outerGroup = svg.querySelector( "g" );
 	const innerGroup = outerGroup.querySelector( "g" );
 
 	// now handle multiple outer and inner groups!!!!
