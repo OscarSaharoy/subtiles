@@ -22,17 +22,17 @@ export function plus() {
 	else
 		svgCache[ divisionDepth ] = svg.innerHTML = tileList.subdivide().toSVG();
 
-	updateCountSpan();
+	updateSubtilesCount();
 }
 
 function minus() {
 
 	divisionDepth = Math.max( 0, divisionDepth - 1 );
 	svg.innerHTML = svgCache[ divisionDepth ];
-	updateCountSpan();
+	updateSubtilesCount();
 }
 
-function updateCountSpan() {
+function updateSubtilesCount() {
 	const count = svg.innerHTML.split("\n").length;
 	const label = count === 1 ? "tile" : "subtiles"
 	countSpan.innerHTML = `${count} ${label}`;
