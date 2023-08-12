@@ -44,6 +44,7 @@ function minus() {
 
 function updateSubtilesCount() {
 	const count = svg.innerHTML.split("\n").length;
-	const label = count === 1 ? "tile" : "subtiles"
-	countSpan.innerHTML = `${count} ${label}`;
+	const sub   = divisionDepth === 0 ? "" : "sub";
+	const label = count === 1 ? "tile" : "tiles";
+	countSpan.innerHTML = `${count} ${sub}${label}`;
 }
