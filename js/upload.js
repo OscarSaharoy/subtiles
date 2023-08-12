@@ -22,7 +22,7 @@ reader.addEventListener( "load",
 
 export let tileList = null;
 export let svgCache = {};
-let svgTextCache = null;
+let importedFileCache = { svgText: undefined, filename: undefined };
 
 
 export function constructRules( svgText ) {
@@ -31,6 +31,8 @@ export function constructRules( svgText ) {
 	svg = document.querySelector( "#container > svg" );
 	svg.removeAttribute( "width"  );
 	svg.removeAttribute( "height" );
+
+	infoLog(`Finding file groups`);
 	
 	const outerGroup = svg.querySelector( "g" );
 	const innerGroup = outerGroup.querySelector( "g" );
@@ -54,7 +56,7 @@ export function ingestSVGFile( svgText, filename ) {
 
 	infoLog(`Resetting subtiles state`);
 
-	svgTextCache = svgText;
+	importedFileCache = { svgText, filename };
 
 	tileList = null;
 	svgCache = {};
@@ -63,6 +65,8 @@ export function ingestSVGFile( svgText, filename ) {
 	successLog(`Importing ${filename}`);
 
 	const [ tileSpaceVerts, subdivisionRules ] = constructRules( svgText );
+
+	successLog(`Calculated subdivision rules`);
 
 	const rootTile = new SVGTile( tileSpaceVerts );
 	tileList = new TileList( rootTile, subdivisionRules );
@@ -75,6 +79,7 @@ export function ingestSVGFile( svgText, filename ) {
 
 export function resetSubdivision() {
 	
-	ingestSVGFile( svgTextCache );
+	infoLog(`Resetting subdivision`);
+	ingestSVGFile( importedFileCache.svgText, importedFileCache.filename );
 }
 
