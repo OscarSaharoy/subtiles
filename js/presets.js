@@ -16,7 +16,7 @@ async function fetchPreset( filename ) {
 
 	const response = await fetch( `presets/${filename}.svg` );
 	const svgText = await response.text();
-	ingestSVGFile( svgText );
+	ingestSVGFile( svgText, `${filename}.svg` );
 	setThickness();
 }
 

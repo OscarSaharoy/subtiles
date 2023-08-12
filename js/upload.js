@@ -4,6 +4,7 @@ import { TileList } from "./TileList.js";
 import { SVGTile } from "./SVGTile.js";
 import { plus, divisionDepth, resetDivisionDepth } from "./subdivide.js";
 import { getVerts, getTransforms } from "./parse-svg.js"
+import { infoLog, successLog, errorLog } from "./log.js"
 
 
 export let svg = document.querySelector( "#container > svg" );
@@ -16,7 +17,7 @@ window.addEventListener( "keydown",
 uploadInput.addEventListener( "change",
 	e => reader.readAsText( uploadInput.files[0] ) );
 reader.addEventListener( "load", 
-	e => ingestSVGFile( reader.result ) );
+	e => ingestSVGFile( reader.result, uploadInput.files[0].name ) );
 
 
 export let tileList = null;
@@ -49,7 +50,9 @@ export function constructRules( svgText ) {
 }
 
 
-export function ingestSVGFile( svgText ) {
+export function ingestSVGFile( svgText, filename ) {
+
+	infoLog(`Resetting subtiles state`);
 
 	svgTextCache = svgText;
 
@@ -57,11 +60,16 @@ export function ingestSVGFile( svgText ) {
 	svgCache = {};
 	resetDivisionDepth();
 
+	successLog(`Importing ${filename}`);
+
 	const [ tileSpaceVerts, subdivisionRules ] = constructRules( svgText );
 
 	const rootTile = new SVGTile( tileSpaceVerts );
 	tileList = new TileList( rootTile, subdivisionRules );
 	svgCache[0] = tileList.toSVG();
+
+	successLog(`Running first subdivision`);
+
 	plus();
 }
 
