@@ -5,6 +5,7 @@ import { SVGTile } from "./SVGTile.js";
 import { plus, divisionDepth, resetDivisionDepth } from "./subdivide.js";
 import { getVerts, getTransforms } from "./parse-svg.js"
 import { infoLog, successLog, errorLog } from "./log.js"
+import { setThickness } from "./thickness.js";
 
 
 export let svg = document.querySelector( "#container > svg" );
@@ -31,6 +32,7 @@ export function constructRules( svgText ) {
 	svg = document.querySelector( "#container > svg" );
 	svg.removeAttribute( "width"  );
 	svg.removeAttribute( "height" );
+	setThickness();
 
 	infoLog(`Finding file groups`);
 	
