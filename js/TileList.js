@@ -5,14 +5,14 @@ import { connect, getFirstLast } from "./utility.js";
 
 export class TileList {
 	
-	constructor( first = null, subdivisionRules = {} ) {
-		this.tiles = [ first ];
-		this.subdivisionRules = subdivisionRules;
+	constructor( intialTiles, subdivisionRuleMap = {} ) {
+		this.tiles = intialTiles;
+		this.subdivisionRuleMap = subdivisionRuleMap;
 	}
 
 	subdivide() {
 
-		this.tiles = this.tiles.map( tile => tile.subdivide(this.subdivisionRules) ).flat();
+		this.tiles = this.tiles.map( tile => tile.subdivide(this.subdivisionRuleMap) ).flat();
 		return this;
 	}
 
