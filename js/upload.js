@@ -72,8 +72,6 @@ export function ingestSVGFile( svgText, filename ) {
 	tileList = new TileList( rootTile, subdivisionRules );
 	svgCache[0] = tileList.toSVG();
 
-	successLog(`Running first subdivision`);
-
 	plus();
 }
 

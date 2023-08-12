@@ -4,6 +4,7 @@ import { resetSubdivision } from "./upload.js";
 import { affineTileMap } from "./affine-map.js";
 import { conformalTileMap } from "./conformal-map.js";
 import { procrustesTileMap } from "./procrustes-map.js";
+import { infoLog } from "./log.js";
 
 
 export let tileMappingFunction = affineTileMap;
@@ -25,6 +26,7 @@ const mapMap = {
 async function setMapping( option ) {
 
 	tileMappingFunction = mapMap[option];
+	infoLog(`Using mapping function: ${option}`);
 	resetSubdivision();
 }
 

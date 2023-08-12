@@ -1,6 +1,7 @@
 // Oscar Saharoy 2023
 
 import { svg, svgCache, tileList } from "./upload.js";
+import { infoLog } from "./log.js";
 
 const countSpan = document.querySelector( "span#count" );
 const plusButton = document.getElementById( "plus" );
@@ -15,6 +16,7 @@ export const resetDivisionDepth = () => divisionDepth = 0;
 export function plus() {
 
 	++divisionDepth;
+	infoLog(`Calculating subdivision level ${divisionDepth}`);
 
 	if( divisionDepth in svgCache )
 		svg.innerHTML = svgCache[ divisionDepth ];
@@ -28,6 +30,8 @@ export function plus() {
 function minus() {
 
 	divisionDepth = Math.max( 0, divisionDepth - 1 );
+	infoLog(`Calculating subdivision level ${divisionDepth}`);
+
 	svg.innerHTML = svgCache[ divisionDepth ];
 	updateSubtilesCount();
 }
