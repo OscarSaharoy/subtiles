@@ -1,6 +1,5 @@
 // Oscar Saharoy 2023
 
-import { svg } from "./upload.js";
 import { infoLog, successLog, errorLog } from "./log.js"
 import { getVerts, getTransforms } from "./parse-svg.js"
 
@@ -24,14 +23,14 @@ function getKeyAndSubdivisionRule( subdivisionOuterGroup ) {
 	const tileSpaceVerts = getVerts( outerTileSVG, outerGroupTransforms );
 	const innerTileSpaceVerts = innerTileSVGs.map( tileSVG => getVerts(tileSVG, innerGroupTransforms) );
 
-	const key = "*";
+	const key = tileSpaceVerts.length;
 	const value = { srcVerts: tileSpaceVerts, dstVertArray: innerTileSpaceVerts };
 
 	return [ key, value ];
 }
 
 
-export function constructRules( svgText, filename ) {
+export function constructRules( svg, filename ) {
 
 	infoLog(`Finding inner subdivision groups...`);
 

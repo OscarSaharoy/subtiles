@@ -35,7 +35,9 @@ export class SVGTile {
 
 	subdivide( subdivisionRules ) {
 
-		const [ tileSpaceVerts, innerTileSpaceVerts ] = [ subdivisionRules["*"].srcVerts, subdivisionRules["*"].dstVertArray ]; // TODO support more than 1 rule
+		const nVerts = this.verts.length;
+		const [ tileSpaceVerts, innerTileSpaceVerts ] =
+			[ subdivisionRules[nVerts].srcVerts, subdivisionRules[nVerts].dstVertArray ];
 
 		const subtileVerts = tileMappingFunction( tileSpaceVerts, innerTileSpaceVerts, this.verts );
 
