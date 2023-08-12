@@ -190,43 +190,50 @@ form button.menu:active img {
 	}
 }
 
-body.help {
+main.help {
 	min-height: 100vh;
 	min-height: 100dvh;
-	display: block;
+	display: grid;
 	padding: 2rem;
 	text-align: center;
+	max-width: 50rem;
+	gap: 2rem;
 }
 
-body.help h1 {
+main.help h1 {
 	font-weight: normal;
 }
 
-body.help h2 {
+main.help h2 {
 	font-weight: normal;
-	margin-top: 2rem;
 }
 
-body.help p {
-	margin-top: 1rem;
-	text-align: left;
+main.help p {
+	text-align: justify;
 }
 
-body.help img {
-	margin-top: 1rem;
+main.help img {
 	width: 40rem;
 	max-width: 100%;
 }
 
-body.help p img {
+main.help p img {
 	margin: 0;
 	height: 0.4rem;
 	width: 1.4rem;
 	transform: scale(3) translateY(-0.06rem);
 }
 
-body.help p.caption {
-	margin-top: 0.5rem;
+main.help p.caption {
 	text-align: center;
+	margin-top: -1rem;
+}
+
+main.help pre {
+	text-align: left;
+}
+
+main.help a {
+	display: inline;
 }
 

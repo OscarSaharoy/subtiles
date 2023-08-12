@@ -10,35 +10,56 @@
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Noto+Serif&display=swap" rel="stylesheet">
+	<link rel="shortcut icon" href="assets/favicon.svg" type="image/x-icon">
 </head>
 
-<body class="help">
+<body>
+<main class="help">
 
-	<a href=".." style="float: left">back to web app</a>
-	<br>
+	<a href=".." style="justify-self: left">back to web app</a>
 	<h1> Thanks for taking a look at subtiles! </h1>
 	<p> subtiles is a web app that allows you to create subdivision tilings.
-		It takes in SVG files, with a certain format which defines the subdivision.
+		It takes in SVG files with a certain format which defines the subdivision.
 		You can supply your own files with the open <img src="../assets/open.svg"/> button 
 		or use one of the presets with the preset <img src="../assets/subsquare.svg"/> button.
 		The web app then parses the file and uses the information to calculate the subdivided geometry -
-		you can use the plus <img src="../assets/plus.svg"/> and minus <img src="../assets/minus.svg"/> buttons to increase or decrease the displayed subdivision level.
+		you can use the plus <img src="../assets/plus.svg"/> and minus <img src="../assets/minus.svg"/> buttons 
+		to increase or decrease the displayed subdivision level.
 		There are also different mapping functions which can be selected with the mapping <img src="../assets/globe.svg"/> button
-		and different colour palettes that can be selected with the palette <img src="../assets/palette.svg"/> button. Finally,
-		the thickness <img src="../assets/thickness.svg"/> button allows you to set the line thickness. </p>
+		and different colour palettes that can be selected with the palette <img src="../assets/palette.svg"/> button. 
+		Finally, the thickness <img src="../assets/thickness.svg"/> button allows you to set the line thickness. </p>
 
 	<img src="../assets/diamond.jpg" />
 	<p class="caption"> A graphic created by recursively dividing quadrilaterals into 5 more quadrilaterals. </p>
 
 	<h2> SVG input file format </h2>
 	<p> Input files can be created with an svg editor like inkscape. 
-		There should be one group in the file, which contains two items. 
-		The first is the path that should be subdivided, and the other is a group of paths which are the result of the subdivision.
-		For now, all of these paths should have the same number of vertices, have the same vertex order (eg clockwise) and have no svg `transform` property. 
-		You can take a look at the <a href="../presets/square.svg">square</a> and <a href="../presets/pentagon.svg">pentagon</a> presets for examples.</p>
+		Each path in the file represents a tile and SVG groups are used to define the relationships between them. <br>
+		Each tile type that you want to define a subdivision rule for should be in its own group. The only other thing in the group should be a group of tiles to subdivide it into.
+		Each iteration, tiles that match the outer tile will be subdivided into those in the inner group. <br>
+		Matching of tiles to subdivision rules is done by matching the number of vertices of a tile to the number of vertices in the outer tile of the subdivision rule.
+		If more than one subdivision rule matches, the stroke colours are matched to decide.
+		If no subdivision rule matches, the tile is not subdivided. </p>
+
+		<pre>
+&lt;g&gt; subdivision rule group
+├── &lt;path&gt; tile to be subdivided
+└── &lt;g&gt; inner group
+    ├── &lt;path&gt; pentagon.svg
+    ├── &lt;path&gt; square.svg
+    ├── &lt;path&gt; subtiles3.svg
+    ├── &lt;path&gt; subtiles4.svg
+    └── &lt;path&gt; subtiles5.svg
+		</pre>
+		
+	<p> You can take a look at the <a href="../presets/square.svg">square</a> and <a href="../presets/pentagon.svg">pentagon</a> presets for examples.</p>
 	
 	<h2> More Info </h2>
-	<p> If you would like to know more about subdivision tilings please take a look at the <a href="https://en.wikipedia.org/wiki/Finite_subdivision_rule" target="_black">wikipedia page</a> - the references and external links on this page are also very helpful. </p>
+	<p> If you would like to know more about subdivision tilings please take a look at the 
+		<a href="https://en.wikipedia.org/wiki/Finite_subdivision_rule" target="_black">wikipedia page</a> 
+		- the references and external links on this page are also very helpful. </p>
+
+<main>
 </body>
 
 </html>
