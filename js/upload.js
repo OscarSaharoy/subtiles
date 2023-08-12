@@ -8,7 +8,7 @@ import { infoLog, successLog, errorLog } from "./log.js"
 import { setThickness } from "./thickness.js";
 
 
-export let svg = document.querySelector( "#container > svg" );
+export let svg = document.querySelector( "main svg" );
 const uploadInput = document.getElementById( "upload-input" );
 
 const reader = new FileReader();
@@ -26,15 +26,16 @@ export let svgCache = {};
 let importedFileCache = { svgText: undefined, filename: undefined };
 
 
-export function constructRules( svgText ) {
+export function constructRules( svgText, filename ) {
 
 	svg.outerHTML = svgText.match( /<\s*svg.*?>(.*)<\/\s*svg.*?>/is )[0];
-	svg = document.querySelector( "#container > svg" );
+	svg = document.querySelector( "main svg" );
 	svg.removeAttribute( "width"  );
 	svg.removeAttribute( "height" );
 	setThickness();
 
-	infoLog(`Finding file groups`);
+	successLog(`Imported ${filename}`);
+	infoLog(`Finding subdivision groups`);
 	
 	const outerGroup = svg.querySelector( "g" );
 	const innerGroup = outerGroup.querySelector( "g" );
@@ -64,9 +65,7 @@ export function ingestSVGFile( svgText, filename ) {
 	svgCache = {};
 	resetDivisionDepth();
 
-	successLog(`Importing ${filename}`);
-
-	const [ tileSpaceVerts, subdivisionRules ] = constructRules( svgText );
+	const [ tileSpaceVerts, subdivisionRules ] = constructRules( svgText, filename );
 
 	successLog(`Calculated subdivision rules`);
 

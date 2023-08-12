@@ -8,7 +8,7 @@ thicknessSlider.addEventListener( "input", e => setThickness( e.target.value ) )
 
 const svgRule = Array.prototype.find.call( 
 	document.styleSheets[0].cssRules,
-	rule => rule instanceof CSSStyleRule && rule.selectorText == "#container > svg"
+	rule => rule instanceof CSSStyleRule && rule.selectorText == "main svg"
 );
 
 
@@ -19,7 +19,7 @@ export function setThickness() {
 
 	const rangeValue = thicknessSlider.value;
 	const scale = getScale( 
-		parseParams( document.querySelector( "#container > svg" )
+		parseParams( document.querySelector( "main svg" )
 			.getAttribute( "viewBox" ) ) 
 	);
 	svgRule.style.strokeWidth = ( (rangeValue / 100) ** 2 * scale ).toString();

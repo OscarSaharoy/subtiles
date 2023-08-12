@@ -14,9 +14,9 @@ export let divisionDepth = 0;
 export const resetDivisionDepth = () => divisionDepth = 0;
 
 export function plus() {
+	const startTime = performance.now();
 
 	++divisionDepth;
-	infoLog(`Calculating subdivision level ${divisionDepth}`);
 
 	if( divisionDepth in svgCache )
 		svg.innerHTML = svgCache[ divisionDepth ];
@@ -25,15 +25,21 @@ export function plus() {
 		svgCache[ divisionDepth ] = svg.innerHTML = tileList.subdivide().toSVG();
 
 	updateSubtilesCount();
+
+	const secondsTaken = Math.ceil( performance.now() - startTime );
+	infoLog(`Calculated subdivision level ${divisionDepth} in ${secondsTaken}ms`);
 }
 
 function minus() {
+	const startTime = performance.now();
 
 	divisionDepth = Math.max( 0, divisionDepth - 1 );
-	infoLog(`Calculating subdivision level ${divisionDepth}`);
 
 	svg.innerHTML = svgCache[ divisionDepth ];
 	updateSubtilesCount();
+
+	const secondsTaken = Math.ceil( performance.now() - startTime );
+	infoLog(`Calculated subdivision level ${divisionDepth} in ${secondsTaken}ms`);
 }
 
 function updateSubtilesCount() {

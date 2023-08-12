@@ -3,7 +3,6 @@
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
-	font-family: 'Noto Serif', serif;
 }
 
 body {
@@ -12,6 +11,7 @@ body {
 	min-height: 100dvh;
 	display: grid;
 	place-items: center;
+	font-family: 'Noto Serif', serif;
 }
 
 #container {
@@ -23,16 +23,61 @@ body {
 	grid-template-columns: 1fr;
 	grid-template-rows: calc(100vh - 8rem) min-content;
 	grid-gap: 2rem;
+	justify-items: stretch;
+	align-items: stretch;
+}
+
+main {
+	display: grid;
 	justify-items: center;
 	align-items: center;
+	position: relative;
 }
 
-#container > svg {
+main div#log {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	font-family: monospace;
+	color: white;
+	background: #000a;
+	padding: 1rem;
+	border-radius: 2rem;
+	box-sizing: content-box;
+	display: grid;
+	grid-template-rows: 2rem auto;
+	visibility: hidden;
+}
+
+main div#log button {
+	appearance: none;
+	background: transparent;
+	border: none;
+	cursor: pointer;
+	grid-row: 1;
+	grid-column: 2;
+	justify-self: right;
+}
+
+main div#log button img {
+	height: 2rem;
+	width: 2rem;
+}
+
+main div#log span {
+	grid-row: 2;
+	grid-column: 1/3;
+	overflow: scroll;
+	overflow-x: scroll;
+	white-space: nowrap;
+}
+
+main svg {
+	max-height: calc(100vh - 8rem);
 	overflow: visible;
-	max-height: 100%;
 }
 
-svg path {
+main svg path {
 	stroke-linejoin: bevel;
 }
 
@@ -74,6 +119,7 @@ form button {
 	background: transparent;
 	border: none;
 	position: relative;
+	font-family: 'Noto Serif', serif;
 }
 
 form input[type="file"] {
