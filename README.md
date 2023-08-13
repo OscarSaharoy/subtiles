@@ -7,3 +7,7 @@ Framework for creating recursive geometry and subdivision tilings. Work in progr
 ![rose tiling](https://github.com/OscarSaharoy/subtiles/blob/main/assets/rose.jpg?raw=true)
 
 ![twist tiling](https://github.com/OscarSaharoy/subtiles/blob/main/assets/twist.jpg?raw=true)
+
+![fractal](https://github.com/OscarSaharoy/subtiles/blob/main/assets/fractile.jpg?raw=true)
+
+![pentagon fractal](https://github.com/OscarSaharoy/subtiles/blob/main/assets/pentagonfractal.jpg?raw=true)
