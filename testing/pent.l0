@@ -1,0 +1,12 @@
+Number_of_tiles_including_the_four_standard_ends:
+5
+Type_of_each_of_these_tiles:
+0 1 2 3 4  
+Size_of_the_tiles
+1 1 2 1 5 
+Tile-ids_--_Adjacent_tiles_in_correct_order):
+0 4 
+1 4 
+2 4 4 
+3 4  
+4 0 1 2 2 3
