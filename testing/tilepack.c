@@ -69,6 +69,13 @@ int **newadj;    /* Indexed first by nooftiles, then by *noofnewadj.*/
 int *edgeused;   /* Indexed by noofedges. Used to keep track of which
                   * edges have already been tested for cycles.*/
 
+Readtilingforvertex();
+Computevertexgraph();
+Writeforpacking();
+Namevertex();
+Findadjacencies();
+edgefromtiletotile();
+
 main(argc, argv) int argc; char *argv[];
 {
             Readtilingforvertex();

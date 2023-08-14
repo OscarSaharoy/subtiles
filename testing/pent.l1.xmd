@@ -1,0 +1,51 @@
+<CP_Scriptfile>
+  <CPscript title="pent.l1.xmd">
+<cmd>act 0;infile_read pent.l1.xmd.p;</cmd>
+<text>Read the file into canvas 0.</text>
+<cmd>repack;layout;disp -w -c;geom_to_e;</cmd>
+<text>Pack the file, draw the circles, and change the geometry to euclidean.</text>
+<cmd>set_aim 1.0 b;set_aim 0.5 7 9 11 15</cmd>
+<text>Set the boundary angles.</text>
+<cmd>gamma 13;repack;fix; disp -w -c -e b; </cmd>
+<text>Repack the file, and draw the circles and the boundary edges.</text>
+<cmd>mark -cw -c a(7,21);disp -w -e m; </cmd>
+<text>Draw the edges corresponding to the tiling.</text>
+
+  </CPscript>
+  <CPdata>
+
+<circlepacking name="pent.l1.xmd.p">
+
+NODECOUNT: 21
+
+GEOMETRY: euclidean
+
+FLOWERS: 
+1 5 15 16 18 17 8 15
+2 5 8 17 19 10 7 8
+3 5 19 20 14 9 10 19
+4 5 21 12 13 14 20 21
+5 5 16 11 12 21 18 16
+6 5 18 21 20 19 17 18
+7 2 8 2 10 
+8 4 15 1 17 2 7 
+9 2 10 3 14 
+10 4 7 2 19 3 9 
+11 2 12 5 16 
+12 4 13 4 21 5 11 
+13 2 14 4 12 
+14 4 9 3 20 4 13 
+15 2 16 1 8 
+16 4 11 5 18 1 15 
+17 6 18 6 19 2 8 1 18 
+18 6 16 5 21 6 17 1 16 
+19 6 17 6 20 3 10 2 17 
+20 6 19 6 21 4 14 3 19 
+21 6 20 6 18 5 12 4 20 
+
+END
+
+  </circlepacking>
+
+ </CPdata>
+</CP_Scriptfile>
