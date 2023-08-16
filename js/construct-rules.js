@@ -45,6 +45,11 @@ export function constructRules( svg, filename ) {
 			.filter( containsOneGroup )
 			.filter( containsOneOf(subdivisionInnerGroups) )
 			.filter( containsOnePath );
+	
+	if( subdivisionInnerGroups.length !== subdivisionOuterGroups.length )
+		return errorLog(`Error: found ${subdivisionOuterGroups.length} outer subdivision groups. ` +
+					    `Did not find an outer subdivision group matching all the inner subdivision groups. ` +
+						`Please check your input SVG file format!`);
 
 	successLog(`Found ${subdivisionOuterGroups.length} outer subdivision groups!`);
 

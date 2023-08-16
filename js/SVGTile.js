@@ -36,6 +36,11 @@ export class SVGTile {
 	subdivide( subdivisionRules ) {
 
 		const nVerts = this.verts.length;
+		const subdivisionRule = subdivisionRules[nVerts];
+
+		if( !subdivisionRule )
+			return [ this ];
+
 		const [ tileSpaceVerts, innerTileSpaceVerts ] =
 			[ subdivisionRules[nVerts].srcVerts, subdivisionRules[nVerts].dstVertArray ];
 
