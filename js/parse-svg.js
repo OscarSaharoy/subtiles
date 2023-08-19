@@ -60,8 +60,9 @@ export function getVerts( tileSVG, transforms=[] ) {
 			const currentArgs = args.splice( 0, argsRequired );
 
 			p = pathCommandMap[commandType]( p, ...currentArgs );
-			const transformedPoint = transforms.toReversed().reduce(
-				(reducerPoint, transform) => applyTransform( reducerPoint, transform ), p );
+			const transformedPoint = transforms
+				.map( (_, i) => transforms[transforms.length - 1 - i] )
+				.reduce( (reducerPoint, transform) => applyTransform( reducerPoint, transform ), p );
 			verts.push( transformedPoint );
 
 			commandType = subsequentCommandMap[ commandType ];
