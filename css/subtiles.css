@@ -209,6 +209,7 @@ main.help h2 {
 
 main.help p {
 	text-align: justify;
+	line-height: 1.6rem;
 }
 
 main.help img {
