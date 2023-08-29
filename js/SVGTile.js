@@ -65,7 +65,7 @@ export class SVGTile {
 			d="${ u.vertsToD(this.verts) }"
 			fill="${ this.fingerprint.fill }"
 			stroke="${ this.fingerprint.stroke }"
-			data="${ JSON.stringify(this.fingerprint).replaceAll(" ","").replaceAll("\"","") }"
+			fingerprint="${ JSON.stringify(this.fingerprint).replaceAll(" ","").replaceAll("\"","") }"
 		/>`;
 	}
 }
