@@ -3,20 +3,28 @@
 import * as u from "./utility.js";
 import { tileMappingFunction } from "./mapping.js";
 import { colourFunction } from "./palette.js";
+import { svg } from "./upload.js";
 
 
 function calcFingerprint( subtile, subtileIndex, tile ) {
 
-	const tileCentre = u.meanVec( tile.verts );
-	const subtileCentre = u.meanVec( subtile.verts );
+	const [x, y, svgWidth, svgHeight ] = svg.getAttribute("viewBox").split(" ").map(s => +s);
+	const lengthScale = Math.max( svgWidth, svgHeight );
+	const scaleNormalise = vert => u.scaleVec( vert, 1/lengthScale );
+
+	const normalisedVerts = tile.verts.map( scaleNormalise );
+	const normalisedSubtileVerts = subtile.verts.map( scaleNormalise );
+
+	const normalisedTileCentre = u.meanVec( normalisedVerts );
+	const normalisedSubtileCentre = u.meanVec( normalisedSubtileVerts );
 
 	const fingerprint = { 
 		corners: tile.verts.length,
 		depth: tile.fingerprint.depth + 1,
 		cumulativeIndex: tile.fingerprint.cumulativeIndex + subtileIndex,
 		alternator: (tile.fingerprint.alternator || 0) + (subtileIndex+1) % 2,
-		centre: subtileCentre,
-		movement: u.subVec( subtileCentre, tileCentre ),
+		centre: normalisedSubtileCentre,
+		movement: u.subVec( normalisedSubtileCentre, normalisedTileCentre ),
 	};
 
 	[ fingerprint.fill, fingerprint.stroke ] = colourFunction( fingerprint );
