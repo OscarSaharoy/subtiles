@@ -8,9 +8,9 @@ import { svg } from "./subdivide.js";
 const xmlns = "http://www.w3.org/2000/svg";
 
 
-function calcFingerprint( subtile, subtileIndex, tile ) {
+function calcFingerprint( subtile, subtileIndex, parentTile ) {
 
-	if( subtileIndex === undefined || tile === undefined )
+	if( subtileIndex === undefined || parentTile === undefined )
 		return { depth: 0, fill: "white", stroke: "black" };
 
 	const [x, y, svgWidth, svgHeight ] = svg.getAttribute("viewBox").split(" ").map(s => +s);
@@ -18,17 +18,17 @@ function calcFingerprint( subtile, subtileIndex, tile ) {
 	const lengthScale = Math.max( svgWidth, svgHeight );
 	const normalise = vert => u.scaleVec( u.subVec(vert, svgOrigin), 1/lengthScale );
 
-	const normalisedVerts = tile.verts.map( normalise );
+	const normalisedVerts = parentTile.verts.map( normalise );
 	const normalisedSubtileVerts = subtile.verts.map( normalise );
 
 	const normalisedTileCentre = u.meanVec( normalisedVerts );
 	const normalisedSubtileCentre = u.meanVec( normalisedSubtileVerts );
 
 	const fingerprint = { 
-		corners: tile.verts.length,
-		depth: tile.fingerprint.depth + 1,
-		cumulativeIndex: tile.fingerprint.cumulativeIndex + subtileIndex,
-		alternator: (tile.fingerprint.alternator || 0) + (subtileIndex+1) % 2,
+		corners: parentTile.verts.length,
+		depth: parentTile.fingerprint.depth + 1,
+		cumulativeIndex: parentTile.fingerprint.cumulativeIndex + subtileIndex,
+		alternator: (parentTile.fingerprint.alternator || 0) + (subtileIndex+1) % 2,
 		centre: normalisedSubtileCentre,
 		movement: u.subVec( normalisedSubtileCentre, normalisedTileCentre ),
 	};
