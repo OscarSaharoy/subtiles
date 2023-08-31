@@ -11,11 +11,12 @@ const xmlns = "http://www.w3.org/2000/svg";
 function calcFingerprint( subtile, subtileIndex, tile ) {
 
 	const [x, y, svgWidth, svgHeight ] = svg.getAttribute("viewBox").split(" ").map(s => +s);
+	const svgOrigin = [x, y];
 	const lengthScale = Math.max( svgWidth, svgHeight );
-	const scaleNormalise = vert => u.scaleVec( vert, 1/lengthScale );
+	const normalise = vert => u.scaleVec( u.subVec(vert, svgOrigin), 1/lengthScale );
 
-	const normalisedVerts = tile.verts.map( scaleNormalise );
-	const normalisedSubtileVerts = subtile.verts.map( scaleNormalise );
+	const normalisedVerts = tile.verts.map( normalise );
+	const normalisedSubtileVerts = subtile.verts.map( normalise );
 
 	const normalisedTileCentre = u.meanVec( normalisedVerts );
 	const normalisedSubtileCentre = u.meanVec( normalisedSubtileVerts );

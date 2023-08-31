@@ -27,7 +27,7 @@ function wireframe( fingerprint ) {
 
 function rainbow( fingerprint ) {
 
-	const hue = u.dot( fingerprint.centre, [1.2, 0.8] ) * 150;
+	const hue = u.dot( fingerprint.centre, [1.2, 0.8] ) * 180;
 	const saturation = Math.abs( u.dot( u.normalise(fingerprint.movement), [1,0] ) )**3 * 50 + 50;
 	const lightness = 80 - saturation / 2.5;
 
