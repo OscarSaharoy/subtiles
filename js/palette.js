@@ -2,6 +2,7 @@
 
 import * as u from "./utility.js"
 import { resetSubdivision } from "./subdivide.js";
+import { darkMode } from "./theme.js";
 
 const paletteButton = document.querySelector( "#palette" );
 const paletteOptions = [ ...palette.querySelectorAll( ".options-list p" ) ];
@@ -22,7 +23,8 @@ const functionMap = {
 };
 
 function wireframe( fingerprint ) {
-	return [ "transparent", "black" ];
+	const stroke = darkMode ? "white" : "black";
+	return [ "transparent", stroke ];
 }
 
 function rainbow( fingerprint ) {
@@ -32,7 +34,7 @@ function rainbow( fingerprint ) {
 	const lightness = 80 - saturation / 2.5;
 
 	const fill = `hsl(${hue}deg, ${saturation}%, ${lightness}%)`;
-	const stroke = "black";
+	const stroke = darkMode ? "white" : "black";
 
 	return [ fill, stroke ];
 }

@@ -1,8 +1,25 @@
-
 * {
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
+}
+
+:root {
+	--text: black;
+	--background: white;
+	--background-transparent: #fffe;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		--text: white;
+		--background: black;
+		--background-transparent: #000e;
+	}
+	form img,
+	main.help p img {
+		filter: invert(1);
+	}
 }
 
 body {
@@ -12,6 +29,12 @@ body {
 	display: grid;
 	place-items: center;
 	font-family: 'Libre Baskerville', serif;
+	color: var(--text);
+	background: var(--background);
+}
+
+h1, h2, p, a, span, nav span a, pre {
+	color: var(--text);
 }
 
 #container {
@@ -85,7 +108,7 @@ nav {
 	grid-gap: 0.5rem;
 	grid-auto-flow: column;
 	justify-items: center;
-	background: #fffe;
+	background: var(--background-transparent);
 	padding: 1rem;
 	margin: -1rem;
 	border-radius: 2rem;
@@ -148,9 +171,9 @@ form button.menu:active .options {
 	left: 0;
 	width: max-content;
 	transform: translateY(0.35rem) translateX(-0.3rem);
-	background: white;
+	background: var(--background);
 	padding: 0.6rem 0.6rem 0.95rem 0.6rem;
-	border: 0.1rem solid black;
+	border: 0.1rem solid var(--text);
 	z-index: 2;
 
 	grid-template-rows: 1fr 1rem;
@@ -187,27 +210,6 @@ form button.menu:active img {
 
 	#container {
 		grid-template-rows: calc(100vh - 12rem) min-content;
-	}
-}
-@midawdawedia (prefers-color-scheme: dark) {
-	body {
-		background: black;
-	}
-	h1, h2, p, a, span, span a, pre {
-		color: white;
-	}
-	nav {
-		background: #000e;
-	}
-	form img,
-	main.help p img {
-		filter: invert(1);
-	}
-	form button.menu:focus .options,
-	form button.menu:focus-within .options,
-	form button.menu:active .options {
-		background: black;
-		border: 0.1rem solid white;
 	}
 }
 
@@ -255,6 +257,7 @@ main.help p.caption {
 
 main.help pre {
 	text-align: left;
+	font-size: 1.2rem;
 }
 
 main.help a {
