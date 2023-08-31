@@ -71,6 +71,8 @@ async function plus() {
 }
 
 async function minus() {
+	if( subdivisionDepth === 0 ) return;
+
 	const startTime = performance.now();
 
 	subdivisionDepth = Math.max( 0, subdivisionDepth - 1 );
@@ -82,7 +84,7 @@ async function minus() {
 	infoLog(`Calculated subdivision level ${subdivisionDepth} in ${millisecondsTaken}ms`);
 }
 
-function updateSubtilesCount() {
+export function updateSubtilesCount() {
 	const count = svg.childElementCount;
 	const sub   = subdivisionDepth === 0 ? "" : "sub";
 	const label = count === 1 ? "tile" : "tiles";

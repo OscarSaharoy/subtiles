@@ -49,6 +49,7 @@ export class SVGTile {
 
 		this.fingerprint = calcFingerprint( this, subtileIndex, parentTile );
 		this.pathElm = this.toPath();
+		this.current = true;
 	}
 
 	toPath() {
@@ -61,6 +62,18 @@ export class SVGTile {
 		return this.pathElm;
 	}
 
+	calcSubtiles( subdivisionRule ) {
+
+		const [ tileSpaceVerts, innerTileSpaceVerts ] =
+			[ subdivisionRule.srcVerts, subdivisionRule.dstVertArray ];
+
+		const subtileVerts = tileMappingFunction( tileSpaceVerts, innerTileSpaceVerts, this.verts );
+
+		this.subtiles = subtileVerts.map( (vertArray, subtileIndex) =>
+			new SVGTile( vertArray, subtileIndex, this )
+		);
+	}
+
 	async subdivide( subdivisionRules, svg ) {
 
 		const nVerts = this.verts.length;
@@ -69,39 +82,26 @@ export class SVGTile {
 		if( !subdivisionRule )
 			return [ this ];
 
-		const [ tileSpaceVerts, innerTileSpaceVerts ] =
-			[ subdivisionRules[nVerts].srcVerts, subdivisionRules[nVerts].dstVertArray ];
-
-		const subtileVerts = tileMappingFunction( tileSpaceVerts, innerTileSpaceVerts, this.verts );
-
-		this.subtiles = subtileVerts.map( (vertArray, subtileIndex) =>
-			new SVGTile( vertArray, subtileIndex, this )
-		);
+		if( !this.subtiles.length ) this.calcSubtiles(subdivisionRule);
 
 		this.pathElm.remove();
-		svg.append( ...this.subtiles.map( subtile => subtile.pathElm ) );
+		this.current = false;
 
+		svg.append( ...this.subtiles.map( subtile => subtile.pathElm ) );
 		return this.subtiles;
 	}
 
-	async unsubdivide( subdivisionRules ) {
+	async unsubdivide( subdivisionRules, svg ) {
 
-		const nVerts = this.verts.length;
-		const subdivisionRule = subdivisionRules[nVerts];
+		this.pathElm.remove();
+		this.current = false;
 
-		if( !subdivisionRule )
-			return [ this ];
+		if( this.parentTile.current ) return [];
 
-		const [ tileSpaceVerts, innerTileSpaceVerts ] =
-			[ subdivisionRules[nVerts].srcVerts, subdivisionRules[nVerts].dstVertArray ];
+		svg.append( this.parentTile.pathElm );
+		this.parentTile.current = true;
 
-		const subtileVerts = tileMappingFunction( tileSpaceVerts, innerTileSpaceVerts, this.verts );
-
-		const subtiles = this.children = subtileVerts.map( (vertArray, subtileIndex) =>
-			new SVGTile( vertArray, subtileIndex, this )
-		);
-
-		return subtiles;
+		return [this.parentTile];
 	}
 
 	area() {

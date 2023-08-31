@@ -1,5 +1,7 @@
 // Oscar Saharoy 2023
 
+import { updateSubtilesCount } from "./subdivide.js";
+
 
 export class TileTree {
 	
@@ -10,22 +12,28 @@ export class TileTree {
 
 	async subdivide(svg) {
 
-		this.currentTiles = (await Promise.all( this.currentTiles.map( tile => tile.subdivide(this.subdivisionRuleMap, svg) ) )).flat();
+		const newCurrentTiles = [];
+		for( const tile of this.currentTiles ) {
+			newCurrentTiles.push( await tile.subdivide( this.subdivisionRuleMap, svg ) );
+		}
+		this.currentTiles = newCurrentTiles.flat();
+
+		return
+		const subdivisionPromises = this.currentTiles.map( tile => tile.subdivide(this.subdivisionRuleMap, svg) );
+		this.currentTiles = (await Promise.all( subdivisionPromises )).flat();
 	}
 
-	async unsubdivide() {
+	async unsubdivide(svg) {
 
+		const newCurrentTiles = [];
+		for( const tile of this.currentTiles ) {
+			newCurrentTiles.push( await tile.unsubdivide( this.subdivisionRuleMap, svg ) );
+		}
+		this.currentTiles = newCurrentTiles.flat();
+
+		return
 		this.tiles = this.tiles.map( tile => tile.subdivide(this.subdivisionRuleMap) ).flat();
 		return this;
-	}
-
-	toPaths() {
-
-		let parsedTiles = this.currentTiles
-			.map( tile => [tile.pathElm, tile.area()] )
-			.sort( ( [path1, area1], [path2, area2] ) => area2 - area1 );
-
-		return parsedTiles.map( ([path, area]) => path );
 	}
 }
 
