@@ -1,9 +1,7 @@
 // Oscar Saharoy 2023
 
-import { connect, getFirstLast } from "./utility.js";
 
-
-export class TileList {
+export class TileTree {
 	
 	constructor( intialTiles, subdivisionRuleMap = {} ) {
 		this.tiles = intialTiles;

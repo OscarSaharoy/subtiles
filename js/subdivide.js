@@ -1,7 +1,7 @@
 // Oscar Saharoy 2023
 
 import { infoLog, successLog } from "./log.js";
-import { TileList } from "./TileList.js";
+import { TileTree } from "./TileTree.js";
 import { SVGTile } from "./SVGTile.js";
 import { setThickness } from "./thickness.js";
 import { constructRules } from "./construct-rules.js";
@@ -30,7 +30,7 @@ reader.addEventListener( "load",
 	e => ingestSVGFile( reader.result, uploadInput.files[0].name ) );
 
 
-export let tileList = null;
+export let tileTree = null;
 export let svgCache = {};
 let importedFileCache = { svgText: undefined, filename: undefined };
 
@@ -41,7 +41,7 @@ export function ingestSVGFile( svgText, filename ) {
 
 	importedFileCache = { svgText, filename };
 
-	tileList = null;
+	tileTree = null;
 	svgCache = {};
 	resetDivisionDepth();
 
@@ -58,8 +58,8 @@ export function ingestSVGFile( svgText, filename ) {
 	const [ initialVertArrays, subdivisionRules ] = constructRules( svg, filename );
 
 	const initialTiles = initialVertArrays.map( verts => new SVGTile( verts ) );
-	tileList = new TileList( initialTiles, subdivisionRules );
-	svgCache[0] = tileList.toSVG();
+	tileTree = new TileTree( initialTiles, subdivisionRules );
+	svgCache[0] = tileTree.toSVG();
 
 	plus();
 }
@@ -74,7 +74,7 @@ export function plus() {
 		svg.innerHTML = svgCache[ divisionDepth ];
 	
 	else
-		svgCache[ divisionDepth ] = svg.innerHTML = tileList.subdivide().toSVG();
+		svgCache[ divisionDepth ] = svg.innerHTML = tileTree.subdivide().toSVG();
 
 	updateSubtilesCount();
 
