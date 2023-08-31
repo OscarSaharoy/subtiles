@@ -35,6 +35,36 @@ export let svgCache = {};
 let importedFileCache = { svgText: undefined, filename: undefined };
 
 
+export function ingestSVGFile( svgText, filename ) {
+
+	infoLog(`Resetting subtiles state`);
+
+	importedFileCache = { svgText, filename };
+
+	tileList = null;
+	svgCache = {};
+	resetDivisionDepth();
+
+	infoLog(`Importing SVG file...`);
+
+	svg.outerHTML = svgText.match( /<\s*svg.*?>(.*)<\/\s*svg.*?>/is )[0];
+	svg = document.querySelector( "main svg" );
+	svg.removeAttribute( "width"  );
+	svg.removeAttribute( "height" );
+	setThickness();
+
+	successLog(`Imported ${filename}`);
+
+	const [ initialVertArrays, subdivisionRules ] = constructRules( svg, filename );
+
+	const initialTiles = initialVertArrays.map( verts => new SVGTile( verts ) );
+	tileList = new TileList( initialTiles, subdivisionRules );
+	svgCache[0] = tileList.toSVG();
+
+	plus();
+}
+
+
 export function plus() {
 	const startTime = performance.now();
 
@@ -65,39 +95,10 @@ function minus() {
 }
 
 function updateSubtilesCount() {
-	const count = svg.innerHTML.split("\n").length;
+	const count = svg.childElementCount;
 	const sub   = divisionDepth === 0 ? "" : "sub";
 	const label = count === 1 ? "tile" : "tiles";
 	countSpan.innerHTML = `${count} ${sub}${label}`;
-}
-
-export function ingestSVGFile( svgText, filename ) {
-
-	infoLog(`Resetting subtiles state`);
-
-	importedFileCache = { svgText, filename };
-
-	tileList = null;
-	svgCache = {};
-	resetDivisionDepth();
-
-	infoLog(`Importing SVG file...`);
-
-	svg.outerHTML = svgText.match( /<\s*svg.*?>(.*)<\/\s*svg.*?>/is )[0];
-	svg = document.querySelector( "main svg" );
-	svg.removeAttribute( "width"  );
-	svg.removeAttribute( "height" );
-	setThickness();
-
-	successLog(`Imported ${filename}`);
-
-	const [ initialVertArrays, subdivisionRules ] = constructRules( svg, filename );
-
-	const initialTiles = initialVertArrays.map( verts => new SVGTile( verts ) );
-	tileList = new TileList( initialTiles, subdivisionRules );
-	svgCache[0] = tileList.toSVG();
-
-	plus();
 }
 
 export function resetSubdivision() {
