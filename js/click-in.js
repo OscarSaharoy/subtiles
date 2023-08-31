@@ -2,6 +2,12 @@
 
 import { seconds } from "./utility.js";
 
+// clicking on a form button should focus it
+const focusOnClicks = [ ...document.querySelectorAll( "form button" ) ];
+
+focusOnClicks.forEach( elm => 
+	elm.addEventListener( "click", e => e.target.parentElement.focus() ) 
+);
 
 // a space or enter keypress on a `.click-in` elm should be interpreted as a click
 const clickIns = [ ...document.querySelectorAll( "form .click-in, .options-list p" ) ];
