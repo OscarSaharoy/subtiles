@@ -10,6 +10,9 @@ const xmlns = "http://www.w3.org/2000/svg";
 
 function calcFingerprint( subtile, subtileIndex, tile ) {
 
+	if( subtileIndex === undefined || tile === undefined )
+		return { depth: 0, fill: "white", stroke: "black" };
+
 	const [x, y, svgWidth, svgHeight ] = svg.getAttribute("viewBox").split(" ").map(s => +s);
 	const svgOrigin = [x, y];
 	const lengthScale = Math.max( svgWidth, svgHeight );
@@ -38,13 +41,24 @@ function calcFingerprint( subtile, subtileIndex, tile ) {
 
 export class SVGTile {
 	
-	constructor( verts ) {
+	constructor( verts, subtileIndex, parentTile ) {
 
 		this.verts = verts;
-		this.fingerprint = { depth: 0, fill: "white", stroke: "black" };
-		this.parent = null;
+		this.parent = parentTile;
 		this.children = [];
-		this.pathElm = null;
+
+		this.fingerprint = calcFingerprint( this, subtileIndex, parentTile );
+		this.pathElm = this.toPath();
+	}
+
+	toPath() {
+		this.pathElm = document.createElementNS( xmlns, "path" );
+		this.pathElm.setAttribute( "d", u.vertsToD(this.verts) );
+		this.pathElm.setAttribute( "fill", this.fingerprint.fill );
+		this.pathElm.setAttribute( "stroke", this.fingerprint.stroke );
+		this.pathElm.setAttribute( "fingerprint", this.fingerprint );
+
+		return this.pathElm;
 	}
 
 	subdivide( subdivisionRules ) {
@@ -60,11 +74,8 @@ export class SVGTile {
 
 		const subtileVerts = tileMappingFunction( tileSpaceVerts, innerTileSpaceVerts, this.verts );
 
-		const subtiles = this.children = subtileVerts.map( vertArray =>
-			new SVGTile( vertArray )
-		);
-		subtiles.forEach( (subtile, i) =>
-			[ subtile.fingerprint, subtile.parent ] = [ calcFingerprint( subtile, i, this ), this ]
+		const subtiles = this.children = subtileVerts.map( (vertArray, subtileIndex) =>
+			new SVGTile( vertArray, subtileIndex, this )
 		);
 
 		return subtiles;
@@ -72,16 +83,6 @@ export class SVGTile {
 
 	area() {
 		return Math.abs( u.signedArea( this.verts ) );
-	}
-
-	toPath() {
-		self.pathElm = document.createElementNS( xmlns, "path" );
-		self.pathElm.setAttribute( "d", u.vertsToD(this.verts) );
-		self.pathElm.setAttribute( "fill", this.fingerprint.fill );
-		self.pathElm.setAttribute( "stroke", this.fingerprint.stroke );
-		self.pathElm.setAttribute( "fingerprint", this.fingerprint );
-
-		return self.pathElm;
 	}
 }
 

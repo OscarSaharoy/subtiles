@@ -24,7 +24,7 @@ export class TileTree {
 	toPaths() {
 
 		let parsedTiles = this.currentTiles
-			.map( tile => [tile.toPath(), tile.area()] )
+			.map( tile => [tile.pathElm, tile.area()] )
 			.sort( ( [path1, area1], [path2, area2] ) => area2 - area1 );
 
 		return parsedTiles.map( ([path, area]) => path );
