@@ -44,6 +44,7 @@ export class SVGTile {
 		this.fingerprint = { depth: 0, fill: "white", stroke: "black" };
 		this.parent = null;
 		this.children = [];
+		this.pathElm = null;
 	}
 
 	subdivide( subdivisionRules ) {
@@ -74,13 +75,13 @@ export class SVGTile {
 	}
 
 	toPath() {
-		const path = document.createElementNS( xmlns, "path" );
-		path.setAttribute( "d", u.vertsToD(this.verts) );
-		path.setAttribute( "fill", this.fingerprint.fill );
-		path.setAttribute( "stroke", this.fingerprint.stroke );
-		path.setAttribute( "fingerprint", this.fingerprint );
+		self.pathElm = document.createElementNS( xmlns, "path" );
+		self.pathElm.setAttribute( "d", u.vertsToD(this.verts) );
+		self.pathElm.setAttribute( "fill", this.fingerprint.fill );
+		self.pathElm.setAttribute( "stroke", this.fingerprint.stroke );
+		self.pathElm.setAttribute( "fingerprint", this.fingerprint );
 
-		return path;
+		return self.pathElm;
 	}
 }
 

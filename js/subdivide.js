@@ -26,9 +26,9 @@ plusButton.addEventListener( "click", plus );
 minusButton.addEventListener( "click", minus );
 
 
-export const resetDivisionDepth = () => divisionDepth = 0;
+export const resetDivisionDepth = () => subdivisionDepth = 0;
 export let tileTree = null;
-export let divisionDepth = 0;
+export let subdivisionDepth = 0;
 let importedFileCache = { svgText: undefined, filename: undefined };
 
 
@@ -60,36 +60,33 @@ export function ingestSVGFile( svgText, filename ) {
 }
 
 
-export function plus() {
+async function plus() {
 	const startTime = performance.now();
 
-	++divisionDepth;
+	++subdivisionDepth;
 
-	const paths = tileTree.subdivide().toPaths();
-	svg.innerHTML = "";
-	svg.append(...paths);
-
+	await tileTree.subdivide(svg);
 	updateSubtilesCount();
 
-	const secondsTaken = Math.ceil( performance.now() - startTime );
-	infoLog(`Calculated subdivision level ${divisionDepth} in ${secondsTaken}ms`);
+	const millisecondsTaken = Math.ceil( performance.now() - startTime );
+	infoLog(`Calculated subdivision level ${subdivisionDepth} in ${millisecondsTaken}ms`);
 }
 
-function minus() {
+async function minus() {
 	const startTime = performance.now();
 
-	divisionDepth = Math.max( 0, divisionDepth - 1 );
+	subdivisionDepth = Math.max( 0, subdivisionDepth - 1 );
 
-	svg.innerHTML = svgCache[ divisionDepth ];
+	await tileTree.unsubdivide(svg);
 	updateSubtilesCount();
 
-	const secondsTaken = Math.ceil( performance.now() - startTime );
-	infoLog(`Calculated subdivision level ${divisionDepth} in ${secondsTaken}ms`);
+	const millisecondsTaken = Math.ceil( performance.now() - startTime );
+	infoLog(`Calculated subdivision level ${subdivisionDepth} in ${millisecondsTaken}ms`);
 }
 
 function updateSubtilesCount() {
 	const count = svg.childElementCount;
-	const sub   = divisionDepth === 0 ? "" : "sub";
+	const sub   = subdivisionDepth === 0 ? "" : "sub";
 	const label = count === 1 ? "tile" : "tiles";
 	countSpan.innerHTML = `${count} ${sub}${label}`;
 }

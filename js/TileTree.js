@@ -4,11 +4,18 @@
 export class TileTree {
 	
 	constructor( intialTiles, subdivisionRuleMap = {} ) {
-		this.tiles = intialTiles;
+		this.currentTiles = this.rootTiles = intialTiles;
 		this.subdivisionRuleMap = subdivisionRuleMap;
 	}
 
-	subdivide() {
+	async subdivide(svg) {
+
+		this.currentTiles = this.currentTiles.map( tile => tile.subdivide(this.subdivisionRuleMap) ).flat();
+		svg.innerHTML = "";
+		svg.append( ...this.toPaths() );
+	}
+
+	async unsubdivide() {
 
 		this.tiles = this.tiles.map( tile => tile.subdivide(this.subdivisionRuleMap) ).flat();
 		return this;
@@ -16,7 +23,7 @@ export class TileTree {
 
 	toPaths() {
 
-		let parsedTiles = this.tiles
+		let parsedTiles = this.currentTiles
 			.map( tile => [tile.toPath(), tile.area()] )
 			.sort( ( [path1, area1], [path2, area2] ) => area2 - area1 );
 
