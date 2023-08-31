@@ -10,15 +10,8 @@ import { constructRules } from "./construct-rules.js";
 const countSpan = document.querySelector( "span#count" );
 const plusButton = document.getElementById( "plus" );
 const minusButton = document.getElementById( "minus" );
-
-plusButton.addEventListener( "click", plus );
-minusButton.addEventListener( "click", minus );
-
-export let divisionDepth = 0;
-export const resetDivisionDepth = () => divisionDepth = 0;
-
-export let svg = document.querySelector( "main svg" );
 const uploadInput = document.getElementById( "upload-input" );
+export let svg = document.querySelector( "main svg" );
 
 const reader = new FileReader();
 
@@ -29,9 +22,13 @@ uploadInput.addEventListener( "change",
 reader.addEventListener( "load", 
 	e => ingestSVGFile( reader.result, uploadInput.files[0].name ) );
 
+plusButton.addEventListener( "click", plus );
+minusButton.addEventListener( "click", minus );
 
+
+export const resetDivisionDepth = () => divisionDepth = 0;
 export let tileTree = null;
-export let svgCache = {};
+export let divisionDepth = 0;
 let importedFileCache = { svgText: undefined, filename: undefined };
 
 
@@ -42,7 +39,6 @@ export function ingestSVGFile( svgText, filename ) {
 	importedFileCache = { svgText, filename };
 
 	tileTree = null;
-	svgCache = {};
 	resetDivisionDepth();
 
 	infoLog(`Importing SVG file...`);
@@ -59,7 +55,6 @@ export function ingestSVGFile( svgText, filename ) {
 
 	const initialTiles = initialVertArrays.map( verts => new SVGTile( verts ) );
 	tileTree = new TileTree( initialTiles, subdivisionRules );
-	svgCache[0] = tileTree.toSVG();
 
 	plus();
 }
@@ -70,11 +65,9 @@ export function plus() {
 
 	++divisionDepth;
 
-	if( divisionDepth in svgCache )
-		svg.innerHTML = svgCache[ divisionDepth ];
-	
-	else
-		svgCache[ divisionDepth ] = svg.innerHTML = tileTree.subdivide().toSVG();
+	const paths = tileTree.subdivide().toPaths();
+	svg.innerHTML = "";
+	svg.append(...paths);
 
 	updateSubtilesCount();
 

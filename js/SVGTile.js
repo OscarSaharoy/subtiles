@@ -5,6 +5,8 @@ import { tileMappingFunction } from "./mapping.js";
 import { colourFunction } from "./palette.js";
 import { svg } from "./subdivide.js";
 
+const xmlns = "http://www.w3.org/2000/svg";
+
 
 function calcFingerprint( subtile, subtileIndex, tile ) {
 
@@ -39,6 +41,8 @@ export class SVGTile {
 
 		this.verts = verts;
 		this.fingerprint = { depth: 0, fill: "white", stroke: "black" };
+		this.parent = null;
+		this.children = [];
 	}
 
 	subdivide( subdivisionRules ) {
@@ -54,11 +58,11 @@ export class SVGTile {
 
 		const subtileVerts = tileMappingFunction( tileSpaceVerts, innerTileSpaceVerts, this.verts );
 
-		const subtiles = subtileVerts.map( vertArray =>
+		const subtiles = this.children = subtileVerts.map( vertArray =>
 			new SVGTile( vertArray )
 		);
-		subtiles.forEach( (subtile, i) => 
-			subtile.fingerprint = calcFingerprint( subtile, i, this )
+		subtiles.forEach( (subtile, i) =>
+			[ subtile.fingerprint, subtile.parent ] = [ calcFingerprint( subtile, i, this ), this ]
 		);
 
 		return subtiles;
@@ -68,13 +72,14 @@ export class SVGTile {
 		return Math.abs( u.signedArea( this.verts ) );
 	}
 
-	toSVG() {
-		return `<path 
-			d="${ u.vertsToD(this.verts) }"
-			fill="${ this.fingerprint.fill }"
-			stroke="${ this.fingerprint.stroke }"
-			fingerprint="${ JSON.stringify(this.fingerprint).replaceAll(" ","").replaceAll("\"","") }"
-		/>`;
+	toPath() {
+		const path = document.createElementNS( xmlns, "path" );
+		path.setAttribute( "d", u.vertsToD(this.verts) );
+		path.setAttribute( "fill", this.fingerprint.fill );
+		path.setAttribute( "stroke", this.fingerprint.stroke );
+		path.setAttribute( "fingerprint", this.fingerprint );
+
+		return path;
 	}
 }
 

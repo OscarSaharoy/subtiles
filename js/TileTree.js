@@ -14,13 +14,13 @@ export class TileTree {
 		return this;
 	}
 
-	toSVG() {
+	toPaths() {
 
 		let parsedTiles = this.tiles
-			.map( tile => [tile.toSVG(), tile.area()] )
-			.sort( ( [svg1, area1], [svg2, area2] ) => area2 - area1 );
+			.map( tile => [tile.toPath(), tile.area()] )
+			.sort( ( [path1, area1], [path2, area2] ) => area2 - area1 );
 
-		return parsedTiles.map( ([svg, area]) => svg ).join( "\n" );
+		return parsedTiles.map( ([path, area]) => path );
 	}
 }
 
