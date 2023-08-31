@@ -11,7 +11,7 @@ body {
 	min-height: 100dvh;
 	display: grid;
 	place-items: center;
-	font-family: 'Noto Serif', serif;
+	font-family: 'Libre Baskerville', serif;
 }
 
 #container {
@@ -94,7 +94,7 @@ nav {
 }
 
 nav span {
-	padding: 0.05rem 1.5rem 0 1.5rem;
+	padding: 0.22rem 1.5rem 0 1.5rem;
 	font-size: 1.3rem;
 }
 
@@ -118,7 +118,7 @@ form button {
 	background: transparent;
 	border: none;
 	position: relative;
-	font-family: 'Noto Serif', serif;
+	font-family: 'Libre Baskerville', serif;
 }
 
 form input[type="file"] {
@@ -147,9 +147,9 @@ form button.menu:active .options {
 	bottom: 0;
 	left: 0;
 	width: max-content;
-	transform: translateY(0.2rem) translateX(-0.2rem);
+	transform: translateY(0.35rem) translateX(-0.3rem);
 	background: white;
-	padding: 0.5rem 0.5rem 0.9rem 0.5rem;
+	padding: 0.6rem 0.6rem 0.95rem 0.6rem;
 	border: 0.1rem solid black;
 	z-index: 2;
 
@@ -158,11 +158,12 @@ form button.menu:active .options {
 }
 
 .options p {
+	padding: 0.1rem 0.4rem 0 0;
 	cursor: pointer;
 }
 
 .options span {
-	padding: 0 0 0 2rem;
+	padding: 0 0 0 2.2rem;
 	font-size: 1rem;
 	justify-self: left;
 }
@@ -194,17 +195,17 @@ main.help {
 	min-height: 100dvh;
 	display: grid;
 	padding: 2rem;
-	text-align: center;
 	max-width: 50rem;
 	gap: 2rem;
+	justify-items: left;
 }
 
 main.help h1 {
 	font-weight: normal;
+	font-size: 3.8rem;
 }
-
-main.help h2 {
-	font-weight: normal;
+main.help p + h1 {
+	margin-top: 2rem;
 }
 
 main.help p {
@@ -215,6 +216,7 @@ main.help p {
 main.help img {
 	width: 40rem;
 	max-width: 100%;
+	justify-self: center;
 }
 
 main.help p img {
@@ -225,6 +227,7 @@ main.help p img {
 }
 
 main.help p.caption {
+	justify-self: center;
 	text-align: center;
 	margin-top: -1rem;
 }
