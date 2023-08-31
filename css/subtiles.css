@@ -189,6 +189,27 @@ form button.menu:active img {
 		grid-template-rows: calc(100vh - 12rem) min-content;
 	}
 }
+@midawdawedia (prefers-color-scheme: dark) {
+	body {
+		background: black;
+	}
+	h1, h2, p, a, span, span a, pre {
+		color: white;
+	}
+	nav {
+		background: #000e;
+	}
+	form img,
+	main.help p img {
+		filter: invert(1);
+	}
+	form button.menu:focus .options,
+	form button.menu:focus-within .options,
+	form button.menu:active .options {
+		background: black;
+		border: 0.1rem solid white;
+	}
+}
 
 main.help {
 	min-height: 100vh;
