@@ -3,7 +3,7 @@
 import * as u from "./utility.js";
 import { tileMappingFunction } from "./mapping.js";
 import { colourFunction } from "./palette.js";
-import { svg } from "./upload.js";
+import { svg } from "./subdivide.js";
 
 
 function calcFingerprint( subtile, subtileIndex, tile ) {

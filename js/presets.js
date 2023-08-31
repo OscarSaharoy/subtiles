@@ -1,6 +1,6 @@
 // Oscar Saharoy 2023
 
-import { ingestSVGFile } from "./upload.js";
+import { ingestSVGFile } from "./subdivide.js";
 
 
 const presetButton = document.getElementById( "preset" );

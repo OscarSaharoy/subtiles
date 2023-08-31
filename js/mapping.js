@@ -1,6 +1,6 @@
 // Oscar Saharoy 2023
 
-import { resetSubdivision } from "./upload.js";
+import { resetSubdivision } from "./subdivide.js";
 import { affineTileMap } from "./affine-map.js";
 import { conformalTileMap } from "./conformal-map.js";
 import { procrustesTileMap } from "./procrustes-map.js";

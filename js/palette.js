@@ -1,7 +1,7 @@
 // Oscar Saharoy 2023
 
 import * as u from "./utility.js"
-import { resetSubdivision } from "./upload.js";
+import { resetSubdivision } from "./subdivide.js";
 
 const paletteButton = document.querySelector( "#palette" );
 const paletteOptions = [ ...palette.querySelectorAll( ".options-list p" ) ];
