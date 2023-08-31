@@ -49,6 +49,7 @@ export function ingestSVGFile( svgText, filename ) {
 	successLog(`Imported ${filename}`);
 
 	const [ initialVertArrays, subdivisionRules ] = constructRules( svg, filename );
+	svg.innerHTML = "";
 
 	const initialTiles = initialVertArrays.map( verts => new SVGTile( verts ) );
 	tileTree = new TileTree( initialTiles, subdivisionRules );

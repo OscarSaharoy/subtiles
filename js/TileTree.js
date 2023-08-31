@@ -10,9 +10,7 @@ export class TileTree {
 
 	async subdivide(svg) {
 
-		this.currentTiles = this.currentTiles.map( tile => tile.subdivide(this.subdivisionRuleMap) ).flat();
-		svg.innerHTML = "";
-		svg.append( ...this.toPaths() );
+		this.currentTiles = (await Promise.all( this.currentTiles.map( tile => tile.subdivide(this.subdivisionRuleMap, svg) ) )).flat();
 	}
 
 	async unsubdivide() {

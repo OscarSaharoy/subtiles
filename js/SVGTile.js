@@ -44,8 +44,8 @@ export class SVGTile {
 	constructor( verts, subtileIndex, parentTile ) {
 
 		this.verts = verts;
-		this.parent = parentTile;
-		this.children = [];
+		this.parentTile = parentTile;
+		this.subtiles = [];
 
 		this.fingerprint = calcFingerprint( this, subtileIndex, parentTile );
 		this.pathElm = this.toPath();
@@ -61,7 +61,30 @@ export class SVGTile {
 		return this.pathElm;
 	}
 
-	subdivide( subdivisionRules ) {
+	async subdivide( subdivisionRules, svg ) {
+
+		const nVerts = this.verts.length;
+		const subdivisionRule = subdivisionRules[nVerts];
+
+		if( !subdivisionRule )
+			return [ this ];
+
+		const [ tileSpaceVerts, innerTileSpaceVerts ] =
+			[ subdivisionRules[nVerts].srcVerts, subdivisionRules[nVerts].dstVertArray ];
+
+		const subtileVerts = tileMappingFunction( tileSpaceVerts, innerTileSpaceVerts, this.verts );
+
+		this.subtiles = subtileVerts.map( (vertArray, subtileIndex) =>
+			new SVGTile( vertArray, subtileIndex, this )
+		);
+
+		this.pathElm.remove();
+		svg.append( ...this.subtiles.map( subtile => subtile.pathElm ) );
+
+		return this.subtiles;
+	}
+
+	async unsubdivide( subdivisionRules ) {
 
 		const nVerts = this.verts.length;
 		const subdivisionRule = subdivisionRules[nVerts];
