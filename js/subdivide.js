@@ -15,12 +15,9 @@ export let svg = document.querySelector( "main svg" );
 
 const reader = new FileReader();
 
-window.addEventListener( "keydown",
-	e => e.key == "o" && uploadInput.click() );
-uploadInput.addEventListener( "change",
-	e => reader.readAsText( uploadInput.files[0] ) );
-reader.addEventListener( "load", 
-	e => ingestSVGFile( reader.result, uploadInput.files[0].name ) );
+window.addEventListener( "keydown", e => e.key == "o" && uploadInput.click() );
+uploadInput.addEventListener( "change", e => reader.readAsText( uploadInput.files[0] ) );
+reader.addEventListener( "load", e => ingestSVGFile( reader.result, uploadInput.files[0].name ) );
 
 plusButton.addEventListener( "click", plus );
 minusButton.addEventListener( "click", minus );
