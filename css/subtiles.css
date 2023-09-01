@@ -78,6 +78,11 @@ main div#log {
 	visibility: hidden;
 }
 
+main div#log h2,
+main div#log p {
+	color: white;
+}
+
 main div#log button {
 	appearance: none;
 	background: transparent;
