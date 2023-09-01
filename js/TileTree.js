@@ -23,7 +23,7 @@ export class TileTree {
 		).flat() );
 
 		svg.innerHTML = "";
-		svg.append( ...this.currentTiles.map( tile => tile.pathElm ) );	
+		this.currentTiles.forEach( tile => svg.append( tile.pathElm ) );
 	}
 
 	unsubdivide(svg) {
@@ -33,7 +33,7 @@ export class TileTree {
 		).flat();
 
 		svg.innerHTML = "";
-		svg.append( ...this.currentTiles.map( tile => tile.pathElm ) );	
+		this.currentTiles.forEach( tile => svg.append( tile.pathElm ) );
 	}
 
 	recolour() {
