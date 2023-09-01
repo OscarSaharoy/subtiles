@@ -2,7 +2,7 @@
 
 import * as u from "./utility.js"
 import { recolour } from "./subdivide.js";
-import { darkMode } from "./theme.js";
+import { darkMode } from "./dark-mode.js";
 
 const paletteButton = document.querySelector( "#palette" );
 const paletteOptions = [ ...palette.querySelectorAll( ".options-list p" ) ];

@@ -9,13 +9,13 @@ body {
 	--background: white;
 	--background-transparent: #fffe;
 }
-body.dark {
+body.dark-mode {
 	--text: white;
 	--background: black;
 	--background-transparent: #000b;
 }
-body.dark form img,
-body.dark main.help p img {
+body.dark-mode form img,
+body.dark-mode main.help p img {
 	filter: invert(1);
 }
 
