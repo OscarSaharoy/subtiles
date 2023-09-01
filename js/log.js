@@ -7,7 +7,7 @@ const logCloseButton = logWindow.querySelector( "button" );
 export const showLog = () => [ logWindow.style.visibility, logSpan.scrollTop ] = [ "visible", logSpan.scrollHeight ];
 export const hideLog = () => logWindow.style.visibility = "hidden";
 
-document.addEventListener( "keydown", event => event.key === "l" && showLog() );
+document.addEventListener( "keydown", event => "lL".includes(event.key) && showLog() );
 document.addEventListener( "keydown", event => event.key === "Escape" && hideLog() );
 logCloseButton.onclick = hideLog;
 
