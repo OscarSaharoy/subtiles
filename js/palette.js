@@ -1,7 +1,7 @@
 // Oscar Saharoy 2023
 
 import * as u from "./utility.js"
-import { resetSubdivision } from "./subdivide.js";
+import { recolour } from "./subdivide.js";
 import { darkMode } from "./theme.js";
 
 const paletteButton = document.querySelector( "#palette" );
@@ -13,7 +13,12 @@ paletteOptions.forEach( option => option.onclick =
 
 function setColourFunction( functionName ) {
 	colourFunction = functionMap[ functionName ];
-	resetSubdivision();
+	recolour();
+}
+
+export function rootTileFillAndStroke() {
+	const stroke = darkMode ? "white" : "black";
+	return { fill: "transparent", stroke: stroke };
 }
 
 const functionMap = {

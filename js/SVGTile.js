@@ -2,7 +2,7 @@
 
 import * as u from "./utility.js";
 import { tileMappingFunction } from "./mapping.js";
-import { colourFunction } from "./palette.js";
+import { colourFunction, rootTileFillAndStroke } from "./palette.js";
 import { svg } from "./subdivide.js";
 
 const xmlns = "http://www.w3.org/2000/svg";
@@ -11,7 +11,7 @@ const xmlns = "http://www.w3.org/2000/svg";
 function calcFingerprint( subtile, subtileIndex, parentTile ) {
 
 	if( subtileIndex === undefined || parentTile === undefined )
-		return { depth: 0, fill: "white", stroke: "black" };
+		return { depth: 0, ...rootTileFillAndStroke() };
 
 	const [x, y, svgWidth, svgHeight ] = svg.getAttribute("viewBox").split(" ").map(s => +s);
 	const svgOrigin = [x, y];
@@ -97,6 +97,15 @@ export class SVGTile {
 		this.parentTile.current = true;
 
 		return [ this.parentTile ];
+	}
+
+	recolour() {
+		if( this.fingerprint.depth !== 0 ) {
+			[ this.fingerprint.fill, this.fingerprint.stroke ] = colourFunction( this.fingerprint );
+			this.pathElm.setAttribute( "fill", this.fingerprint.fill );
+			this.pathElm.setAttribute( "stroke", this.fingerprint.stroke );
+		}
+		this.subtiles.forEach( tile => tile.recolour() );
 	}
 }
 

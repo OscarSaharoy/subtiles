@@ -35,5 +35,9 @@ export class TileTree {
 		svg.innerHTML = "";
 		svg.append( ...this.currentTiles.map( tile => tile.pathElm ) );	
 	}
+
+	recolour() {
+		this.rootTiles.forEach( tile => tile.recolour() );
+	}
 }
 

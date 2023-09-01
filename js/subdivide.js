@@ -22,12 +22,12 @@ reader.addEventListener( "load", e => ingestSVGFile( reader.result, uploadInput.
 plusButton.addEventListener( "click", plus );
 minusButton.addEventListener( "click", minus );
 
-
-export const resetDivisionDepth = () => subdivisionDepth = 0;
 export let tileTree = null;
 export let subdivisionDepth = 0;
 let importedFileCache = { svgText: undefined, filename: undefined };
 
+export const resetDivisionDepth = () => subdivisionDepth = 0;
+export const recolour = () => tileTree.recolour();
 
 export function ingestSVGFile( svgText, filename ) {
 
