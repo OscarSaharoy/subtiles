@@ -4,22 +4,19 @@
 	box-sizing: border-box;
 }
 
-:root {
+body {
 	--text: black;
 	--background: white;
 	--background-transparent: #fffe;
 }
-
-@media (prefers-color-scheme: dark) {
-	:root {
-		--text: white;
-		--background: black;
-		--background-transparent: #000e;
-	}
-	form img,
-	main.help p img {
-		filter: invert(1);
-	}
+body.dark {
+	--text: white;
+	--background: black;
+	--background-transparent: #000e;
+}
+body.dark form img,
+body.dark main.help p img {
+	filter: invert(1);
 }
 
 body {

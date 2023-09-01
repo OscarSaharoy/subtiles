@@ -14,52 +14,54 @@
 </head>
 
 <body>
-<main class="help">
+	<main class="help">
 
-	<a href=".." style="justify-self: left">back to web app</a>
-	<h1> Thanks for taking a look at subtiles! </h1>
-	<p> subtiles is a web app that allows you to create subdivision tilings.
-		It takes in SVG files with a certain format which defines the subdivision.
-		You can supply your own files with the open <img src="../assets/open.svg"/> button 
-		or use one of the presets with the preset <img src="../assets/subsquare.svg"/> button.
-		The web app then parses the file and uses the information to calculate the subdivided geometry -
-		you can use the plus <img src="../assets/plus.svg"/> and minus <img src="../assets/minus.svg"/> buttons 
-		to increase or decrease the displayed subdivision level.
-		There are also different mapping functions which can be selected with the mapping <img src="../assets/globe.svg"/> button
-		and different colour palettes that can be selected with the palette <img src="../assets/palette.svg"/> button. 
-		Finally, the thickness <img src="../assets/thickness.svg"/> button allows you to set the line thickness. </p>
+		<a href=".." style="justify-self: left">back to web app</a>
+		<h1> Thanks for taking a look at subtiles! </h1>
+		<p> subtiles is a web app that allows you to create subdivision tilings.
+			It takes in SVG files with a certain format which defines the subdivision.
+			You can supply your own files with the open <img src="../assets/open.svg"/> button 
+			or use one of the presets with the preset <img src="../assets/subsquare.svg"/> button.
+			The web app then parses the file and uses the information to calculate the subdivided geometry -
+			you can use the plus <img src="../assets/plus.svg"/> and minus <img src="../assets/minus.svg"/> buttons 
+			to increase or decrease the displayed subdivision level.
+			There are also different mapping functions which can be selected with the mapping <img src="../assets/globe.svg"/> button
+			and different colour palettes that can be selected with the palette <img src="../assets/palette.svg"/> button. 
+			Finally, the thickness <img src="../assets/thickness.svg"/> button allows you to set the line thickness. </p>
 
-	<img src="../assets/diamond.jpg" />
-	<p class="caption"> A graphic created by recursively dividing quadrilaterals into 5 more quadrilaterals. </p>
+		<img src="../assets/diamond.jpg" />
+		<p class="caption"> A graphic created by recursively dividing quadrilaterals into 5 more quadrilaterals. </p>
 
-	<h1> SVG input file format </h1>
-	<p> Input files can be created with an svg editor like inkscape. 
-		Each path in the file represents a tile and SVG groups are used to define the relationships between them. <br><br>
-		Each tile type that you want to define a subdivision rule for should be in its own group. The only other thing in the group should be a group of tiles to subdivide it into.
-		Each iteration, tiles that match the outer tile will be subdivided into those in the inner group. <br><br>
-		Matching of tiles to subdivision rules is done by matching the number of vertices of a tile to the number of vertices in the outer tile of the subdivision rule.
-		If more than one subdivision rule matches, the stroke colours are matched to decide.
-		If no subdivision rule matches, the tile is not subdivided. </p>
+		<h1> SVG input file format </h1>
+		<p> Input files can be created with an svg editor like inkscape. 
+			Each path in the file represents a tile and SVG groups are used to define the relationships between them. <br><br>
+			Each tile type that you want to define a subdivision rule for should be in its own group. The only other thing in the group should be a group of tiles to subdivide it into.
+			Each iteration, tiles that match the outer tile will be subdivided into those in the inner group. <br><br>
+			Matching of tiles to subdivision rules is done by matching the number of vertices of a tile to the number of vertices in the outer tile of the subdivision rule.
+			If more than one subdivision rule matches, the stroke colours are matched to decide.
+			If no subdivision rule matches, the tile is not subdivided. </p>
 
-		<pre>
-&lt;g&gt; subdivision rule group
-├── &lt;path&gt; tile to be subdivided
-└── &lt;g&gt; inner group
-    ├── &lt;path&gt; pentagon.svg
-    ├── &lt;path&gt; square.svg
-    ├── &lt;path&gt; subtiles3.svg
-    ├── &lt;path&gt; subtiles4.svg
-    └── &lt;path&gt; subtiles5.svg
-		</pre>
+			<pre>
+	&lt;g&gt; subdivision rule group
+	├── &lt;path&gt; tile to be subdivided
+	└── &lt;g&gt; inner group
+		├── &lt;path&gt; pentagon.svg
+		├── &lt;path&gt; square.svg
+		├── &lt;path&gt; subtiles3.svg
+		├── &lt;path&gt; subtiles4.svg
+		└── &lt;path&gt; subtiles5.svg
+			</pre>
+			
+		<p> You can take a look at the <a href="../presets/square.svg">square</a> and <a href="../presets/pentagon.svg">pentagon</a> presets for examples.</p>
 		
-	<p> You can take a look at the <a href="../presets/square.svg">square</a> and <a href="../presets/pentagon.svg">pentagon</a> presets for examples.</p>
-	
-	<h1> More Info </h2>
-	<p> If you would like to know more about subdivision tilings please take a look at the 
-		<a href="https://en.wikipedia.org/wiki/Finite_subdivision_rule" target="_black">wikipedia page</a> 
-		- the references and external links on this page are also very helpful. </p>
+		<h1> More Info </h2>
+		<p> If you would like to know more about subdivision tilings please take a look at the 
+			<a href="https://en.wikipedia.org/wiki/Finite_subdivision_rule" target="_black">wikipedia page</a> 
+			- the references and external links on this page are also very helpful. </p>
 
-<main>
+	</main>
+	<script type="module" src="../js/theme.js"></script>
 </body>
+
 
 </html>
