@@ -47,6 +47,7 @@ export class SVGTile {
 		this.parentTile = parentTile;
 		this.subtiles = [];
 
+		this.area = Math.abs( u.signedArea( this.verts ) );
 		this.fingerprint = calcFingerprint( this, subtileIndex, parentTile );
 		this.pathElm = this.toPath();
 		this.current = true;
@@ -74,8 +75,8 @@ export class SVGTile {
 		);
 	}
 
-	async subdivide( subdivisionRules, svg ) {
-
+	subdivide( subdivisionRules ) {
+		
 		const nVerts = this.verts.length;
 		const subdivisionRule = subdivisionRules[nVerts];
 
@@ -84,28 +85,18 @@ export class SVGTile {
 
 		if( !this.subtiles.length ) this.calcSubtiles(subdivisionRule);
 
-		this.pathElm.remove();
 		this.current = false;
-
-		svg.append( ...this.subtiles.map( subtile => subtile.pathElm ) );
 		return this.subtiles;
 	}
 
-	async unsubdivide( subdivisionRules, svg ) {
-
-		this.pathElm.remove();
-		this.current = false;
-
+	unsubdivide() {
+		
 		if( this.parentTile.current ) return [];
-
-		svg.append( this.parentTile.pathElm );
+		
+		this.current = false;
 		this.parentTile.current = true;
 
-		return [this.parentTile];
-	}
-
-	area() {
-		return Math.abs( u.signedArea( this.verts ) );
+		return [ this.parentTile ];
 	}
 }
 

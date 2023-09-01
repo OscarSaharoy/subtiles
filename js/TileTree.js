@@ -3,6 +3,12 @@
 import { updateSubtilesCount } from "./subdivide.js";
 
 
+function sortTilesByArea( tiles ) {
+
+	return tiles.sort( (tileA, tileB) => tileB.area - tileA.area );
+}
+
+
 export class TileTree {
 	
 	constructor( intialTiles, subdivisionRuleMap = {} ) {
@@ -12,28 +18,22 @@ export class TileTree {
 
 	async subdivide(svg) {
 
-		const newCurrentTiles = [];
-		for( const tile of this.currentTiles ) {
-			newCurrentTiles.push( await tile.subdivide( this.subdivisionRuleMap, svg ) );
-		}
-		this.currentTiles = newCurrentTiles.flat();
+		this.currentTiles = sortTilesByArea( this.currentTiles.map(
+			tile => tile.subdivide( this.subdivisionRuleMap )
+		).flat() );
 
-		return
-		const subdivisionPromises = this.currentTiles.map( tile => tile.subdivide(this.subdivisionRuleMap, svg) );
-		this.currentTiles = (await Promise.all( subdivisionPromises )).flat();
+		svg.innerHTML = "";
+		svg.append( ...this.currentTiles.map( tile => tile.pathElm ) );	
 	}
 
 	async unsubdivide(svg) {
 
-		const newCurrentTiles = [];
-		for( const tile of this.currentTiles ) {
-			newCurrentTiles.push( await tile.unsubdivide( this.subdivisionRuleMap, svg ) );
-		}
-		this.currentTiles = newCurrentTiles.flat();
+		this.currentTiles = this.currentTiles.map(
+			tile => tile.unsubdivide()
+		).flat();
 
-		return
-		this.tiles = this.tiles.map( tile => tile.subdivide(this.subdivisionRuleMap) ).flat();
-		return this;
+		svg.innerHTML = "";
+		svg.append( ...this.currentTiles.map( tile => tile.pathElm ) );	
 	}
 }
 
