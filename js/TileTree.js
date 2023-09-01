@@ -16,7 +16,7 @@ export class TileTree {
 		this.subdivisionRuleMap = subdivisionRuleMap;
 	}
 
-	async subdivide(svg) {
+	subdivide(svg) {
 
 		this.currentTiles = sortTilesByArea( this.currentTiles.map(
 			tile => tile.subdivide( this.subdivisionRuleMap )
@@ -26,7 +26,7 @@ export class TileTree {
 		svg.append( ...this.currentTiles.map( tile => tile.pathElm ) );	
 	}
 
-	async unsubdivide(svg) {
+	unsubdivide(svg) {
 
 		this.currentTiles = this.currentTiles.map(
 			tile => tile.unsubdivide()
