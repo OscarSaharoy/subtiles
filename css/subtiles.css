@@ -14,9 +14,18 @@ body.dark-mode {
 	--background: black;
 	--background-transparent: #000b;
 }
-body.dark-mode form img,
-body.dark-mode main.help p img {
+body.dark-mode form img {
 	filter: invert(1);
+}
+@media (prefers-color-scheme: dark) {
+	body.help {
+		--text: white;
+		--background: black;
+		--background-transparent: #000b;
+	}
+	main.help p img {
+		filter: invert(1);
+	}
 }
 
 body {
