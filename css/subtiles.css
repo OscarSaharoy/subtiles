@@ -12,7 +12,7 @@ body {
 body.dark {
 	--text: white;
 	--background: black;
-	--background-transparent: #000e;
+	--background-transparent: #000b;
 }
 body.dark form img,
 body.dark main.help p img {
@@ -110,7 +110,8 @@ nav {
 	margin: -1rem;
 	border-radius: 2rem;
 	justify-self: right;
-	transform: translateX(calc(-50vw + 17.7rem));
+	transform: translateX(calc(-50vw + 17.9rem));
+	z-index: 1;
 }
 
 nav span {
@@ -198,7 +199,7 @@ form button.menu:active img {
 	width: 9rem;
 }
 
-@media( max-width: 40rem ) {
+@media( max-width: 50rem ) {
 	nav {
 		grid-auto-flow: row;
 		justify-self: center;
