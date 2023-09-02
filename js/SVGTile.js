@@ -59,6 +59,7 @@ export class SVGTile {
 		this.fingerprint = calcFingerprint( this, subtileIndex, parentTile );
 		this.pathElm = this.toPath();
 		this.current = true;
+		this.staticCount = 0;
 	}
 
 	toPath() {
@@ -88,8 +89,10 @@ export class SVGTile {
 		const nVerts = this.verts.length;
 		const subdivisionRule = subdivisionRules[nVerts];
 
-		if( !subdivisionRule )
+		if( !subdivisionRule ) {
+			++this.staticCount;
 			return [ this ];
+		}
 
 		if( !this.subtiles.length ) this.calcSubtiles(subdivisionRule);
 
@@ -100,6 +103,7 @@ export class SVGTile {
 	unsubdivide() {
 		
 		if( this.parentTile.current ) return [];
+		if( this.staticCount-- > 0 ) return [ this ];
 		
 		this.current = false;
 		this.parentTile.current = true;

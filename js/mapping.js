@@ -23,7 +23,7 @@ const mapMap = {
 	"procrustes": procrustesTileMap,
 };
 
-async function setMapping( option ) {
+function setMapping( option ) {
 
 	tileMappingFunction = mapMap[option];
 	infoLog(`Using mapping function: ${option}`);

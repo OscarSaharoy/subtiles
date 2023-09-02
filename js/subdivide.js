@@ -58,26 +58,26 @@ export function ingestSVGFile( svgText, filename ) {
 }
 
 
-async function plus() {
+function plus() {
 	const startTime = performance.now();
 
 	++subdivisionDepth;
 
-	await tileTree.subdivide(svg);
+	tileTree.subdivide(svg);
 	updateSubtilesCount();
 
 	const millisecondsTaken = Math.ceil( performance.now() - startTime );
 	infoLog(`Calculated subdivision level ${subdivisionDepth} in ${millisecondsTaken}ms`);
 }
 
-async function minus() {
+function minus() {
 	if( subdivisionDepth === 0 ) return;
 
 	const startTime = performance.now();
 
-	subdivisionDepth = Math.max( 0, subdivisionDepth - 1 );
+	--subdivisionDepth;
 
-	await tileTree.unsubdivide(svg);
+	tileTree.unsubdivide(svg);
 	updateSubtilesCount();
 
 	const millisecondsTaken = Math.ceil( performance.now() - startTime );
