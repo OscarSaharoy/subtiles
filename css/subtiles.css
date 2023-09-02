@@ -281,3 +281,7 @@ main.help a {
 	display: inline;
 }
 
+main.help p:last-child {
+	margin-bottom: 2rem;
+}
+
