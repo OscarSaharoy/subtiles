@@ -26,7 +26,6 @@ export let tileTree = null;
 export let subdivisionDepth = 0;
 let importedFileCache = { svgText: undefined, filename: undefined };
 
-export const resetDivisionDepth = () => subdivisionDepth = 0;
 export const recolour = () => tileTree.recolour();
 
 export function ingestSVGFile( svgText, filename ) {
@@ -36,7 +35,7 @@ export function ingestSVGFile( svgText, filename ) {
 	importedFileCache = { svgText, filename };
 
 	tileTree = null;
-	resetDivisionDepth();
+	subdivisionDepth = 0;
 
 	infoLog(`Importing SVG file...`);
 
