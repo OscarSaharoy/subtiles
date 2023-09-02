@@ -3,6 +3,7 @@
 import * as u from "./utility.js"
 import { recolour } from "./subdivide.js";
 import { darkMode } from "./dark-mode.js";
+import { infoLog } from "./log.js";
 
 const paletteButton = document.querySelector( "#palette" );
 const paletteOptions = [ ...palette.querySelectorAll( ".options-list p" ) ];
@@ -13,6 +14,7 @@ paletteOptions.forEach( option => option.onclick =
 
 function setColourFunction( functionName ) {
 	colourFunction = functionMap[ functionName ];
+	infoLog(`Using colouring function: ${functionName}`);
 	recolour();
 }
 
