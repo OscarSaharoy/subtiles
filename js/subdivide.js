@@ -3,14 +3,16 @@
 import { infoLog, successLog } from "./log.js";
 import { TileTree } from "./TileTree.js";
 import { SVGTile } from "./SVGTile.js";
-import { setThickness, getThickness } from "./thickness.js";
+import { setThickness } from "./thickness.js";
 import { constructRules } from "./construct-rules.js";
+import { download } from "./download.js";
 
 
 const countSpan = document.querySelector( "span#count" );
 const plusButton = document.getElementById( "plus" );
 const minusButton = document.getElementById( "minus" );
 const uploadInput = document.getElementById( "upload-input" );
+const downloadButton = document.querySelector( "button#download" );
 export let svg = document.querySelector( "main svg" );
 
 const reader = new FileReader();
@@ -21,18 +23,17 @@ reader.addEventListener( "load", e => ingestSVGFile( reader.result, uploadInput.
 
 plusButton.addEventListener( "click", plus );
 minusButton.addEventListener( "click", minus );
+downloadButton.addEventListener( "click", () => download( svg, importedFileCache ) );
 
 export let tileTree = null;
 export let subdivisionDepth = 0;
-let importedFileCache = { svgText: undefined, filename: undefined };
+let importedFileCache = { svgText: null, filename: null, width: null, height: null };
 
 export const recolour = () => tileTree.recolour();
 
 export function ingestSVGFile( svgText, filename ) {
 
 	infoLog(`Resetting subtiles state`);
-
-	importedFileCache = { svgText, filename };
 
 	tileTree = null;
 	subdivisionDepth = 0;
@@ -41,6 +42,10 @@ export function ingestSVGFile( svgText, filename ) {
 
 	svg.outerHTML = svgText.match( /<\s*svg.*?>(.*)<\/\s*svg.*?>/is )[0];
 	svg = document.querySelector( "main svg" );
+
+	const [ width, height ] = [ svg.getAttribute( "width" ), svg.getAttribute( "height" ) ];
+	importedFileCache = { svgText, filename, width, height };
+
 	svg.removeAttribute( "width"  );
 	svg.removeAttribute( "height" );
 	setThickness();
