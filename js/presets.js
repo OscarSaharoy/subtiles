@@ -18,5 +18,5 @@ async function fetchPreset( filename ) {
 	ingestSVGFile( svgText, `${filename}.svg` );
 }
 
-fetchPreset( "square" );
+fetchPreset( "trisquare" );
 
