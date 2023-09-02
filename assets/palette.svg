@@ -2,13 +2,13 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
-   width="23.307077mm"
-   height="23.307077mm"
-   viewBox="0 0 23.307077 23.307077"
+   width="25mm"
+   height="25mm"
+   viewBox="0 0 25 25"
    version="1.1"
    id="svg23147"
-   inkscape:version="1.2.2 (b0a8486541, 2022-12-01)"
-   sodipodi:docname="palatte.svg"
+   inkscape:version="1.3 (0e150ed, 2023-07-21)"
+   sodipodi:docname="palette.svg"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -25,15 +25,15 @@
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="mm"
      showgrid="false"
-     inkscape:zoom="2.4577076"
-     inkscape:cx="-83.411062"
-     inkscape:cy="64.490992"
-     inkscape:window-width="1920"
-     inkscape:window-height="1054"
+     inkscape:zoom="5.7594674"
+     inkscape:cx="32.902348"
+     inkscape:cy="65.110187"
+     inkscape:window-width="1728"
+     inkscape:window-height="1051"
      inkscape:window-x="0"
-     inkscape:window-y="0"
+     inkscape:window-y="38"
      inkscape:window-maximized="1"
-     inkscape:current-layer="layer1" />
+     inkscape:current-layer="g1" />
   <defs
      id="defs23144">
     <linearGradient
@@ -117,25 +117,29 @@
      inkscape:groupmode="layer"
      id="layer1"
      transform="translate(-79.844852,-45.453647)">
-    <circle
-       style="mix-blend-mode:normal;fill:url(#linearGradient52112);fill-opacity:1;stroke:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:3.1;stroke-dasharray:none;paint-order:fill markers stroke"
-       id="circle52078"
-       cx="91.49839"
-       cy="57.107185"
-       r="10.700835" />
-    <path
-       style="mix-blend-mode:lighten;fill:url(#radialGradient54355);stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:3.1;paint-order:fill markers stroke"
-       d="m 97.221569,51.610894 a 10.694257,10.694257 0 0 0 -10.694438,10.693921 10.694257,10.694257 0 0 0 1.134815,4.783687 10.700835,10.700835 0 0 0 3.836458,0.719336 10.700835,10.700835 0 0 0 10.700636,-10.700639 10.700835,10.700835 0 0 0 -1.13016,-4.779553 10.694257,10.694257 0 0 0 -3.847311,-0.716752 z"
-       id="path54347" />
-    <path
-       style="mix-blend-mode:lighten;fill:url(#radialGradient65256);stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:3.1;paint-order:fill markers stroke"
-       d="m 91.498404,46.40656 a 10.700835,10.700835 0 0 0 -10.700639,10.700639 10.700835,10.700835 0 0 0 1.095024,4.703589 10.694257,10.694257 0 0 0 3.206006,0.494027 10.694257,10.694257 0 0 0 10.694438,-10.693921 10.694257,10.694257 0 0 0 -1.093991,-4.710307 10.700835,10.700835 0 0 0 -3.200838,-0.494027 z"
-       id="path75148" />
-    <circle
-       style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:3.1;stroke-dasharray:none;paint-order:fill markers stroke"
-       id="path36605"
-       cx="91.49839"
-       cy="57.107185"
-       r="10.700835" />
+    <g
+       id="g1"
+       transform="translate(0.8464618,0.84646164)">
+      <circle
+         style="mix-blend-mode:normal;fill:url(#linearGradient52112);fill-opacity:1;stroke:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:3.1;stroke-dasharray:none;paint-order:fill markers stroke"
+         id="circle52078"
+         cx="91.49839"
+         cy="57.107185"
+         r="10.700835" />
+      <path
+         style="mix-blend-mode:lighten;fill:url(#radialGradient54355);stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:3.1;paint-order:fill markers stroke"
+         d="m 97.221569,51.610894 a 10.694257,10.694257 0 0 0 -10.694438,10.693921 10.694257,10.694257 0 0 0 1.134815,4.783687 10.700835,10.700835 0 0 0 3.836458,0.719336 10.700835,10.700835 0 0 0 10.700636,-10.700639 10.700835,10.700835 0 0 0 -1.13016,-4.779553 10.694257,10.694257 0 0 0 -3.847311,-0.716752 z"
+         id="path54347" />
+      <path
+         style="mix-blend-mode:lighten;fill:url(#radialGradient65256);stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:3.1;paint-order:fill markers stroke"
+         d="m 91.498404,46.40656 a 10.700835,10.700835 0 0 0 -10.700639,10.700639 10.700835,10.700835 0 0 0 1.095024,4.703589 10.694257,10.694257 0 0 0 3.206006,0.494027 10.694257,10.694257 0 0 0 10.694438,-10.693921 10.694257,10.694257 0 0 0 -1.093991,-4.710307 10.700835,10.700835 0 0 0 -3.200838,-0.494027 z"
+         id="path75148" />
+      <circle
+         style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:3.1;stroke-dasharray:none;paint-order:fill markers stroke"
+         id="path36605"
+         cx="91.49839"
+         cy="57.107185"
+         r="10.700835" />
+    </g>
   </g>
 </svg>
