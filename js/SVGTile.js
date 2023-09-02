@@ -67,7 +67,7 @@ export class SVGTile {
 		this.pathElm.setAttribute( "d", u.vertsToD(this.verts) );
 		this.pathElm.setAttribute( "fill", this.fingerprint.fill );
 		this.pathElm.setAttribute( "stroke", this.fingerprint.stroke );
-		this.pathElm.setAttribute( "fingerprint", this.fingerprint );
+		this.pathElm.setAttribute( "fingerprint", JSON.stringify(this.fingerprint).replaceAll('"',"") );
 
 		return this.pathElm;
 	}
