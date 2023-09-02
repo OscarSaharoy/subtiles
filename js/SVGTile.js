@@ -2,16 +2,24 @@
 
 import * as u from "./utility.js";
 import { tileMappingFunction } from "./mapping.js";
-import { colourFunction, rootTileFillAndStroke } from "./palette.js";
+import { colourFunction, rootTileColourFunction } from "./palette.js";
 import { svg } from "./subdivide.js";
 
 const xmlns = "http://www.w3.org/2000/svg";
 
 
+const rootFingerprint = {
+	depth: 0,
+	alternator: 0,
+	cumulativeIndex: 0,
+	fill: rootTileColourFunction()[0],
+	stroke: rootTileColourFunction()[1],
+};
+
 function calcFingerprint( subtile, subtileIndex, parentTile ) {
 
 	if( subtileIndex === undefined || parentTile === undefined )
-		return { depth: 0, ...rootTileFillAndStroke() };
+		return rootFingerprint;
 
 	const [x, y, svgWidth, svgHeight ] = svg.getAttribute("viewBox").split(" ").map(s => +s);
 	const svgOrigin = [x, y];
@@ -28,7 +36,7 @@ function calcFingerprint( subtile, subtileIndex, parentTile ) {
 		corners: parentTile.verts.length,
 		depth: parentTile.fingerprint.depth + 1,
 		cumulativeIndex: parentTile.fingerprint.cumulativeIndex + subtileIndex,
-		alternator: (parentTile.fingerprint.alternator || 0) + (subtileIndex+1) % 2,
+		alternator: parentTile.fingerprint.alternator + (subtileIndex+1) % 2,
 		centre: normalisedSubtileCentre,
 		movement: u.subVec( normalisedSubtileCentre, normalisedTileCentre ),
 	};
@@ -100,11 +108,12 @@ export class SVGTile {
 	}
 
 	recolour() {
-		if( this.fingerprint.depth !== 0 ) {
-			[ this.fingerprint.fill, this.fingerprint.stroke ] = colourFunction( this.fingerprint );
-			this.pathElm.setAttribute( "fill", this.fingerprint.fill );
-			this.pathElm.setAttribute( "stroke", this.fingerprint.stroke );
-		}
+		const rootOrNormalColourFunc =
+			this.fingerprint.depth === 0 ? rootTileColourFunction : colourFunction;
+		[ this.fingerprint.fill, this.fingerprint.stroke ] = rootOrNormalColourFunc( this.fingerprint );
+		this.pathElm.setAttribute( "fill", this.fingerprint.fill );
+		this.pathElm.setAttribute( "stroke", this.fingerprint.stroke );
+
 		this.subtiles.forEach( tile => tile.recolour() );
 	}
 }

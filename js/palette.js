@@ -16,11 +16,6 @@ function setColourFunction( functionName ) {
 	recolour();
 }
 
-export function rootTileFillAndStroke() {
-	const stroke = darkMode ? "white" : "black";
-	return { fill: "transparent", stroke: stroke };
-}
-
 const functionMap = {
 	"wireframe": wireframe,
 	"rainbow": rainbow,
@@ -57,5 +52,6 @@ function tron( fingerprint ) {
 	return [ fill, stroke ];
 }
 
+export const rootTileColourFunction = wireframe;
 export let colourFunction = rainbow;
 
