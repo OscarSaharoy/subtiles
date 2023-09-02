@@ -25,3 +25,7 @@ export function setThickness() {
 	svgRule.style.strokeWidth = ( (rangeValue / 100) ** 2 * scale ).toString();
 }
 
+export function getThickness() {
+	return svgRule.style.strokeWidth;
+}
+

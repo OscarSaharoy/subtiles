@@ -3,7 +3,7 @@
 import { infoLog, successLog } from "./log.js";
 import { TileTree } from "./TileTree.js";
 import { SVGTile } from "./SVGTile.js";
-import { setThickness } from "./thickness.js";
+import { setThickness, getThickness } from "./thickness.js";
 import { constructRules } from "./construct-rules.js";
 
 
