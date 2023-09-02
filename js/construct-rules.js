@@ -14,14 +14,11 @@ function getKeyAndSubdivisionRule( subdivisionOuterGroup ) {
 
 	const innerGroup = subdivisionOuterGroup.querySelector( "g" );
 
-	const outerGroupTransforms = getTransforms( subdivisionOuterGroup );
-	const innerGroupTransforms = [ ...outerGroupTransforms, ...getTransforms( innerGroup ) ];
-
 	const outerTileSVG  = subdivisionOuterGroup.querySelector( ":scope > path" );
 	const innerTileSVGs = [ ...innerGroup.querySelectorAll( "path" ) ];
 
-	const tileSpaceVerts = getVerts( outerTileSVG, outerGroupTransforms );
-	const innerTileSpaceVerts = innerTileSVGs.map( tileSVG => getVerts(tileSVG, innerGroupTransforms) );
+	const tileSpaceVerts = getVerts( outerTileSVG );
+	const innerTileSpaceVerts = innerTileSVGs.map( getVerts );
 
 	const key = tileSpaceVerts.length;
 	const value = { srcVerts: tileSpaceVerts, dstVertArray: innerTileSpaceVerts };

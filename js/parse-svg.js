@@ -35,10 +35,9 @@ const subsequentCommandMap = {
 	v: "v",
 };
 
-export function getVerts( tileSVG, transforms=[] ) {
+export function getVerts( tileSVG ) {
 
-	const pathTransforms = getTransforms( tileSVG );
-	transforms = [ ...transforms, ...pathTransforms ];
+	const transforms = getTransforms( tileSVG );
 	
 	const d = tileSVG.getAttribute("d");
 	const letterSeperated = d.match( /([MmLlHhVvCcSsQqTtAa])([-\de\., ]*)/g );
@@ -85,11 +84,16 @@ const parseTransformString = (transformString, transformOrigin) =>
 	[ ...transformString.matchAll( /(\w+)\((.*?)\)/g ) ]
 		.map( match => makeTransformObj(match, transformOrigin) )
 
-export const getTransforms = svg =>
+export const getLocalTransforms = svg =>
 	parseTransformString(
 		svg.getAttribute( "transform" ) ?? "",
 		parseParams( svg.getAttribute( "transform-origin" ) ) || [0,0],
 	);
+
+export const getTransforms = svg =>  [
+		...( svg.parentElement.matches("g") ? getTransforms( svg.parentElement ) : [] ),
+		...getLocalTransforms( svg ),
+	];
 
 const transformMatrixMap = {
 
