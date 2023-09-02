@@ -3,8 +3,8 @@
 import { recolour } from "./subdivide.js";
 
 export let darkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-const darkModeIcon = "../assets/dark-mode.svg";
-const lightModeIcon = "../assets/light-mode.svg";
+const darkModeIcon = "assets/dark-mode.svg";
+const lightModeIcon = "assets/light-mode.svg";
 const darkModeButton = document.querySelector( "button#dark-mode" );
 darkModeButton?.addEventListener( "click", () => setDarkMode( !darkMode, true ) );
 
