@@ -260,10 +260,11 @@ main.help img {
 }
 
 main.help p img {
+	vertical-align: text-bottom;
 	margin: 0;
-	height: 0.4rem;
-	width: 1.4rem;
-	transform: scale(3) translateY(-0.06rem);
+	height: 1.6rem;
+	margin-bottom: -0.2rem;
+	width: 1rem;
 }
 
 main.help p.caption {
