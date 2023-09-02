@@ -4,10 +4,16 @@ const logWindow = document.querySelector( "div#log" );
 const logSpan = logWindow.querySelector( "span" );
 const logCloseButton = logWindow.querySelector( "button" );
 
-export const showLog = () => [ logWindow.style.visibility, logSpan.scrollTop ] = [ "visible", logSpan.scrollHeight ];
-export const hideLog = () => logWindow.style.visibility = "hidden";
+let logShown = false;
+export const toggleLog = () => logShown ? hideLog() : showLog();
+export const showLog = () =>
+	[ logWindow.style.visibility, logSpan.scrollTop, logShown ] =
+	[ "visible", logSpan.scrollHeight, true ];
+export const hideLog = () => 
+	[ logWindow.style.visibility, logShown ] = 
+	[ "hidden", false ];
 
-document.addEventListener( "keydown", event => "lL".includes(event.key) && showLog() );
+document.addEventListener( "keydown", event => "lL".includes(event.key) && toggleLog() );
 document.addEventListener( "keydown", event => event.key === "Escape" && hideLog() );
 logCloseButton.onclick = hideLog;
 
