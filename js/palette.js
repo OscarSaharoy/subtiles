@@ -3,7 +3,7 @@
 import * as u from "./utility.js"
 import { recolour } from "./subdivide.js";
 import { darkMode } from "./dark-mode.js";
-import { infoLog } from "./log.js";
+import { infoLog, showLog } from "./log.js";
 
 const paletteButton = document.querySelector( "#palette" );
 const paletteOptions = [ ...palette.querySelectorAll( ".options-list p" ) ];
@@ -22,6 +22,7 @@ const functionMap = {
 	"wireframe": wireframe,
 	"rainbow": rainbow,
 	"tron": tron,
+	"radial": radial,
 };
 
 function wireframe( fingerprint ) {
@@ -50,6 +51,31 @@ function tron( fingerprint ) {
 
 	const fill = `hsl( ${hue} ${sat} ${fillVal} )`;
 	const stroke = `hsl( ${hue} ${sat} ${strokeVal} )`;
+
+	return [ fill, stroke ];
+}
+
+function radial( fingerprint ) {
+
+	let hash = 10*u.length(fingerprint.cumulativeMovement)
+		+ u.length(u.normalise(fingerprint.movement);
+
+	hash = parseInt( hash );
+	/*
+	const hash =
+		4*u.length( fingerprint.cumulativeMovement ) +
+		4*fingerprint.corners;
+	*/
+
+	const hue = `${Math.round(hash *50)}deg`;
+	const sat = "175%";
+	const fillVal = "80%";
+	const strokeVal = "80%";
+
+	const fill   = `hsl( ${hue} ${sat} ${fillVal} )`;
+	const stroke = `hsl( ${hue} ${sat} ${strokeVal} )`;
+
+	infoLog( fill );
 
 	return [ fill, stroke ];
 }

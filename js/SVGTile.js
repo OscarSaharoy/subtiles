@@ -14,6 +14,7 @@ const rootFingerprint = {
 	cumulativeIndex: 0,
 	fill: rootTileColourFunction()[0],
 	stroke: rootTileColourFunction()[1],
+	cumulativeMovement: [ 0, 0 ],
 };
 
 function calcFingerprint( subtile, subtileIndex, parentTile ) {
@@ -23,22 +24,34 @@ function calcFingerprint( subtile, subtileIndex, parentTile ) {
 
 	const [x, y, svgWidth, svgHeight ] = svg.getAttribute("viewBox").split(" ").map(s => +s);
 	const svgOrigin = [x, y];
+	const svgCentre = u.addVec(
+		svgOrigin,
+		[ svgWidth/2, svgHeight/2 ]
+	);
 	const lengthScale = Math.max( svgWidth, svgHeight );
-	const normalise = vert => u.scaleVec( u.subVec(vert, svgOrigin), 1/lengthScale );
+	const normalise = vert => u.scaleVec(
+		u.subVec(vert, svgCentre), 1/lengthScale
+	);
 
 	const normalisedVerts = parentTile.verts.map( normalise );
 	const normalisedSubtileVerts = subtile.verts.map( normalise );
 
 	const normalisedTileCentre = u.meanVec( normalisedVerts );
 	const normalisedSubtileCentre = u.meanVec( normalisedSubtileVerts );
+	const movement = u.subVec( normalisedSubtileCentre, normalisedTileCentre );
 
 	const fingerprint = { 
-		corners: parentTile.verts.length,
+		corners: subtile.verts.length,
 		depth: parentTile.fingerprint.depth + 1,
+		subtileIndex: subtileIndex,
 		cumulativeIndex: parentTile.fingerprint.cumulativeIndex + subtileIndex,
 		alternator: parentTile.fingerprint.alternator + (subtileIndex+1) % 2,
 		centre: normalisedSubtileCentre,
-		movement: u.subVec( normalisedSubtileCentre, normalisedTileCentre ),
+		movement: movement,
+		cumulativeMovement: u.addVec(
+			parentTile.fingerprint.cumulativeMovement,
+			movement,
+		),
 	};
 
 	[ fingerprint.fill, fingerprint.stroke ] = colourFunction( fingerprint );
