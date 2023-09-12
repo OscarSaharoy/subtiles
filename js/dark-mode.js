@@ -6,14 +6,19 @@ export let darkMode = window.matchMedia && window.matchMedia('(prefers-color-sch
 const darkModeIcon = "assets/dark-mode.svg";
 const lightModeIcon = "assets/light-mode.svg";
 const darkModeButton = document.querySelector( "button#dark-mode" );
-darkModeButton?.addEventListener( "click", () => setDarkMode( !darkMode, true ) );
+darkModeButton.addEventListener( "click", () => setDarkMode( !darkMode, true ) );
 
 function setDarkMode(newDarkMode, redraw=false) {
 	darkMode = newDarkMode;
-	document.body.classList.toggle( "dark-mode" );
-	if(redraw) recolour()
+
+	darkMode
+		? document.body.classList.add( "dark-mode" )
+		: document.body.classList.remove( "dark-mode" );
+
 	darkModeButton.querySelector( "img" ).src =
 		darkMode ? lightModeIcon : darkModeIcon;
+
+	if(redraw) recolour()
 }
-if( darkMode ) setDarkMode(darkMode);
+setDarkMode( darkMode );
 
