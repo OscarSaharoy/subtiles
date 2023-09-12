@@ -26,8 +26,9 @@ const functionMap = {
 };
 
 function wireframe( fingerprint ) {
+	const fill = "transparent";
 	const stroke = darkMode ? "white" : "black";
-	return [ "transparent", stroke ];
+	return { fill, stroke };
 }
 
 function rainbow( fingerprint ) {
@@ -39,7 +40,7 @@ function rainbow( fingerprint ) {
 	const fill = `hsl(${hue}deg, ${saturation}%, ${lightness}%)`;
 	const stroke = darkMode ? "white" : "black";
 
-	return [ fill, stroke ];
+	return { fill, stroke };
 }
 
 function tron( fingerprint ) {
@@ -52,7 +53,7 @@ function tron( fingerprint ) {
 	const fill = `hsl( ${hue} ${sat} ${fillVal} )`;
 	const stroke = `hsl( ${hue} ${sat} ${strokeVal} )`;
 
-	return [ fill, stroke ];
+	return { fill, stroke };
 }
 
 function radial( fingerprint ) {
@@ -70,20 +71,19 @@ function radial( fingerprint ) {
 	const hash = 10*u.dot(
 		u.normalise(fingerprint.cumulativeMovement),
 		u.normalise(fingerprint.movement),
-	);
+	) + 1e-4;
 
 
-	const hue = `${Math.round(hash *50)}deg`;
+	const hue = `${Math.round(hash * 50)}deg`;
 	const sat = "175%";
 	const fillVal = "80%";
 	const strokeVal = "80%";
 
 	const fill   = `hsl( ${hue} ${sat} ${fillVal} )`;
 	const stroke = `hsl( ${hue} ${sat} ${strokeVal} )`;
+	const style  = "paint-order: fill stroke;";
 
-	infoLog( fill );
-
-	return [ fill, stroke ];
+	return { fill, stroke, style };
 }
 
 export const rootTileColourFunction = wireframe;

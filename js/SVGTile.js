@@ -12,9 +12,8 @@ const rootFingerprint = {
 	depth: 0,
 	alternator: 0,
 	cumulativeIndex: 0,
-	fill: rootTileColourFunction()[0],
-	stroke: rootTileColourFunction()[1],
 	cumulativeMovement: [ 0, 0 ],
+	...rootTileColourFunction(),
 };
 
 function calcFingerprint( subtile, subtileIndex, parentTile ) {
@@ -40,7 +39,7 @@ function calcFingerprint( subtile, subtileIndex, parentTile ) {
 	const normalisedSubtileCentre = u.meanVec( normalisedSubtileVerts );
 	const movement = u.subVec( normalisedSubtileCentre, normalisedTileCentre );
 
-	const fingerprint = { 
+	let fingerprint = { 
 		corners: subtile.verts.length,
 		depth: parentTile.fingerprint.depth + 1,
 		subtileIndex: subtileIndex,
@@ -54,7 +53,7 @@ function calcFingerprint( subtile, subtileIndex, parentTile ) {
 		),
 	};
 
-	[ fingerprint.fill, fingerprint.stroke ] = colourFunction( fingerprint );
+	fingerprint = { ...fingerprint, ...colourFunction( fingerprint ) };
 
 	return fingerprint;
 }
@@ -80,6 +79,7 @@ export class SVGTile {
 		this.pathElm.setAttribute( "d", u.vertsToD(this.verts) );
 		this.pathElm.setAttribute( "fill", this.fingerprint.fill );
 		this.pathElm.setAttribute( "stroke", this.fingerprint.stroke );
+		this.pathElm.setAttribute( "style", this.fingerprint.style );
 		this.pathElm.setAttribute( "fingerprint", JSON.stringify(this.fingerprint).replaceAll('"',"") );
 
 		return this.pathElm;
@@ -127,9 +127,11 @@ export class SVGTile {
 	recolour() {
 		const rootOrNormalColourFunc =
 			this.fingerprint.depth === 0 ? rootTileColourFunction : colourFunction;
-		[ this.fingerprint.fill, this.fingerprint.stroke ] = rootOrNormalColourFunc( this.fingerprint );
+		this.fingerprint = { ...this.fingerprint, ...rootOrNormalColourFunc( this.fingerprint ) };
+
 		this.pathElm.setAttribute( "fill", this.fingerprint.fill );
 		this.pathElm.setAttribute( "stroke", this.fingerprint.stroke );
+		this.pathElm.setAttribute( "style", this.fingerprint.style );
 
 		this.subtiles.forEach( tile => tile.recolour() );
 	}
