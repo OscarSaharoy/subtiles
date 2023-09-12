@@ -57,15 +57,21 @@ function tron( fingerprint ) {
 
 function radial( fingerprint ) {
 
-	let hash = 10*u.length(fingerprint.cumulativeMovement)
-		+ u.length(u.normalise(fingerprint.movement);
-
-	hash = parseInt( hash );
 	/*
-	const hash =
-		4*u.length( fingerprint.cumulativeMovement ) +
-		4*fingerprint.corners;
+	// 1
+	let hash = 10*u.length( u.addVec(
+		fingerprint.cumulativeMovement,
+		u.normalise(fingerprint.movement),
+	));
+	hash = parseInt( hash );
 	*/
+
+	// 2
+	const hash = 10*u.dot(
+		u.normalise(fingerprint.cumulativeMovement),
+		u.normalise(fingerprint.movement),
+	);
+
 
 	const hue = `${Math.round(hash *50)}deg`;
 	const sat = "175%";
