@@ -64,18 +64,22 @@ function radial( fingerprint ) {
 		fingerprint.cumulativeMovement,
 		u.normalise(fingerprint.movement),
 	));
-	hash = parseInt( hash );
 	*/
 
 	// 2
-	const hash = 10*u.dot(
+	let hash = 5*u.dot(
 		u.normalise(fingerprint.cumulativeMovement),
 		u.normalise(fingerprint.movement),
-	) + 1e-4;
+	);
+	if( u.length(fingerprint.movement) < 1e-4 )
+		hash = 4;
+
+	let hueAngle = 180*hash;
+	if( hueAngle > 90 ) hueAngle += 180;
 
 
-	const hue = `${Math.round(hash * 50)}deg`;
-	const sat = "175%";
+	const hue = `${Math.round(hueAngle)}deg`;
+	const sat = "100%";
 	const fillVal = "80%";
 	const strokeVal = "80%";
 
