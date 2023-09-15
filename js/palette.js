@@ -58,6 +58,12 @@ function tron( fingerprint ) {
 
 function radial( fingerprint ) {
 
+	const colours = [
+		"hsl(0deg, 100%, 80%)",
+		"hsl(70deg, 100%, 80%)",
+		"hsl(120deg, 100%, 80%)",
+	];
+
 	/*
 	// 1
 	let hash = 10*u.length( u.addVec(
@@ -73,10 +79,9 @@ function radial( fingerprint ) {
 	);
 	if( u.length(fingerprint.movement) < 1e-4 )
 		hash = 4;
-
-	let hueAngle = 180*hash;
-	if( hueAngle > 90 ) hueAngle += 180;
-
+	
+/*
+	const hueAngle = 360*hash;
 
 	const hue = `${Math.round(hueAngle)}deg`;
 	const sat = "100%";
@@ -86,8 +91,12 @@ function radial( fingerprint ) {
 	const fill   = `hsl( ${hue} ${sat} ${fillVal} )`;
 	const stroke = `hsl( ${hue} ${sat} ${strokeVal} )`;
 	const style  = "paint-order: fill stroke;";
+*/
+	const i = Math.round(hash) % colours.length;
+	const fill = colours[i];
+	const stroke = fill;
 
-	return { fill, stroke, style };
+	return { fill, stroke };
 }
 
 export const rootTileColourFunction = wireframe;
