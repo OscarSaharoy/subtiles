@@ -92,7 +92,7 @@ function radial( fingerprint ) {
 	const stroke = `hsl( ${hue} ${sat} ${strokeVal} )`;
 	const style  = "paint-order: fill stroke;";
 */
-	const i = Math.round(hash) % colours.length;
+	const i = ( ( Math.round(hash) % colours.length ) + colours.length ) % colours.length;
 	const fill = colours[i];
 	const stroke = fill;
 
