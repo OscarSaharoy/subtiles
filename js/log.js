@@ -14,6 +14,7 @@ export const hideLog = () =>
 	[ "hidden", false ];
 
 document.addEventListener( "keydown", event => "lL".includes(event.key) && toggleLog() );
+document.addEventListener( "touchstart", event => event.touches.length === 3 && toggleLog() );
 document.addEventListener( "keydown", event => event.key === "Escape" && hideLog() );
 logCloseButton.onclick = hideLog;
 
