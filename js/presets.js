@@ -1,6 +1,7 @@
 // Oscar Saharoy 2023
 
 import { ingestSVGFile } from "./subdivide.js";
+import "./click-in.js";
 
 
 const presetButton = document.getElementById( "preset" );
