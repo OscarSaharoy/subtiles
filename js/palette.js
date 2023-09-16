@@ -23,6 +23,7 @@ const functionMap = {
 	"rainbow": rainbow,
 	"tron": tron,
 	"radial": radial,
+	"inherit": inherit,
 };
 
 function wireframe( fingerprint ) {
@@ -95,6 +96,27 @@ function radial( fingerprint ) {
 	const i = ( ( Math.round(hash) % colours.length ) + colours.length ) % colours.length;
 	const fill = colours[i];
 	const stroke = fill;
+
+	return { fill, stroke };
+}
+
+const getHue = hslString =>
+	hslString.match( /(\d+)deg/ )?.[1] || 0;
+
+function inherit( fingerprint ) {
+	
+	const parentHue =
+		getHue( fingerprint.parentFingerprint.fill );
+	
+	const randomHue = parentHue + Math.random() * 360 - 180;
+
+	const blendFactor = 1 - 0.4 / fingerprint.depth;
+	const hue = Math.round(
+		randomHue * (1-blendFactor) + parentHue * blendFactor
+	);
+	
+	const fill   = `hsl( ${hue}deg, 100%, 80% )`;
+	const stroke = `hsl( ${hue}deg, 100%, 80% )`;
 
 	return { fill, stroke };
 }

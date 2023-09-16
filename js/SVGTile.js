@@ -51,6 +51,7 @@ function calcFingerprint( subtile, subtileIndex, parentTile ) {
 			parentTile.fingerprint.cumulativeMovement,
 			movement,
 		),
+		parentFingerprint: parentTile.fingerprint,
 	};
 
 	fingerprint = { ...fingerprint, ...colourFunction( fingerprint ) };
