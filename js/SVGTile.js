@@ -80,7 +80,8 @@ export class SVGTile {
 		this.pathElm.setAttribute( "fill", this.fingerprint.fill );
 		this.pathElm.setAttribute( "stroke", this.fingerprint.stroke );
 		this.pathElm.setAttribute( "style", this.fingerprint.style );
-		this.pathElm.setAttribute( "fingerprint", JSON.stringify(this.fingerprint).replaceAll('"',"") );
+		// for debugging tiles from inspector
+		//this.pathElm.setAttribute( "fingerprint", JSON.stringify(this.fingerprint).replaceAll('"',"") );
 
 		return this.pathElm;
 	}
