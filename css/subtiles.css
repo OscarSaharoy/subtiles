@@ -251,6 +251,7 @@ main.help p + h1 {
 main.help p {
 	text-align: justify;
 	line-height: 1.6rem;
+	font-size: 1rem;
 }
 
 main.help img {
@@ -275,7 +276,7 @@ main.help p.caption {
 
 main.help pre {
 	text-align: left;
-	font-size: 1.2rem;
+	font-size: 1rem;
 }
 
 main.help a {
