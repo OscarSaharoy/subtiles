@@ -23,7 +23,6 @@ const functionMap = {
 	"rainbow": rainbow,
 	"tron": tron,
 	"radial": radial,
-	"inherit": inherit,
 };
 
 function wireframe( fingerprint ) {
@@ -57,70 +56,41 @@ function tron( fingerprint ) {
 	return { fill, stroke };
 }
 
-function radial( fingerprint ) {
+const getHue = hslString =>
+	+hslString.match( /(\d+)deg/ )?.[1] || 0;
 
-	const colours = [
-		"hsl(0deg, 100%, 80%)",
-		"hsl(70deg, 100%, 80%)",
-		"hsl(120deg, 100%, 80%)",
-	];
-
-	/*
-	// 1
-	let hash = 10*u.length( u.addVec(
-		fingerprint.cumulativeMovement,
-		u.normalise(fingerprint.movement),
-	));
-	*/
-
-	// 2
-	let hash = 5*u.dot(
-		u.normalise(fingerprint.cumulativeMovement),
-		u.normalise(fingerprint.movement),
-	);
-	if( u.length(fingerprint.movement) < 1e-4 )
-		hash = 4;
-	
-/*
-	const hueAngle = 360*hash;
-
-	const hue = `${Math.round(hueAngle)}deg`;
-	const sat = "100%";
-	const fillVal = "80%";
-	const strokeVal = "80%";
-
-	const fill   = `hsl( ${hue} ${sat} ${fillVal} )`;
-	const stroke = `hsl( ${hue} ${sat} ${strokeVal} )`;
-	const style  = "paint-order: fill stroke;";
-*/
-	const i = ( ( Math.round(hash) % colours.length ) + colours.length ) % colours.length;
-	const fill = colours[i];
-	const stroke = fill;
-
-	return { fill, stroke };
+function colourMap( hue ) {
+	const lightness = Math.sin(hue/360*3.14)**2*100;
+	return `hsl( 0deg, 0%, ${lightness}% )`;
 }
 
-const getHue = hslString =>
-	hslString.match( /(\d+)deg/ )?.[1] || 0;
-
-function inherit( fingerprint ) {
+function radial( fingerprint ) {
 	
-	const parentHue =
-		getHue( fingerprint.parentFingerprint.fill );
+	const parentHue = fingerprint.parentFingerprint.hue ?? 0;
 	
-	const randomHue = parentHue + Math.random() * 360 - 180;
+	let dot = 0;
+	if( u.length(fingerprint.movement) > 1e-4 )
+		dot += u.dot(
+			u.normalise(fingerprint.cumulativeMovement),
+			u.normalise(fingerprint.movement),
+		);
+	const dotsum =
+		dot + (fingerprint.parentFingerprint.dotsum || 0);
+	const hash = Math.sin( 12*dotsum );
+	infoLog(dotsum);
+	const randomHue = parentHue + hash * 180;
 
-	const blendFactor = 1 - 0.4 / fingerprint.depth;
+	const blendFactor = ( 1 - 1 / fingerprint.depth );
 	const hue = Math.round(
 		randomHue * (1-blendFactor) + parentHue * blendFactor
 	);
-	
+
 	const fill   = `hsl( ${hue}deg, 100%, 80% )`;
 	const stroke = `hsl( ${hue}deg, 100%, 80% )`;
 
-	return { fill, stroke };
+	return { fill, stroke, hue, dotsum };
 }
 
 export const rootTileColourFunction = wireframe;
-export let colourFunction = rainbow;
+export let colourFunction = radial;
 
