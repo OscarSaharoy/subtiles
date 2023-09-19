@@ -4,6 +4,8 @@ Extensible framework for creating recursive geometry and subdivision tilings. **
 
 [https://oscarsaharoy.github.io/subtiles](https://oscarsaharoy.github.io/subtiles)
 
+## about
+
 <p> subtiles is a web app that allows you to create subdivision tilings.
 	It takes in SVG files with a certain format which defines the subdivision.
 	You can supply your own files with the open button 
@@ -21,7 +23,7 @@ Extensible framework for creating recursive geometry and subdivision tilings. **
 <img src="assets/witch-square.jpg" />
 <p class="caption"> A graphic created by recursively dividing quadrilaterals into 5 more quadrilaterals. </p>
 
-<h1> SVG input file format </h1>
+## SVG input file format
 <p> Input files can be created with an svg editor like inkscape. 
 	Each path in the file represents a tile and SVG groups are used to define the relationships between them. <br><br>
 	Each tile type that you want to define a subdivision rule for should be in its own group. The only other thing in the group should be a group of tiles to subdivide it into.
@@ -45,7 +47,7 @@ Extensible framework for creating recursive geometry and subdivision tilings. **
 <img src="assets/trihex.jpg" />
 <p class="caption"> This is another example with two tile types. </p>
 
-<h1> More Info </h2>
+## More Info
 <p> If you would like to know more about subdivision tilings please take a look at the 
 	<a href="https://en.wikipedia.org/wiki/Finite_subdivision_rule" target="_black">wikipedia page</a> 
 	- the references and external links on this page are also very helpful. </p>
@@ -57,5 +59,5 @@ Extensible framework for creating recursive geometry and subdivision tilings. **
 <p class="caption"> This image was made with the conformal mapping function and the square preset. </p>
 
 <img src="assets/black-white.jpg" />
-<p class="caption"> Custom colouring functions can be defined in the js/palette.js file to get results like this. <br>
-	Make sure to add them to the palette menu in index.html! </p>
+<p class="caption"> Custom colouring functions can be defined in the `js/palette.js` file to get results like this. <br>
+	Make sure to add them to the palette menu in `index.html`! </p>
