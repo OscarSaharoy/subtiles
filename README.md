@@ -47,16 +47,27 @@ Extensible framework for creating recursive geometry and subdivision tilings. **
 <img src="assets/trihex.jpg" />
 <p class="caption"> This is another example with two tile types. </p>
 
-## More Info
-<p> If you would like to know more about subdivision tilings please take a look at the 
-	<a href="https://en.wikipedia.org/wiki/Finite_subdivision_rule" target="_black">wikipedia page</a> 
-	- the references and external links on this page are also very helpful. </p>
+## Running Locally
+This is a vanilla html/css/js web app so to run it locally you just need to clone the repo and start a webserver from the root directory.
+The `./runlocal.sh` script can also be used and is just a shortcut for `python3 -m http.server`.
+
+```bash
+git clone git@github.com:OscarSaharoy/subtiles.git
+cd subtiles
+./runlocal.sh
+```
+You can then access the site from `http://localhost:8000`.
 
 <img src="assets/pentagonally.jpg" />
 <p class="caption"> This tiling uses the "radial" palette, applied after a few subdivisions with a different palette. </p>
 
 <img src="assets/stars-circles.jpg" />
 <p class="caption"> This image was made with the conformal mapping function and the square preset. </p>
+
+## More Info
+<p> If you would like to know more about subdivision tilings please take a look at the 
+	<a href="https://en.wikipedia.org/wiki/Finite_subdivision_rule" target="_black">wikipedia page</a> 
+	- the references and external links on this page are also very helpful. </p>
 
 <img src="assets/black-white.jpg" />
 <p class="caption"> Custom colouring functions can be defined in the `js/palette.js` file to get results like this. <br>
