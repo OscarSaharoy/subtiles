@@ -56,7 +56,7 @@ git clone git@github.com:OscarSaharoy/subtiles.git
 cd subtiles
 ./runlocal.sh
 ```
-You can then access the site from `http://localhost:8000`.
+You can then access the web app at [http://localhost:8000](http://localhost:8000).
 
 <img src="assets/pentagonally.jpg" />
 <p class="caption"> This tiling uses the "radial" palette, applied after a few subdivisions with a different palette. </p>
