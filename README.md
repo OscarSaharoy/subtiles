@@ -4,30 +4,18 @@ Extensible framework for creating recursive geometry and subdivision tilings. **
 
 [https://oscarsaharoy.github.io/subtiles](https://oscarsaharoy.github.io/subtiles)
 
-<style>
-p img {
-	vertical-align: text-bottom;
-	margin: 0;
-	height: 1.6rem;
-	margin-bottom: -0.2rem;
-	width: 1rem;
-}
-</style>
-
 <p> subtiles is a web app that allows you to create subdivision tilings.
 	It takes in SVG files with a certain format which defines the subdivision.
-	You can supply your own files with the open <img src="assets/open.svg"/> button 
-	or use one of the presets with the preset <img src="assets/subsquare.svg"/> button.
+	You can supply your own files with the open button 
+	or use one of the presets with the preset button.
 	The web app then parses the file and uses the information to calculate the subdivided geometry -
-	you can use the plus <img src="assets/plus.svg"/> and minus <img src="assets/minus.svg"/> buttons 
-	to increase or decrease the displayed subdivision level.
-	There are also different mapping functions which can be selected with the mapping <img src="assets/globe.svg"/> button,
+	you can use the plus and minus buttons to increase or decrease the displayed subdivision level.
+	There are also different mapping functions which can be selected with the mapping button,
 	but these have more effect on some tilings than on others.
-	Different colour palettes can be selected with the palette <img src="assets/palette.svg"/> button and 
-	the theme can be toggled with the dark / light mode 
-	<img src="assets/dark-mode.svg"/> / <img src="assets/light-mode.svg"/> button.
-	The thickness <img src="assets/thickness.svg"/> button allows you to set the line thickness 
-	and the download button <img src="assets/download.svg"/> downloads the subdivision tiling as an SVG. </p>
+	Different colour palettes can be selected with the palette button and 
+	the theme can be toggled with the dark / light mode button.
+	The thickness button allows you to set the line thickness 
+	and the download button downloads the subdivision tiling as an SVG. </p>
 <p> Tip: press L to view the program logs! </p>
 
 <img src="assets/witch-square.jpg" />
