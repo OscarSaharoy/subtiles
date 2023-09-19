@@ -63,7 +63,7 @@ function colourMap( hue ) {
 	const lightness = 
 		80 
 		+ 20 * Math.sin( ( hue + 50 ) / 180 * Math.PI)
-		- 890 / Math.sin( ( hue - 120 ) / 180 * Math.PI)
+		- 3 / (Math.sin( ( hue - 230 ) / 360 * Math.PI)**2+0.05)
 	;
 	const saturation = 100;
 	return `hsl( ${hue}deg, ${saturation}%, ${lightness}% )`;
@@ -101,5 +101,5 @@ function radial( fingerprint ) {
 }
 
 export const rootTileColourFunction = wireframe;
-export let colourFunction = radial;
+export let colourFunction = rainbow;
 
