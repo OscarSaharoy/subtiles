@@ -1,9 +1,18 @@
 # subtiles
 
-Extensible framework for creating recursive geometry and subdivision tilings.
+Extensible framework for creating recursive geometry and subdivision tilings. **Pull Requests Welcome!!**
 
-**Pull Requests Welcome**
+[https://oscarsaharoy.github.io/subtiles](https://oscarsaharoy.github.io/subtiles)
 
+<style>
+p img {
+	vertical-align: text-bottom;
+	margin: 0;
+	height: 1.6rem;
+	margin-bottom: -0.2rem;
+	width: 1rem;
+}
+</style>
 
 <p> subtiles is a web app that allows you to create subdivision tilings.
 	It takes in SVG files with a certain format which defines the subdivision.
