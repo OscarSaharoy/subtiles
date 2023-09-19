@@ -1,0 +1,82 @@
+<!DOCTYPE HTML>
+
+<html>
+	<head>
+		<title> palette test </title>
+		<style>
+* {
+	padding: 0;
+	margin: 0;
+}
+body {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	justify-items: stretch;
+}
+div.right {
+	grid-column: 1;
+}
+div.left {
+	grid-column: 2;
+}
+		</style>
+	</head>
+	<body>
+		<script>
+
+function colourMap1( hue ) {
+	const lightness = Math.sin(hue/360*3.14)**2*100;
+	return `hsl( 0deg, 0%, ${lightness}% )`;
+}
+
+
+function colourMap2( hue ) {
+	const lightness = 80 + Math.sin( hue / 20 )**2*50;
+	const saturation = 100;
+	return `hsl( ${hue}deg, ${saturation}%, ${lightness-saturation/3}% )`;
+}
+
+function colourMap3( hue ) {
+	const lightness = 80 + 20 * Math.sin(
+		( hue + 50 ) / 180 * Math.PI
+	);
+	const saturation = 100;
+	return `hsl( ${hue}deg, ${saturation}%, ${lightness}% )`;
+}
+
+
+function colourMap( hue ) {
+	const lightness = 
+		80 
+		+ 20 * Math.sin( ( hue + 50 ) / 180 * Math.PI)
+		- 3 / (Math.sin( ( hue - 230 ) / 360 * Math.PI)**2+0.05)
+	;
+	const saturation = 100;
+	return `hsl( ${hue}deg, ${saturation}%, ${lightness}% )`;
+}
+
+
+const strip = document.createElement("div");
+strip.style.height = "2rem";
+
+for( let i = 0; i < 100; ++i ) {
+	const rightClone = strip.cloneNode();
+	rightClone.classList.add("right");
+	const leftClone = strip.cloneNode();
+	leftClone.classList.add("left");
+
+	const hue = i * 7;
+	const preimage = `hsl( ${hue}deg, 100%, 80% )`;
+	const image = colourMap( hue );
+
+	rightClone.style.background = preimage;
+	leftClone.style.background = image;
+
+	document.body.appendChild( rightClone );
+	document.body.appendChild( leftClone );
+}
+
+		</script>
+	</body>
+</html>
+
