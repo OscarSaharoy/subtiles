@@ -57,12 +57,18 @@ function tron( fingerprint ) {
 }
 
 const getHue = hslString =>
-	+hslString.match( /(\d+)deg/ )?.[1] || 0;
+	+hslString.match( /(-?\d+)deg/ )?.[1] || 0;
 
 function colourMap( hue ) {
-	const lightness = Math.sin(hue/360*3.14)**2*100;
-	return `hsl( 0deg, 0%, ${lightness}% )`;
+	const lightness = 
+		80 
+		+ 20 * Math.sin( ( hue + 50 ) / 180 * Math.PI)
+		- 890 / Math.sin( ( hue - 120 ) / 180 * Math.PI)
+	;
+	const saturation = 100;
+	return `hsl( ${hue}deg, ${saturation}%, ${lightness}% )`;
 }
+
 
 function radial( fingerprint ) {
 	
@@ -77,7 +83,6 @@ function radial( fingerprint ) {
 	const dotsum =
 		dot + (fingerprint.parentFingerprint.dotsum || 0);
 	const hash = Math.sin( 12*dotsum );
-	infoLog(dotsum);
 	const randomHue = parentHue + hash * 180;
 
 	const blendFactor = ( 1 - 1 / fingerprint.depth );
@@ -85,8 +90,12 @@ function radial( fingerprint ) {
 		randomHue * (1-blendFactor) + parentHue * blendFactor
 	);
 
+	/*
 	const fill   = `hsl( ${hue}deg, 100%, 80% )`;
 	const stroke = `hsl( ${hue}deg, 100%, 80% )`;
+	*/
+	const fill = colourMap( hue );
+	const stroke = fill;
 
 	return { fill, stroke, hue, dotsum };
 }
