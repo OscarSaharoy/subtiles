@@ -276,7 +276,9 @@ main.help p.caption {
 
 main.help pre {
 	text-align: left;
-	font-size: 1rem;
+	font-size: min(1rem, 3.6vw);
+	font-family: 'Cutive Mono', monospace;
+	line-height: 1.15;
 }
 
 main.help a {
