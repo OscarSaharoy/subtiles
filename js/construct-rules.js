@@ -4,7 +4,7 @@ import { infoLog, successLog, errorLog } from "./log.js"
 import { getVerts, getTransforms } from "./parse-svg.js"
 
 
-const containsPathsOnly = elm => [...elm.children].every( child => child.matches("path") );
+const containsPathsOnly = elm => elm.childElementCount > 0 && [...elm.children].every( child => child.matches("path") );
 const containsOneGroup  = elm => [...elm.children].filter( child => child.matches("g") ).length === 1;
 const containsOnePath  = elm => [...elm.children].filter( child => child.matches("path") ).length === 1;
 const containsOneOf = candidates => elm => candidates.filter( candidate => elm.contains(candidate) ).length === 1;
@@ -29,14 +29,15 @@ function getKeyAndSubdivisionRule( subdivisionOuterGroup ) {
 
 export function constructRules( svg, filename ) {
 
-	infoLog(`Finding inner subdivision groups...`);
-
+	infoLog(`Finding subdivision groups...`);
 	const groups = [ ...svg.querySelectorAll( "g" ) ];
+	successLog(`Found ${groups.length} subdivision groups!`);
+
+	infoLog(`Finding inner subdivision groups...`);
 	const subdivisionInnerGroups = groups.filter( containsPathsOnly );
-
 	successLog(`Found ${subdivisionInnerGroups.length} inner subdivision groups!`);
-	infoLog(`Finding outer subdivision groups...`);
 
+	infoLog(`Finding outer subdivision groups...`);
 	const subdivisionOuterGroups = 
 		groups
 			.filter( containsOneGroup )
