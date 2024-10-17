@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="62.53204mm"
+   height="54.154335mm"
+   viewBox="0 0 62.53204 54.154335"
+   version="1.1"
+   id="svg1"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs1" />
+  <g
+     id="layer1"
+     transform="translate(-58.58452,-24.466)">
+    <g
+       id="g8">
+      <path
+         id="path1"
+         style="fill:#00ffff;stroke-width:1.372;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1000;paint-order:stroke markers fill"
+         d="m 89.850541,24.466 31.266019,54.154335 -62.53204,-10e-7 z" />
+      <g
+         id="g9">
+        <path
+           id="path2"
+           style="fill:#00ff00;stroke-width:1.37201;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1000;paint-order:stroke markers fill"
+           d="m 89.850541,64.511217 3.414154,-5.913489 h -6.828309 z" />
+        <path
+           style="fill:#ff0000;stroke-width:1.372;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1000;paint-order:stroke markers fill"
+           d="M 58.58452,78.620333 89.850541,64.511216 86.436384,58.597728 Z"
+           id="path3" />
+        <path
+           style="fill:#ff0000;stroke-width:1.372;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1000;paint-order:stroke markers fill"
+           d="M 121.11656,78.620333 93.264695,58.597728 89.850541,64.511216 Z"
+           id="path4" />
+        <path
+           style="fill:#ff0000;stroke-width:1.372;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1000;paint-order:stroke markers fill"
+           d="m 89.850541,24.466 -3.414157,34.131728 h 6.828311 z"
+           id="path5" />
+        <path
+           style="fill:#00ff00;stroke-width:1.372;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1000;paint-order:stroke markers fill"
+           d="m 58.58452,78.620333 h 62.53204 L 89.850541,64.511216 Z"
+           id="path6" />
+        <path
+           style="fill:#00ff00;stroke-width:1.372;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1000;paint-order:stroke markers fill"
+           d="m 89.850541,24.466001 3.41415,34.131728 27.851869,20.022605 z"
+           id="path7" />
+        <path
+           style="fill:#00ff00;stroke-width:1.372;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1000;paint-order:stroke markers fill"
+           d="M 89.850541,24.466 86.436384,58.597728 58.58452,78.620333 Z"
+           id="path8" />
+      </g>
+    </g>
+  </g>
+</svg>
